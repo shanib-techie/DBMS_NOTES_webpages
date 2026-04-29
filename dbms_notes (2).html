@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBMS & SQL — Complete Study Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #13131a;
+    --card: #1a1a24;
+    --card2: #1e1e2e;
+    --border: #2a2a3d;
+    --accent: #7c6af7;
+    --accent2: #f7a56a;
+    --accent3: #6af7b8;
+    --accent4: #f76a8a;
+    --text: #e8e8f0;
+    --muted: #888899;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Sora', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ─── TOP HEADER ─── */
+  .hero {
+    background: linear-gradient(135deg, #0d0d1a 0%, #1a0d2e 50%, #0d1a1a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(124,106,247,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(106,247,184,0.07) 0%, transparent 50%);
+  }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+  .hero h1 {
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    position: relative;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 300;
+    position: relative;
+  }
+
+  /* ─── TABLE OF CONTENTS ─── */
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 32px 40px;
+  }
+  .toc-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent3);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 6px 24px;
+  }
+  .toc a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    min-width: 24px;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .container { padding: 0 40px 60px; max-width: 1100px; margin: 0 auto; }
+
+  /* ─── SECTION ─── */
+  .section {
+    margin-bottom: 48px;
+    scroll-margin-top: 20px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--accent);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+  .section-num.green { background: var(--accent3); color: #000; }
+  .section-num.orange { background: var(--accent2); color: #000; }
+  .section-num.pink { background: var(--accent4); color: #fff; }
+  .section h2 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-family: var(--mono);
+    letter-spacing: 0.5px;
+  }
+  .card-title.green { color: var(--accent3); }
+  .card-title.orange { color: var(--accent2); }
+  .card-title.pink { color: var(--accent4); }
+
+  /* ─── TABLES ─── */
+  .table-wrap { overflow-x: auto; margin: 14px 0; border-radius: 8px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  th {
+    background: rgba(124,106,247,0.15);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(42,42,61,0.5);
+    color: var(--text);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(124,106,247,0.05); }
+  td.ok { color: var(--accent3); font-weight: 600; }
+  td.bad { color: var(--accent4); font-weight: 600; }
+  td.warn { color: var(--accent2); font-weight: 600; }
+  td code { background: rgba(124,106,247,0.12); padding: 1px 6px; border-radius: 3px; font-family: var(--mono); font-size: 12px; }
+
+  /* ─── CODE BLOCKS ─── */
+  pre {
+    background: #0a0a10;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    margin: 12px 0;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #c9d1d9;
+  }
+  .kw { color: #ff7b72; }
+  .fn { color: #d2a8ff; }
+  .str { color: #a5d6ff; }
+  .cm { color: #8b949e; font-style: italic; }
+  .num { color: #79c0ff; }
+  .op { color: var(--accent3); }
+
+  /* ─── ALERT BOXES ─── */
+  .alert {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    border-left: 3px solid;
+  }
+  .alert.info { background: rgba(124,106,247,0.08); border-color: var(--accent); }
+  .alert.success { background: rgba(106,247,184,0.07); border-color: var(--accent3); }
+  .alert.danger { background: rgba(247,106,138,0.08); border-color: var(--accent4); }
+  .alert.warn { background: rgba(247,165,106,0.08); border-color: var(--accent2); }
+  .alert strong { display: block; margin-bottom: 4px; font-size: 12px; font-family: var(--mono); letter-spacing: 1px; text-transform: uppercase; }
+  .alert.info strong { color: var(--accent); }
+  .alert.success strong { color: var(--accent3); }
+  .alert.danger strong { color: var(--accent4); }
+  .alert.warn strong { color: var(--accent2); }
+
+  /* ─── FLOW STEPS ─── */
+  .steps { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--card2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+  }
+  .step-num {
+    background: var(--accent);
+    color: #fff;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-num.g { background: var(--accent3); color: #000; }
+  .step-num.o { background: var(--accent2); color: #000; }
+  .step-body { flex: 1; font-size: 13.5px; }
+  .step-body strong { color: var(--accent); font-family: var(--mono); font-size: 12px; }
+
+  /* ─── GRID 2-COL ─── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  @media (max-width: 700px) { .grid2 { grid-template-columns: 1fr; } }
+
+  /* ─── MINI BADGE ─── */
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin: 0 3px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+  }
+  .badge.v { background: rgba(124,106,247,0.2); color: var(--accent); }
+  .badge.g { background: rgba(106,247,184,0.15); color: var(--accent3); }
+  .badge.r { background: rgba(247,106,138,0.15); color: var(--accent4); }
+  .badge.o { background: rgba(247,165,106,0.15); color: var(--accent2); }
+
+  p { margin-bottom: 8px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; font-size: 13.5px; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  .divider {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--border);
+    letter-spacing: 4px;
+    margin: 32px 0 16px;
+  }
+
+  /* anchor offset */
+  [id] { scroll-margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">📚 PYQ Study Notes · DBMS & SQL</div>
+  <h1>Database Management<br><span>Complete Notes</span></h1>
+  <p class="hero-sub">Hinglish Concepts → English Final Answers · Tables · Examples · Exam Ready</p>
+
+  <!-- FILE NAVIGATOR -->
+  <div style="margin-top:28px;position:relative;z-index:10;">
+    <label style="font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--accent3);text-transform:uppercase;display:block;margin-bottom:8px;">📂 Open Other Notes</label>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <select id="fileNav" onchange="openFile(this.value)" style="background:#1a1a2e;color:var(--text);border:1px solid var(--accent);border-radius:8px;padding:10px 16px;font-family:var(--mono);font-size:12px;cursor:pointer;outline:none;min-width:280px;appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22%237c6af7%22><path d=%22M7 10l5 5 5-5z%22/></svg>');background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;">
+        <option value="">— Select a Notes File —</option>
+        <option value="DBMS_Notes_2024.html">📘 DBMS Notes 2024</option>
+        <option value="er_model_concepts.html">🔷 ER Model Concepts</option>
+        <option value="three_schema_architecture_3d.html">🏗️ Three Schema Architecture (3D)</option>
+        <option value="sql_joins_complete.html">🔗 SQL JOINs — Complete Notes</option>
+      </select>
+      <button onclick="openFile(document.getElementById('fileNav').value)" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-family:var(--mono);font-size:12px;cursor:pointer;letter-spacing:1px;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">OPEN →</button>
+    </div>
+    <p style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:1px;">⚠ Keep all HTML files in the same folder for links to work</p>
+  </div>
+</div>
+
+<script>
+function openFile(val) {
+  if (val) window.open(val, '_blank');
+}
+</script>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc" style="max-width:1100px;margin:32px auto;margin-left:40px;margin-right:40px;">
+  <div class="toc-title">📋 Topics — Study in this Order</div>
+  <div class="toc-grid">
+    <a href="#s1"><span class="toc-num">01</span> SQL Command Categories (DDL, DML, VDL)</a>
+    <a href="#s2"><span class="toc-num">02</span> ER Diagram — Symbols & Concepts</a>
+    <a href="#s3"><span class="toc-num">03</span> NATURAL JOIN vs Normal JOIN</a>
+    <a href="#s4"><span class="toc-num">04</span> Foreign Keys — Full Guide</a>
+    <a href="#s5"><span class="toc-num">05</span> Relational Algebra (σ, π, ⨝)</a>
+    <a href="#s6"><span class="toc-num">06</span> Multivalued & Composite Attributes</a>
+    <a href="#s7"><span class="toc-num">07</span> Functional Dependency (FD) — Core Concept</a>
+    <a href="#s8"><span class="toc-num">08</span> Closure + Partial Dependency</a>
+    <a href="#s9"><span class="toc-num">09</span> BCNF</a>
+    <a href="#s10"><span class="toc-num">10</span> Update, Insertion, Deletion Anomalies</a>
+    <a href="#s11"><span class="toc-num">11</span> Normalization — 1NF, 2NF, 3NF</a>
+    <a href="#s12"><span class="toc-num">12</span> All JOIN Types with Tables</a>
+    <a href="#s13"><span class="toc-num">13</span> Data Independence & 3-Schema Architecture</a>
+    <a href="#s14"><span class="toc-num">14</span> Database Constraints (PK, FK, UNIQUE, CHECK)</a>
+    <a href="#s15"><span class="toc-num">15</span> Concurrency — Lost Update Problem</a>
+    <a href="#s16"><span class="toc-num">16</span> File System vs Database</a>
+    <a href="#s17"><span class="toc-num">17</span> FD Violation Detection</a>
+    <a href="#s18"><span class="toc-num">18</span> ON UPDATE CASCADE / ON DELETE SET NULL</a>
+    <a href="#s19"><span class="toc-num">19</span> ER Diagram — MOVIE Database</a>
+    <a href="#s20"><span class="toc-num">20</span> CAR Database — FK + Referential Integrity</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 01 SQL COMMAND CATEGORIES -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>SQL Command Categories — DDL, DML, VDL</h2>
+  </div>
+
+  <div class="alert info"><strong>Core Concept</strong>SQL commands are divided into 3 categories based on what they operate on.</div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">DDL — Data Definition Language</div>
+      <p>Operates on the <strong>structure</strong> of the database (schema).</p>
+      <ul>
+        <li><code>CREATE TABLE</code> — banayi table</li>
+        <li><code>ALTER TABLE</code> — modify ki table</li>
+      </ul>
+      <div class="alert info" style="margin-top:10px"><strong>Shortcut</strong>Structure change = DDL</div>
+    </div>
+    <div class="card">
+      <div class="card-title green">DML — Data Manipulation Language</div>
+      <p>Operates on the <strong>data</strong> inside tables.</p>
+      <ul>
+        <li><code>SELECT</code> — data dekhna</li>
+        <li><code>INSERT</code> — data daalna</li>
+        <li><code>DELETE</code> — data hataana</li>
+      </ul>
+      <div class="alert success" style="margin-top:10px"><strong>Shortcut</strong>Data ke andar ghusna = DML</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title orange">VDL — View Definition Language</div>
+    <p>Used to create <strong>views</strong> (virtual tables).</p>
+    <ul><li><code>CREATE VIEW</code> — virtual table banayi</li></ul>
+    <div class="alert warn" style="margin-top:10px"><strong>Exam Note</strong>SELECT is technically DQL, but in exams → count it under DML.</div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Command</th><th>Category</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><code>CREATE TABLE</code></td><td class="ok">DDL</td><td>Creates table structure</td></tr>
+        <tr><td><code>SELECT</code></td><td class="ok">DML</td><td>Retrieves data</td></tr>
+        <tr><td><code>INSERT</code></td><td class="ok">DML</td><td>Adds data to table</td></tr>
+        <tr><td><code>CREATE VIEW</code></td><td class="ok">VDL</td><td>Creates virtual table</td></tr>
+        <tr><td><code>DELETE</code></td><td class="ok">DML</td><td>Removes data</td></tr>
+        <tr><td><code>ALTER TABLE</code></td><td class="ok">DDL</td><td>Modifies table structure</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 02 ER DIAGRAM -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num green">02</span>
+    <h2>ER Diagram — Symbols & Ternary Relationship</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symbol</th><th>Name</th><th>Meaning</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>□ Rectangle</td><td>Entity</td><td>Real-world object</td><td>Instructor, Student</td></tr>
+        <tr><td>○ Oval</td><td>Attribute</td><td>Property of entity</td><td>Name, Salary</td></tr>
+        <tr><td><u>Underlined</u> Oval</td><td>Primary Key</td><td>Unique identifier</td><td>ID, RollNo</td></tr>
+        <tr><td>◇ Diamond</td><td>Relationship</td><td>Connection between entities</td><td>ProjGuide</td></tr>
+        <tr><td>{ } Curly</td><td>Multivalued</td><td>Multiple values possible</td><td>{Phone}, {Hobbies}</td></tr>
+        <tr><td>( ) Parens</td><td>Composite</td><td>Attribute made of sub-parts</td><td>Name(First, Last)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ternary Relationship — ProjGuide Example</div>
+    <p>3 entities linked together: <strong>Instructor + Student + Project</strong></p>
+    <div class="alert warn"><strong>Important</strong>Ternary relationship → MUST create a separate table. Cannot break into 2 tables — meaning changes!</div>
+    <div class="table-wrap" style="margin-top:12px">
+      <table>
+        <thead><tr><th>Table</th><th>Columns</th><th>Primary Key</th></tr></thead>
+        <tbody>
+          <tr><td>Instructor</td><td>ID, Name, Salary</td><td>ID</td></tr>
+          <tr><td>Student</td><td>RollNo, Name, Credit</td><td>RollNo</td></tr>
+          <tr><td>Project</td><td>ProjectNo, Duration</td><td>ProjectNo</td></tr>
+          <tr><td>ProjGuide</td><td>ID, RollNo, ProjectNo</td><td class="ok">(ID, RollNo, ProjectNo) — composite</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 03 NATURAL JOIN VS NORMAL JOIN -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num orange">03</span>
+    <h2>NATURAL JOIN vs Normal JOIN — deptID Trap</h2>
+  </div>
+
+  <div class="alert warn"><strong>The Big Difference</strong>NATURAL JOIN removes duplicate columns. Normal WHERE join keeps both copies of the common column.</div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title green">NATURAL JOIN</div>
+      <pre><span class="kw">SELECT</span> * <span class="kw">FROM</span> Employee E
+<span class="kw">NATURAL JOIN</span> Department D;</pre>
+      <p>Detects common column (<code>deptID</code>) automatically. Removes duplicate.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Output Columns</th></tr></thead>
+          <tbody>
+            <tr><td>empID, <strong>deptID</strong> (once), empSalary, empHobby, deptName, deptFloor</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title pink">WHERE JOIN (Old Style)</div>
+      <pre><span class="kw">SELECT</span> * <span class="kw">FROM</span> Employee E,
+Department D
+<span class="kw">WHERE</span> E.deptID = D.deptID;</pre>
+      <p>Manual condition. Does NOT remove duplicates.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Output Columns</th></tr></thead>
+          <tbody>
+            <tr><td>empID, <strong>E.deptID</strong>, empSalary, empHobby, <strong>D.deptID</strong>, deptName, deptFloor</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Query Type</th><th>deptID appears</th></tr></thead>
+      <tbody>
+        <tr><td>NATURAL JOIN</td><td class="ok">1 time (duplicate removed)</td></tr>
+        <tr><td>WHERE JOIN</td><td class="warn">2 times (both copies kept)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 04 FOREIGN KEYS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Foreign Keys — Complete Guide</h2>
+  </div>
+
+  <div class="alert info"><strong>Definition</strong>A Foreign Key (FK) is a column that references the Primary Key of another table (or the same table). It maintains Referential Integrity.</div>
+
+  <div class="card">
+    <div class="card-title">Real-Life Analogy</div>
+    <ul>
+      <li>Aadhaar number = PK (unique identity)</li>
+      <li>Bank account stores Aadhaar = FK (must exist in Aadhaar DB)</li>
+      <li>If Aadhaar doesn't exist → account invalid</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title orange">SALESPERSON Database — FK Example</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Table</th><th>FK Column</th><th>References</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>SALESPERSON</td><td>supervisorSSN</td><td>SALESPERSON(SSN)</td><td>Supervisor is also an employee — self-reference</td></tr>
+          <tr><td>TRIP</td><td>SSN</td><td>SALESPERSON(SSN)</td><td>Trip belongs to a salesperson</td></tr>
+          <tr><td>EXPENSE</td><td>tripID</td><td>TRIP(tripID)</td><td>Expense belongs to a trip</td></tr>
+          <tr><td>EXPENSE</td><td>accountNo</td><td>ACCOUNT(accountNo)</td><td>Assumption: ACCOUNT table exists</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert warn" style="margin-top:12px"><strong>Key Insight</strong>EXPENSE is a bridge table handling Many-to-Many between TRIP and ACCOUNT. Without it, one trip could only link to one account.</div>
+  </div>
+
+  <div class="alert success"><strong>FK Rules</strong>FK value must either EXIST in the referenced PK column, or be NULL. Random values → Referential Integrity violation.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 05 RELATIONAL ALGEBRA -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num green">05</span>
+    <h2>Relational Algebra — σ, π, ⨝</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Symbol</th><th>Name</th><th>SQL Equivalent</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><code>σ</code></td><td>Selection</td><td>WHERE</td><td>Filter rows by condition</td></tr>
+        <tr><td><code>π</code></td><td>Projection</td><td>SELECT columns</td><td>Select specific columns</td></tr>
+        <tr><td><code>⨝</code></td><td>Natural Join</td><td>JOIN</td><td>Combine tables on common columns</td></tr>
+        <tr><td><code>×</code></td><td>Cartesian Product</td><td>FROM A, B</td><td>All combinations (no filter)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert info"><strong>Golden Rule</strong>RA Flow: <strong>Filter → Join → Project</strong>. Always filter first for efficiency.</div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Q(i): Suppliers of RED parts</div>
+      <pre><span class="cm">-- RA Expression</span>
+π sName (
+  Suppliers ⨝ (
+    Catalog ⨝ (σ color='red' (Parts))
+  )
+)</pre>
+      <pre><span class="cm">-- SQL</span>
+<span class="kw">SELECT DISTINCT</span> s.sName
+<span class="kw">FROM</span> Suppliers s
+<span class="kw">JOIN</span> Catalog c <span class="kw">ON</span> s.sID = c.sID
+<span class="kw">JOIN</span> Parts p <span class="kw">ON</span> c.pID = p.pID
+<span class="kw">WHERE</span> p.color = <span class="str">'red'</span>;</pre>
+    </div>
+    <div class="card">
+      <div class="card-title green">Q(ii): Parts with Catalog entry</div>
+      <pre><span class="cm">-- RA Expression</span>
+π pID, pName (Parts ⨝ Catalog)</pre>
+      <pre><span class="cm">-- SQL</span>
+<span class="kw">SELECT DISTINCT</span> p.pID, p.pName
+<span class="kw">FROM</span> Parts p
+<span class="kw">JOIN</span> Catalog c
+<span class="kw">ON</span> p.pID = c.pID;</pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title orange">Step-by-Step Table Execution — Q(i)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Operation</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>σ color='red'(Parts)</td><td>pID=10 (Bolt,red), pID=30 (Screw,red)</td></tr>
+          <tr><td>2</td><td>Catalog ⨝ red parts</td><td>sID=1,pID=10 | sID=1,pID=30 | sID=3,pID=30</td></tr>
+          <tr><td>3</td><td>Suppliers ⨝ step2</td><td>Ram(sID=1), Aman(sID=3)</td></tr>
+          <tr><td>4</td><td>π sName</td><td class="ok">Ram, Aman</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 06 MULTIVALUED & COMPOSITE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num orange">06</span>
+    <h2>Multivalued & Composite Attributes</h2>
+  </div>
+
+  <div class="alert info"><strong>Symbols</strong>{ } = Multivalued (multiple values) &nbsp;|&nbsp; ( ) = Composite (sub-parts)</div>
+
+  <div class="card">
+    <div class="card-title">Given: Hobby_stats</div>
+    <pre>Hobby_stats (
+  Name (First_name, Last_name),
+  {Phone (Area_code, Phone_number)},
+  {Hobbies}
+)</pre>
+    <div class="table-wrap" style="margin-top:12px">
+      <table>
+        <thead><tr><th>Attribute</th><th>Type</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Name (First_name, Last_name)</td><td class="ok">Composite</td><td>( ) = has sub-parts</td></tr>
+          <tr><td>Phone (Area_code, Phone_number)</td><td class="warn">Multivalued + Composite</td><td>{ } = multiple phones, ( ) = sub-parts</td></tr>
+          <tr><td>Hobbies</td><td class="ok">Multivalued</td><td>{ } = multiple values possible</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert danger" style="margin-top:12px"><strong>Common Mistake</strong>Phone is NOT just multivalued — it is BOTH multivalued AND composite. Don't miss this!</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 07 FUNCTIONAL DEPENDENCY CORE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2>Functional Dependency — Core Concept</h2>
+  </div>
+
+  <div class="alert info"><strong>Definition</strong>A → B means: if two rows have the same A value, they MUST have the same B value. A "determines" B.</div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title green">Real-Life Example</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>RollNo</th><th>Name</th></tr></thead>
+          <tbody>
+            <tr><td>101</td><td>Ram</td></tr>
+            <tr><td>102</td><td>Shyam</td></tr>
+            <tr><td class="bad">101</td><td class="bad">Aman ❌</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:8px">RollNo → Name (same ID → same name always). Row 3 VIOLATES this FD.</p>
+    </div>
+    <div class="card">
+      <div class="card-title orange">Types of Dependency</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body"><strong>Full Dependency</strong> — depends on entire key. Example: (A,B) → C</div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--accent4)">2</div>
+          <div class="step-body"><strong>Partial Dependency</strong> — only part of key. Example: A → D (when key is A,B)</div>
+        </div>
+        <div class="step">
+          <div class="step-num o">3</div>
+          <div class="step-body"><strong>Transitive Dependency</strong> — chain. Example: A→D, D→E (so A→E indirectly)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title pink">Quick Violation Check Method</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num g">1</div>
+        <div class="step-body">Does the LHS value repeat in any two rows?</div>
+      </div>
+      <div class="step">
+        <div class="step-num g">2</div>
+        <div class="step-body">If YES → check if RHS is also same in those rows</div>
+      </div>
+      <div class="step">
+        <div class="step-num g">3</div>
+        <div class="step-body">If RHS differs → <strong>FD VIOLATED</strong>. If same → OK.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 08 CLOSURE + PARTIAL DEPENDENCY -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num green">08</span>
+    <h2>Closure & Partial Dependency — PYQ Solved</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Given: R = {A,B,C,D,E,F,G,H,I,J}, FDs:</div>
+    <pre>AB → C,  A → D,E,  B → F,  F → G,H,  D → I,J</pre>
+  </div>
+
+  <div class="card">
+    <div class="card-title green">Closure of {A,B} — Step by Step</div>
+    <div class="steps">
+      <div class="step"><div class="step-num g">1</div><div class="step-body">Start: {A, B}</div></div>
+      <div class="step"><div class="step-num g">2</div><div class="step-body">Apply AB → C → Add C → {A, B, C}</div></div>
+      <div class="step"><div class="step-num g">3</div><div class="step-body">Apply A → D, E → Add D, E → {A, B, C, D, E}</div></div>
+      <div class="step"><div class="step-num g">4</div><div class="step-body">Apply B → F → Add F → {A, B, C, D, E, F}</div></div>
+      <div class="step"><div class="step-num g">5</div><div class="step-body">Apply F → G, H → Add G, H → {A, B, C, D, E, F, G, H}</div></div>
+      <div class="step"><div class="step-num g">6</div><div class="step-body">Apply D → I, J → Add I, J → {A, B, C, D, E, F, G, H, I, J}</div></div>
+    </div>
+    <div class="alert success" style="margin-top:12px"><strong>Result</strong>(AB)⁺ = {A, B, C, D, E, F, G, H, I, J} → AB determines all attributes → AB is the candidate key.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title pink">Partial Dependency Check</div>
+    <p>Primary Key = (A, B). Check if any non-prime attribute depends on PART of key:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>FD</th><th>LHS is...?</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td>A → D, E</td><td>Only A (part of key)</td><td class="bad">❌ PARTIAL DEPENDENCY</td></tr>
+          <tr><td>B → F</td><td>Only B (part of key)</td><td class="bad">❌ PARTIAL DEPENDENCY</td></tr>
+          <tr><td>AB → C</td><td>Full key</td><td class="ok">✔ Full Dependency</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert danger" style="margin-top:10px"><strong>Conclusion</strong>YES — relation has partial dependency → VIOLATES 2NF.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 09 BCNF -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <span class="section-num orange">09</span>
+    <h2>BCNF — Boyce-Codd Normal Form</h2>
+  </div>
+
+  <div class="alert info"><strong>BCNF Rule</strong>For every FD X → Y, X must be a SUPER KEY. If any FD's LHS is NOT a super key → BCNF violated.</div>
+
+  <div class="card">
+    <div class="card-title">R(A, B) — Is it in BCNF?</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Case</th><th>FD</th><th>LHS is Super Key?</th><th>BCNF?</th></tr></thead>
+        <tbody>
+          <tr><td>Case 1</td><td>No FD</td><td>N/A</td><td class="ok">✔ Yes</td></tr>
+          <tr><td>Case 2</td><td>A → B</td><td>Yes (A is key)</td><td class="ok">✔ Yes</td></tr>
+          <tr><td>Case 3</td><td>B → A</td><td>Yes (B is key)</td><td class="ok">✔ Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert success" style="margin-top:10px"><strong>Conclusion</strong>A 2-attribute relation is ALWAYS in BCNF. BCNF violations start with 3+ attributes.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 10 ANOMALIES -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s10">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <h2>Update, Insertion & Deletion Anomalies</h2>
+  </div>
+
+  <div class="alert danger"><strong>Root Cause</strong>All 3 anomalies happen because of bad table design (no normalization) — same data stored in multiple places.</div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title pink">Update Anomaly</div>
+      <p>Same info in multiple rows. Update one → forget others → inconsistency.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Student</th><th>Course</th><th>Fees</th></tr></thead>
+          <tbody>
+            <tr><td>Ram</td><td>Python</td><td class="ok">6000</td></tr>
+            <tr><td>Shyam</td><td>Python</td><td class="bad">5000 ❌</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title orange">Insertion Anomaly</div>
+      <p>Cannot insert valid data without unnecessary extra data.</p>
+      <p>Example: Cannot add a new course (AI → 8000) without a student — Student column can't be empty!</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title green">Deletion Anomaly</div>
+    <p>Deleting one record accidentally removes important info.</p>
+    <p>Example: Deleting the only student in Java course → Java course info also disappears from DB.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">StudentCourse PYQ — Which command causes Update Anomaly?</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>studentID</th><th>studentName</th><th>CGPA</th><th>courseID</th><th>courseName</th><th>credits</th></tr></thead>
+        <tbody>
+          <tr><td>123</td><td>Shyam</td><td>9</td><td>C118</td><td>C++</td><td>4</td></tr>
+          <tr><td>132</td><td>Shyam</td><td>8.5</td><td>C121</td><td>Java</td><td>4</td></tr>
+          <tr><td>131</td><td>Mohan</td><td>7.5</td><td>C118</td><td>C++</td><td>4</td></tr>
+          <tr><td>135</td><td>Vijay</td><td>8</td><td>C118</td><td>C++</td><td>4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-wrap" style="margin-top:12px">
+      <table>
+        <thead><tr><th>Command</th><th>Anomaly Type</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td><code>DELETE WHERE studentID=132</code></td><td class="warn">Deletion Anomaly</td><td>Java course info disappears with Shyam</td></tr>
+          <tr><td><code>UPDATE credits=3 WHERE courseID=C118</code></td><td class="bad">UPDATE ANOMALY ✔</td><td>C118 exists in 3 rows — if any row missed → inconsistency</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 11 NORMALIZATION -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s11">
+  <div class="section-header">
+    <span class="section-num green">11</span>
+    <h2>Normalization — 1NF → 2NF → 3NF</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Normal Form</th><th>Rule</th><th>What to Remove</th></tr></thead>
+      <tbody>
+        <tr><td>1NF</td><td>All cells must have atomic (single) values</td><td>Multi-values, repeating groups</td></tr>
+        <tr><td>2NF</td><td>Must be in 1NF + No partial dependency</td><td>Dependency on part of composite key</td></tr>
+        <tr><td>3NF</td><td>Must be in 2NF + No transitive dependency</td><td>A→B→C chains (indirect dependency)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">CANDIDATE Example — Full 1NF → 2NF → 3NF</div>
+    <div class="divider">── ORIGINAL (UNNORMALIZED) ──</div>
+    <pre>CANDIDATE (Ssn, Name, {JOB_HIST (Company, High_pos)})</pre>
+    <div class="alert danger"><strong>Problem</strong>{ } = repeating group → violates 1NF</div>
+
+    <div class="divider">── STEP 1: 1NF ──</div>
+    <p>Remove repeating groups. Create one row per job:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ssn</th><th>Name</th><th>Company</th><th>High_pos</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Ram</td><td>TCS</td><td>Dev</td></tr>
+          <tr><td>1</td><td>Ram</td><td>Infosys</td><td>Lead</td></tr>
+          <tr><td>2</td><td>Shyam</td><td>Wipro</td><td>Manager</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert warn"><strong>Remaining Problem</strong>Name repeats for same Ssn → partial dependency (Ssn → Name, but key is (Ssn, Company))</div>
+
+    <div class="divider">── STEP 2: 2NF ──</div>
+    <p>Split tables to remove partial dependency:</p>
+    <div class="grid2">
+      <div>
+        <p style="font-family:var(--mono);font-size:12px;color:var(--accent3);margin-bottom:6px">CANDIDATE (Ssn, Name)</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ssn</th><th>Name</th></tr></thead>
+            <tbody><tr><td>1</td><td>Ram</td></tr><tr><td>2</td><td>Shyam</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <p style="font-family:var(--mono);font-size:12px;color:var(--accent3);margin-bottom:6px">JOB_HISTORY (Ssn, Company, High_pos)</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ssn</th><th>Company</th><th>High_pos</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>TCS</td><td>Dev</td></tr>
+              <tr><td>1</td><td>Infosys</td><td>Lead</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider">── STEP 3: 3NF ──</div>
+    <p>If Company → High_pos (same company always gives same role) → transitive dependency exists. Fix:</p>
+    <div class="grid2">
+      <div><p style="font-family:var(--mono);font-size:12px;color:var(--accent3)">CANDIDATE (Ssn, Name)</p></div>
+      <div><p style="font-family:var(--mono);font-size:12px;color:var(--accent3)">COMPANY (Company, High_pos)</p></div>
+    </div>
+    <p style="font-family:var(--mono);font-size:12px;color:var(--accent3);margin-top:8px">JOB_HISTORY (Ssn, Company) → link table</p>
+    <div class="alert success" style="margin-top:10px"><strong>Final Design</strong>CANDIDATE (Ssn, Name) + COMPANY (Company, High_pos) + JOB_HISTORY (Ssn, Company)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title pink">1NF Trap — Convert CANDIDATE Relation (PYQ)</div>
+    <p>Given: <code>CANDIDATE (Ssn, Name, {JOB_HIST (Company, High_pos)})</code></p>
+    <p>Convert to 1NF: Remove { } by creating separate rows:</p>
+    <pre>CANDIDATE (Ssn, Name, Company, High_pos)
+<span class="cm">-- Each row = one job of one candidate</span></pre>
+    <div class="alert info"><strong>English Exam Answer</strong>The relation contains a repeating group {JOB_HIST} which violates 1NF. To convert, remove the repeating group and create separate tuples for each job history. Result: CANDIDATE(Ssn, Name, Company, High_pos).</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 12 ALL JOIN TYPES -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s12">
+  <div class="section-header">
+    <span class="section-num orange">12</span>
+    <h2>All JOIN Types with Tables</h2>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">T1</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>P</th><th>Q</th><th>R</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td>10</td><td>b</td></tr>
+            <tr><td>1</td><td>20</td><td>b</td></tr>
+            <tr><td>3</td><td>10</td><td>c</td></tr>
+            <tr><td>5</td><td>30</td><td>d</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">T2</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>A</th><th>B</th><th>C</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>20</td><td>b</td></tr>
+            <tr><td>2</td><td>10</td><td>b</td></tr>
+            <tr><td>3</td><td>30</td><td>c</td></tr>
+            <tr><td>4</td><td>40</td><td>c</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title green">INTERSECTION (T1 ∩ T2)</div>
+    <pre><span class="kw">SELECT</span> P,Q,R <span class="kw">FROM</span> T1 <span class="kw">INTERSECT SELECT</span> A,B,C <span class="kw">FROM</span> T2;</pre>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>P</th><th>Q</th><th>R</th><th>Match?</th></tr></thead>
+        <tbody>
+          <tr><td>2</td><td>10</td><td>b</td><td class="ok">✔ In T2</td></tr>
+          <tr><td>1</td><td>20</td><td>b</td><td class="ok">✔ In T2</td></tr>
+          <tr><td>3</td><td>10</td><td>c</td><td class="bad">❌ T2 has (3,30,c)</td></tr>
+          <tr><td>5</td><td>30</td><td>d</td><td class="bad">❌ Not in T2</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert success"><strong>Result</strong>(2,10,b) and (1,20,b)</div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Join Type</th><th>What it Returns</th><th>P=5 row?</th><th>A=4 row?</th></tr></thead>
+      <tbody>
+        <tr><td><code>INNER JOIN</code></td><td>Only matching rows</td><td class="bad">❌ NULL</td><td class="bad">❌ NULL</td></tr>
+        <tr><td><code>LEFT JOIN</code></td><td>All T1 + matching T2</td><td class="ok">✔ with NULLs</td><td class="bad">❌ NULL</td></tr>
+        <tr><td><code>RIGHT JOIN</code></td><td>All T2 + matching T1</td><td class="bad">❌ NULL</td><td class="ok">✔ with NULLs</td></tr>
+        <tr><td><code>FULL OUTER JOIN</code></td><td>Everything from both</td><td class="ok">✔ with NULLs</td><td class="ok">✔ with NULLs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">FULL OUTER JOIN Result</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>P</th><th>Q</th><th>R</th><th>A</th><th>B</th><th>C</th></tr></thead>
+        <tbody>
+          <tr><td>2</td><td>10</td><td>b</td><td>2</td><td>10</td><td>b</td></tr>
+          <tr><td>1</td><td>20</td><td>b</td><td>1</td><td>20</td><td>b</td></tr>
+          <tr><td>3</td><td>10</td><td>c</td><td>3</td><td>30</td><td>c</td></tr>
+          <tr><td>5</td><td>30</td><td>d</td><td class="warn">NULL</td><td class="warn">NULL</td><td class="warn">NULL</td></tr>
+          <tr><td class="warn">NULL</td><td class="warn">NULL</td><td class="warn">NULL</td><td>4</td><td>40</td><td>c</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="alert info"><strong>Real-Life Analogy</strong>T1 = Students · T2 = Course Records. INNER = only enrolled students. LEFT = all students. RIGHT = all courses. FULL = everything.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 13 DATA INDEPENDENCE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s13">
+  <div class="section-header">
+    <span class="section-num">13</span>
+    <h2>Data Independence & 3-Schema Architecture</h2>
+  </div>
+
+  <div class="alert info"><strong>Core Concept</strong>Ability to modify the database schema at one level WITHOUT affecting the next higher level.</div>
+
+  <div class="card">
+    <div class="card-title">Real-Life Analogy</div>
+    <p>App stored data in Excel → migrated to MySQL → App still works, user noticed nothing. That's Data Independence.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title green">Physical Data Independence</div>
+      <p>Change internal storage structure without affecting conceptual schema.</p>
+      <p><strong>Example:</strong> Hard disk → SSD, adding indexes, changing file format. Queries remain same.</p>
+    </div>
+    <div class="card">
+      <div class="card-title orange">Logical Data Independence</div>
+      <p>Change conceptual schema without affecting external schema / app.</p>
+      <p><strong>Example:</strong> Adding Email column to Student table. Existing app still runs same queries.</p>
+      <div class="alert danger" style="margin-top:8px"><strong>Note</strong>Logical independence is HARDER to achieve than physical.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title pink">3-Schema Architecture + Schema Definition Languages</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Level</th><th>Name</th><th>What it defines</th><th>Language</th></tr></thead>
+        <tbody>
+          <tr><td>External</td><td>User View</td><td>What each user sees (views)</td><td>VDL (View Definition Language)</td></tr>
+          <tr><td>Conceptual</td><td>Logical Schema</td><td>All tables, relationships, constraints</td><td>DDL (Data Definition Language)</td></tr>
+          <tr><td>Internal</td><td>Physical Schema</td><td>How data is actually stored (indexes, files)</td><td>SDL (Storage Definition Language)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert info" style="margin-top:10px"><strong>Reality</strong>In modern DBMS: you mostly use DDL. VDL (views) occasionally. SDL is mostly hidden/automatic.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 14 DATABASE CONSTRAINTS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s14">
+  <div class="section-header">
+    <span class="section-num green">14</span>
+    <h2>Database Constraints — PK, FK, UNIQUE, NOT NULL, CHECK</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Constraint</th><th>Rule</th><th>Real-Life Analogy</th><th>Violation Example</th></tr></thead>
+      <tbody>
+        <tr><td><code>PRIMARY KEY</code></td><td>Unique + Not NULL</td><td>Aadhaar number — unique identity</td><td>Same studentID twice</td></tr>
+        <tr><td><code>FOREIGN KEY</code></td><td>Must exist in referenced PK</td><td>Aadhaar linked to bank account</td><td>courseID that doesn't exist</td></tr>
+        <tr><td><code>UNIQUE</code></td><td>No duplicates (NULL allowed)</td><td>Email address</td><td>Same email in 2 rows</td></tr>
+        <tr><td><code>NOT NULL</code></td><td>Value cannot be empty</td><td>Your name on a form</td><td>NULL in age column</td></tr>
+        <tr><td><code>CHECK</code></td><td>Value must satisfy condition</td><td>Age ≥ 18 for voting</td><td>age = 15 when CHECK(age≥18)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">STUDENT_COURSE PYQ — Which constraint violated?</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Operation</th><th>Constraint Violated</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td><code>Insert &lt;4, 'C1', '2022-05-05'&gt;</code></td><td class="ok">None</td><td>(4,C1) is unique, not NULL</td></tr>
+          <tr><td><code>Insert &lt;4, 'C3', '2022-05-05'&gt;</code></td><td class="bad">PRIMARY KEY</td><td>(4,C3) already exists</td></tr>
+          <tr><td><code>Update &lt;4, NULL, '2023-06-07'&gt;</code></td><td class="bad">ENTITY INTEGRITY</td><td>PK attribute (CourseID) cannot be NULL</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert warn"><strong>Composite Key Trap</strong>PK here is (SNo, CourseID) — both together. Check the COMBINATION for uniqueness, not individual values.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title orange">Quick Decision Tree for Constraint Questions</div>
+    <div class="steps">
+      <div class="step"><div class="step-num o">?</div><div class="step-body">Duplicate value? → Check PRIMARY KEY or UNIQUE</div></div>
+      <div class="step"><div class="step-num o">?</div><div class="step-body">NULL in important column? → Check NOT NULL or ENTITY INTEGRITY</div></div>
+      <div class="step"><div class="step-num o">?</div><div class="step-body">Referenced value doesn't exist? → FOREIGN KEY (Referential Integrity)</div></div>
+      <div class="step"><div class="step-num o">?</div><div class="step-body">Value breaks a rule (age, range)? → CHECK constraint</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 15 CONCURRENCY — LOST UPDATE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s15">
+  <div class="section-header">
+    <span class="section-num pink">15</span>
+    <h2>Concurrency — Lost Update Problem</h2>
+  </div>
+
+  <div class="alert danger"><strong>Lost Update Problem</strong>Two transactions read same data → update independently → one update overwrites the other → one update is LOST.</div>
+
+  <div class="card">
+    <div class="card-title">Bank Account Example — X = 5 (PYQ)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Time</th><th>T1</th><th>T2</th><th>X in DB</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>read(X) → 5</td><td></td><td>5</td></tr>
+          <tr><td>2</td><td>X = 5+10 = 15 (local)</td><td></td><td>5</td></tr>
+          <tr><td>3</td><td></td><td>write(X) = ???</td><td class="warn">unclear</td></tr>
+          <tr><td>4</td><td></td><td>read(X) → 5 (old value!)</td><td>5</td></tr>
+          <tr><td>5</td><td></td><td>X = 5+20 = 25</td><td>5</td></tr>
+          <tr><td>6</td><td></td><td>write(X) = 25</td><td class="bad">25</td></tr>
+          <tr><td>7</td><td>commit</td><td></td><td class="bad">25</td></tr>
+          <tr><td>8</td><td></td><td>commit</td><td class="bad">25</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert danger" style="margin-top:10px"><strong>Problem</strong>T1's update (+10) is LOST. Final = 25 instead of correct 35. This is the Lost Update Problem.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title green">How to Fix — Prevention Techniques</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Method</th><th>How it prevents</th></tr></thead>
+        <tbody>
+          <tr><td>Locking</td><td>One transaction holds lock → others wait → no conflict</td></tr>
+          <tr><td>2PL (Two-Phase Locking)</td><td>Acquire all locks first, release after commit</td></tr>
+          <tr><td>Serializable Isolation</td><td>Transactions behave as if run one after another</td></tr>
+          <tr><td>Timestamp Ordering</td><td>Older transaction gets priority, conflict → rollback</td></tr>
+          <tr><td>Optimistic Concurrency</td><td>Assume no conflict → check at end → rollback if conflict</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title pink">PYQ — Schedule Problem (T1, T2, X=5)</div>
+    <p><strong>Problem identified:</strong> Dirty Read + Lost Update</p>
+    <p>T2 reads old value of X (5) before T1 commits. T2 computes 5+20=25 and writes. T1's addition of 10 is completely lost.</p>
+    <div class="alert danger"><strong>Final Value of X = 25 (incorrect — should be 35)</strong></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 16 FILE SYSTEM VS DATABASE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s16">
+  <div class="section-header">
+    <span class="section-num">16</span>
+    <h2>File System vs Database — When to Use What</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>File System</th><th>Database (DBMS)</th></tr></thead>
+      <tbody>
+        <tr><td>Data type</td><td>Unstructured (files, images)</td><td>Structured (tables, relations)</td></tr>
+        <tr><td>Concurrency</td><td class="bad">Weak</td><td class="ok">Strong (locks, transactions)</td></tr>
+        <tr><td>Query support</td><td class="bad">Basic</td><td class="ok">Powerful (SQL)</td></tr>
+        <tr><td>Data integrity</td><td class="bad">Weak</td><td class="ok">Strong (constraints)</td></tr>
+        <tr><td>Multi-user access</td><td class="bad">Problematic</td><td class="ok">Handled well</td></tr>
+        <tr><td>Large binary files</td><td class="ok">Fast & easy</td><td class="bad">Overhead</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title green">Employee Management System → DBMS</div>
+      <p>Multiple users (HR, Manager), complex queries (salary &gt; 50k), consistency needed, relationships exist → Database is better.</p>
+    </div>
+    <div class="card">
+      <div class="card-title orange">CAD Tools → File System</div>
+      <p>Large binary design files, mostly single-user, no complex SQL queries needed, fast file access required → File System is better.</p>
+    </div>
+  </div>
+
+  <div class="alert info"><strong>Decision Rule</strong>Structured + multi-user + complex queries → DBMS. Large files + single-user + no complex queries → File System.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 17 FD VIOLATION DETECTION -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s17">
+  <div class="section-header">
+    <span class="section-num green">17</span>
+    <h2>FD Violation Detection — PYQ Solved</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Given Relation</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>S</th><th>Q</th><th>R</th><th>T</th></tr></thead>
+        <tbody>
+          <tr><td>S1</td><td>Q1</td><td>50</td><td>20</td></tr>
+          <tr><td>S2</td><td>Q2</td><td>60</td><td>20</td></tr>
+          <tr><td>S3</td><td>Q1</td><td>60</td><td>30</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>FD to Check</th><th>LHS repeats?</th><th>RHS same when LHS same?</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Q → R</td><td>Q1 appears in rows 1 &amp; 3</td><td>R=50 vs R=60 ❌ DIFFERENT</td><td class="bad">VIOLATED</td></tr>
+        <tr><td>S → T</td><td>S1, S2, S3 all unique</td><td>No repeat to check</td><td class="ok">NOT VIOLATED</td></tr>
+        <tr><td>R → T</td><td>R=60 appears in rows 2 &amp; 3</td><td>T=20 vs T=30 ❌ DIFFERENT</td><td class="bad">VIOLATED</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 18 CASCADE / SET NULL -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s18">
+  <div class="section-header">
+    <span class="section-num orange">18</span>
+    <h2>ON UPDATE CASCADE / ON DELETE SET NULL</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Tables: PART (parent) → SUPPLIER (child via Pnumber FK)</div>
+    <div class="grid2">
+      <div class="card" style="background:var(--bg)">
+        <div class="card-title green">ON UPDATE CASCADE</div>
+        <p>Parent PK changes → child FK automatically updates.</p>
+        <pre><span class="cm">-- UPDATE PART SET Pno='P10'
+--   WHERE Pno='P1'</span>
+
+<span class="cm">-- SUPPLIER auto-updates:</span>
+Pnumber: P1 → P10 ✔</pre>
+        <p>Think: "Parent changed → child syncs."</p>
+      </div>
+      <div class="card" style="background:var(--bg)">
+        <div class="card-title pink">ON DELETE SET NULL</div>
+        <p>Parent row deleted → child FK becomes NULL.</p>
+        <pre><span class="cm">-- DELETE FROM PART
+--   WHERE Pno='P1'</span>
+
+<span class="cm">-- SUPPLIER:</span>
+Pnumber: P1 → NULL</pre>
+        <p>Think: "Parent gone → child's link becomes empty."</p>
+        <div class="alert warn" style="margin-top:8px"><strong>Condition</strong>Only works if FK column allows NULL.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Option</th><th>On parent UPDATE</th><th>On parent DELETE</th></tr></thead>
+      <tbody>
+        <tr><td>CASCADE</td><td>Child FK auto-updates</td><td>Child row also deleted</td></tr>
+        <tr><td>SET NULL</td><td>Child FK → NULL</td><td>Child FK → NULL</td></tr>
+        <tr><td>RESTRICT</td><td>UPDATE blocked</td><td>DELETE blocked</td></tr>
+        <tr><td>NO ACTION</td><td>Error thrown</td><td>Error thrown</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 19 MOVIE ER DIAGRAM -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s19">
+  <div class="section-header">
+    <span class="section-num">19</span>
+    <h2>ER Diagram — MOVIE Database</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Entities & Attributes</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Entity</th><th>Attributes</th><th>Primary Key</th></tr></thead>
+        <tbody>
+          <tr><td>MOVIE</td><td>Title, Year, Length, Plot, {Genre}</td><td>(Title, Year) — composite</td></tr>
+          <tr><td>ACTOR</td><td>Name, DOB</td><td>(Name, DOB)</td></tr>
+          <tr><td>DIRECTOR</td><td>Name, DOB</td><td>(Name, DOB)</td></tr>
+          <tr><td>PRODUCTION_COMPANY</td><td>Name, Address</td><td>Name</td></tr>
+          <tr><td>GENRE</td><td>GenreName</td><td>GenreName</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title green">Relationships</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Relationship</th><th>Entities</th><th>Cardinality</th><th>Special</th></tr></thead>
+        <tbody>
+          <tr><td>produces</td><td>PRODUCTION_COMPANY → MOVIE</td><td>1:N</td><td>Each movie has exactly ONE company</td></tr>
+          <tr><td>acts_in</td><td>ACTOR ↔ MOVIE</td><td>M:N</td><td>Attribute: <strong>Role</strong> (in relationship, not actor)</td></tr>
+          <tr><td>directs</td><td>DIRECTOR ↔ MOVIE</td><td>M:N</td><td>Director can also be actor (overlap)</td></tr>
+          <tr><td>has</td><td>MOVIE ↔ GENRE</td><td>M:N</td><td>Genre is multi-valued</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert warn"><strong>Important — Role Placement</strong>Role is an attribute of the acts_in RELATIONSHIP, NOT of the Actor entity. Role depends on BOTH actor and movie.</div>
+    <div class="alert info" style="margin-top:8px"><strong>Director-Actor Overlap</strong>A director can also act. ACTOR and DIRECTOR are separate entity sets but may overlap (same person can be in both).</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 20 CAR DATABASE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section" id="s20">
+  <div class="section-header">
+    <span class="section-num green">20</span>
+    <h2>CAR Database — FK, Sample Data & Referential Integrity</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Foreign Keys</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Table</th><th>FK Column</th><th>References</th></tr></thead>
+        <tbody>
+          <tr><td>OPTION</td><td>Serial_no</td><td>CAR(Serial_no)</td></tr>
+          <tr><td>SALE</td><td>Serial_no</td><td>CAR(Serial_no)</td></tr>
+          <tr><td>SALE</td><td>Salesperson_id</td><td>SALESPERSON(Salesperson_id)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title orange">Sample Data</div>
+    <div class="grid2">
+      <div>
+        <p style="font-family:var(--mono);font-size:11px;color:var(--accent3);margin-bottom:6px">CAR</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Serial_no</th><th>Model</th><th>Manufacturer</th><th>Price</th></tr></thead>
+            <tbody>
+              <tr><td>101</td><td>X1</td><td>BMW</td><td>50000</td></tr>
+              <tr><td>102</td><td>City</td><td>Honda</td><td>20000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-family:var(--mono);font-size:11px;color:var(--accent3);margin-top:10px;margin-bottom:6px">SALESPERSON</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Salesperson_id</th><th>Name</th><th>Phone</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Ram</td><td>9999</td></tr>
+              <tr><td>2</td><td>Shyam</td><td>8888</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <p style="font-family:var(--mono);font-size:11px;color:var(--accent3);margin-bottom:6px">SALE</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Salesperson_id</th><th>Serial_no</th><th>Date</th><th>Sale_price</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>101</td><td>2026-04-01</td><td>52000</td></tr>
+              <tr><td>2</td><td>102</td><td>2026-04-05</td><td>21000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-family:var(--mono);font-size:11px;color:var(--accent3);margin-top:10px;margin-bottom:6px">OPTION</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Serial_no</th><th>Option_name</th><th>Price</th></tr></thead>
+            <tbody>
+              <tr><td>101</td><td>Sunroof</td><td>2000</td></tr>
+              <tr><td>101</td><td>GPS</td><td>1000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title pink">Referential Integrity Violation Example</div>
+    <pre><span class="cm">-- ❌ WRONG — FK violation</span>
+<span class="kw">INSERT INTO</span> SALE <span class="kw">VALUES</span> (<span class="num">3</span>, <span class="num">105</span>, <span class="str">'2026-04-10'</span>, <span class="num">30000</span>);
+
+<span class="cm">-- Salesperson_id = 3 ❌ (not in SALESPERSON)
+-- Serial_no = 105 ❌ (not in CAR)</span></pre>
+    <pre><span class="cm">-- ✔ CORRECT — valid insertion</span>
+<span class="kw">INSERT INTO</span> SALE <span class="kw">VALUES</span> (<span class="num">2</span>, <span class="num">102</span>, <span class="str">'2026-04-05'</span>, <span class="num">21000</span>);
+
+<span class="cm">-- Salesperson_id = 2 ✔ exists
+-- Serial_no = 102 ✔ exists in CAR</span></pre>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="border-top:1px solid var(--border);padding:48px 40px 32px;margin-top:40px;text-align:center;">
+
+  <!-- Student Message -->
+  <div style="background:linear-gradient(135deg,rgba(124,106,247,0.12),rgba(106,247,184,0.07));border:1px solid var(--border);border-radius:14px;padding:24px 32px;max-width:680px;margin:0 auto 36px;position:relative;">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--accent3);text-transform:uppercase;margin-bottom:10px;">💬 A Message for You</div>
+    <p style="font-size:15px;color:var(--text);line-height:1.8;font-weight:400;">
+      Hey student! 🎓 You're doing amazing — every concept you read today is a step closer to your goal. 
+      Don't rush, don't skip — <span style="color:var(--accent);font-weight:600;">consistency beats cramming every time.</span> 
+      Trust the process, stay curious, and remember: you've got this! 💪
+    </p>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:12px;letter-spacing:1px;">— Shanib, your study companion 🚀</div>
+  </div>
+
+  <!-- Divider -->
+  <div style="font-family:var(--mono);font-size:10px;color:var(--border);letter-spacing:4px;margin-bottom:28px;">· · · · · · · · · ·</div>
+
+  <!-- Creator Info -->
+  <div style="margin-bottom:20px;">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Created &amp; Developed by</div>
+    <div style="font-size:22px;font-weight:700;letter-spacing:-0.5px;color:var(--text);">Shanib <span style="color:var(--accent);">Khan</span></div>
+  </div>
+
+  <!-- Social Links -->
+  <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:28px;">
+    <!-- GitHub -->
+    <a href="https://github.com/shanib-techie" target="_blank" style="display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 18px;text-decoration:none;color:var(--text);font-family:var(--mono);font-size:12px;letter-spacing:0.5px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#7c6af7'" onmouseout="this.style.borderColor='var(--border)'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      shanib-techie
+    </a>
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/shanib-khan-515a8a316/" target="_blank" style="display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 18px;text-decoration:none;color:var(--text);font-family:var(--mono);font-size:12px;letter-spacing:0.5px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#0a66c2'" onmouseout="this.style.borderColor='var(--border)'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#0a66c2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      Shanib Khan
+    </a>
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/shanib99" target="_blank" style="display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 18px;text-decoration:none;color:var(--text);font-family:var(--mono);font-size:12px;letter-spacing:0.5px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#e1306c'" onmouseout="this.style.borderColor='var(--border)'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="url(#igGrad)"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f09433"/><stop offset="25%" style="stop-color:#e6683c"/><stop offset="50%" style="stop-color:#dc2743"/><stop offset="75%" style="stop-color:#cc2366"/><stop offset="100%" style="stop-color:#bc1888"/></linearGradient></defs><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      shanib99
+    </a>
+  </div>
+
+  <!-- Bottom line -->
+  <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;">
+    DBMS &amp; SQL NOTES · PYQ PREP · ALL CONCEPTS COVERED
+  </div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--border);letter-spacing:1px;margin-top:6px;">
+    © 2024 Shanib Khan · Made with ❤️ for students
+  </div>
+</div>
+
+</div><!-- end container -->
+</body>
+</html>

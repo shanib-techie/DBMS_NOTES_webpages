@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL JOINs — Complete Notes by Shanib</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #13131a;
+    --card: #1a1a24;
+    --card2: #1e1e2e;
+    --border: #2a2a3d;
+    --accent: #7c6af7;
+    --accent2: #f7a56a;
+    --accent3: #6af7b8;
+    --accent4: #f76a8a;
+    --accent5: #6ab4f7;
+    --text: #e8e8f0;
+    --muted: #888899;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Sora', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 40%, #0a1a1a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 60%, rgba(124,106,247,0.15) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 15%, rgba(106,247,184,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 80%, rgba(247,106,138,0.06) 0%, transparent 45%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent3);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.8;
+    position: relative;
+  }
+  .hero h1 {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    position: relative;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 300;
+    position: relative;
+  }
+
+  /* nav dropdown */
+  .nav-bar {
+    margin-top: 28px;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .nav-bar select {
+    background: #1a1a2e;
+    color: var(--text);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 10px 36px 10px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+    min-width: 280px;
+    appearance: none;
+    background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22%237c6af7%22><path d=%22M7 10l5 5 5-5z%22/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+  }
+  .nav-bar button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+  .nav-bar button:hover { opacity: 0.8; }
+  .nav-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent3);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  /* ─── TOC ─── */
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 32px 40px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .toc-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 6px 24px;
+  }
+  .toc a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    min-width: 24px;
+  }
+
+  /* ─── MAIN ─── */
+  .container { padding: 0 40px 60px; max-width: 1100px; margin: 0 auto; }
+
+  /* ─── SECTION ─── */
+  .section {
+    margin-bottom: 56px;
+    scroll-margin-top: 20px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--accent);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+  .section-num.green { background: var(--accent3); color: #000; }
+  .section-num.orange { background: var(--accent2); color: #000; }
+  .section-num.pink { background: var(--accent4); color: #fff; }
+  .section-num.blue { background: var(--accent5); color: #000; }
+  .section h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.4px; }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-family: var(--mono);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .card-title.green { color: var(--accent3); }
+  .card-title.orange { color: var(--accent2); }
+  .card-title.pink { color: var(--accent4); }
+  .card-title.blue { color: var(--accent5); }
+
+  /* ─── TABLES ─── */
+  .table-wrap { overflow-x: auto; margin: 14px 0; border-radius: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th {
+    background: rgba(124,106,247,0.15);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(42,42,61,0.5);
+    color: var(--text);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(124,106,247,0.04); }
+  td.ok { color: var(--accent3); font-weight: 600; }
+  td.bad { color: var(--accent4); font-weight: 600; }
+  td.warn { color: var(--accent2); font-weight: 600; }
+  td.blue { color: var(--accent5); font-weight: 600; }
+  td.null-val { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+
+  /* ─── CODE ─── */
+  pre {
+    background: #080810;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    margin: 12px 0;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: #c9d1d9;
+  }
+  .kw { color: #ff7b72; }
+  .fn { color: #d2a8ff; }
+  .str { color: #a5d6ff; }
+  .cm { color: #8b949e; font-style: italic; }
+  .num { color: #79c0ff; }
+  .op { color: var(--accent3); }
+
+  /* ─── ALERTS ─── */
+  .alert {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    border-left: 3px solid;
+  }
+  .alert.info { background: rgba(124,106,247,0.08); border-color: var(--accent); }
+  .alert.success { background: rgba(106,247,184,0.07); border-color: var(--accent3); }
+  .alert.danger { background: rgba(247,106,138,0.08); border-color: var(--accent4); }
+  .alert.warn { background: rgba(247,165,106,0.08); border-color: var(--accent2); }
+  .alert.blue { background: rgba(106,180,247,0.08); border-color: var(--accent5); }
+  .alert strong {
+    display: block; margin-bottom: 4px;
+    font-size: 11px; font-family: var(--mono);
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .alert.info strong { color: var(--accent); }
+  .alert.success strong { color: var(--accent3); }
+  .alert.danger strong { color: var(--accent4); }
+  .alert.warn strong { color: var(--accent2); }
+  .alert.blue strong { color: var(--accent5); }
+
+  /* ─── GRID ─── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 12px 0; }
+  @media (max-width: 750px) {
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 28px; }
+    .container, .toc { padding: 0 20px 40px; }
+    .hero { padding: 32px 20px 28px; }
+  }
+
+  /* ─── VENN DIAGRAM ─── */
+  .venn-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  .venn-svg { max-width: 100%; }
+
+  /* ─── JOIN CARD (big) ─── */
+  .join-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .join-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .join-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+  .join-badge.inner { background: rgba(124,106,247,0.25); color: var(--accent); }
+  .join-badge.left { background: rgba(106,247,184,0.2); color: var(--accent3); }
+  .join-badge.right { background: rgba(247,165,106,0.2); color: var(--accent2); }
+  .join-badge.full { background: rgba(247,106,138,0.2); color: var(--accent4); }
+  .join-badge.cross { background: rgba(106,180,247,0.2); color: var(--accent5); }
+  .join-badge.self { background: rgba(200,200,100,0.2); color: #d4d46a; }
+  .join-badge.natural { background: rgba(160,100,247,0.2); color: #c09aff; }
+  .join-card-body { padding: 20px 24px; }
+  .join-name { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; }
+
+  /* ─── REAL LIFE EXAMPLE BOX ─── */
+  .real-life {
+    background: linear-gradient(135deg, rgba(106,247,184,0.06), rgba(106,180,247,0.06));
+    border: 1px solid rgba(106,247,184,0.2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 14px 0;
+  }
+  .real-life-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent3);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .real-life p { font-size: 14px; color: var(--text); }
+  .real-life strong { color: var(--accent3); }
+
+  /* ─── MEMORY TRICK ─── */
+  .trick {
+    background: rgba(247,165,106,0.07);
+    border: 1px solid rgba(247,165,106,0.25);
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 12px 0;
+    font-size: 13.5px;
+  }
+  .trick-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  /* badge inline */
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin: 0 3px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+  }
+  .badge.v { background: rgba(124,106,247,0.2); color: var(--accent); }
+  .badge.g { background: rgba(106,247,184,0.15); color: var(--accent3); }
+  .badge.o { background: rgba(247,165,106,0.15); color: var(--accent2); }
+  .badge.r { background: rgba(247,106,138,0.15); color: var(--accent4); }
+
+  [id] { scroll-margin-top: 24px; }
+  ul, ol { padding-left: 20px; }
+  li { margin-bottom: 5px; font-size: 14px; }
+  code { background: rgba(124,106,247,0.12); padding: 1px 6px; border-radius: 3px; font-family: var(--mono); font-size: 12px; }
+  p { margin-bottom: 8px; }
+
+  /* summary quick-ref */
+  .qref-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+  }
+  .qref-name { font-family: var(--mono); font-size: 12px; font-weight: 700; min-width: 130px; }
+  .qref-desc { font-size: 13px; color: var(--muted); flex: 1; }
+  .qref-emoji { font-size: 18px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-tag">📚 SQL Deep Dive · Joins Complete Guide</div>
+  <h1>SQL <span>JOINs</span><br>Complete Notes</h1>
+  <p class="hero-sub">Every type of JOIN · Real Life Examples · Venn Diagrams · SQL Syntax · Exam Ready</p>
+
+  <div style="margin-top:20px;position:relative;z-index:10;">
+    <div class="nav-label">📂 Open Other Notes</div>
+    <div class="nav-bar">
+      <select id="fileNav" onchange="openFile(this.value)">
+        <option value="">— Select a Notes File —</option>
+        <option value="dbms_notes.html">📗 DBMS & SQL Complete Notes</option>
+        <option value="DBMS_Notes_2024.html">📘 DBMS Notes 2024</option>
+        <option value="er_model_concepts.html">🔷 ER Model Concepts</option>
+        <option value="three_schema_architecture_3d.html">🏗️ Three Schema Architecture (3D)</option>
+      </select>
+      <button onclick="openFile(document.getElementById('fileNav').value)">OPEN →</button>
+    </div>
+    <p style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:1px;">⚠ Keep all HTML files in the same folder for links to work</p>
+  </div>
+</div>
+<script>function openFile(v){ if(v) window.open(v,'_blank'); }</script>
+
+<!-- ═══ TOC ═══ -->
+<div class="toc">
+  <div class="toc-title">📋 Topics Covered — SQL JOINs</div>
+  <div class="toc-grid">
+    <a href="#s1"><span class="toc-num">01</span> What is a JOIN? (Intro)</a>
+    <a href="#s2"><span class="toc-num">02</span> Base Tables We'll Use</a>
+    <a href="#s3"><span class="toc-num">03</span> INNER JOIN</a>
+    <a href="#s4"><span class="toc-num">04</span> LEFT JOIN (LEFT OUTER JOIN)</a>
+    <a href="#s5"><span class="toc-num">05</span> RIGHT JOIN (RIGHT OUTER JOIN)</a>
+    <a href="#s6"><span class="toc-num">06</span> FULL OUTER JOIN</a>
+    <a href="#s7"><span class="toc-num">07</span> CROSS JOIN (Cartesian Product)</a>
+    <a href="#s8"><span class="toc-num">08</span> SELF JOIN</a>
+    <a href="#s9"><span class="toc-num">09</span> NATURAL JOIN</a>
+    <a href="#s10"><span class="toc-num">10</span> EQUI JOIN vs NON-EQUI JOIN</a>
+    <a href="#s11"><span class="toc-num">11</span> Venn Diagram — All JOINs Visual</a>
+    <a href="#s12"><span class="toc-num">12</span> JOIN vs WHERE vs Subquery</a>
+    <a href="#s13"><span class="toc-num">13</span> Multiple Table JOINs</a>
+    <a href="#s14"><span class="toc-num">14</span> Common Mistakes & Exam Tips</a>
+    <a href="#s15"><span class="toc-num">15</span> Quick Reference Summary</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 01 WHAT IS JOIN -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>What is a JOIN? — The Big Idea</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Simple Definition</div>
+    <p>A <strong>JOIN</strong> is used to <strong>combine rows from two or more tables</strong> based on a related column between them.</p>
+    <p style="margin-top:8px">In real databases, data is split across many tables (to avoid repetition). JOIN brings them back together when you need to see combined info.</p>
+  </div>
+
+  <div class="real-life">
+    <div class="real-life-tag">🌍 Real Life Analogy</div>
+    <p>Think of two lists:</p>
+    <ul style="margin-top:8px;">
+      <li><strong>List 1 (Students):</strong> Student ID, Student Name</li>
+      <li><strong>List 2 (Marks):</strong> Student ID, Subject, Marks</li>
+    </ul>
+    <p style="margin-top:8px;">If you want to see <strong>"Rahul scored 85 in Maths"</strong> — you need to JOIN both lists using <strong>Student ID</strong> as the common link. That's exactly what SQL JOIN does!</p>
+  </div>
+
+  <div class="alert info">
+    <strong>Why not put everything in one table?</strong>
+    If we stored student name + marks in one table, we'd repeat the student name for every subject. That's data redundancy. So we use JOIN to combine when needed.
+  </div>
+
+  <div class="card">
+    <div class="card-title green">General SQL JOIN Syntax</div>
+    <pre><span class="kw">SELECT</span> columns
+<span class="kw">FROM</span>   Table1
+<span class="kw">JOIN_TYPE</span> Table2
+<span class="kw">ON</span>     Table1.common_column <span class="op">=</span> Table2.common_column;</pre>
+    <p style="color:var(--muted);font-size:13px;">Replace <code>JOIN_TYPE</code> with: INNER JOIN, LEFT JOIN, RIGHT JOIN, etc.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 02 BASE TABLES -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num green">02</span>
+    <h2>Base Tables — We'll Use These Throughout</h2>
+  </div>
+
+  <div class="alert success"><strong>Real Life Scenario</strong>We're building a small school system. Students enroll in courses. Let's use these tables for ALL examples below.</div>
+
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <div class="card-title">Table: STUDENTS</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>student_id</th><th>student_name</th><th>city</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Rahul</td><td>Delhi</td></tr>
+              <tr><td>2</td><td>Priya</td><td>Mumbai</td></tr>
+              <tr><td>3</td><td>Amit</td><td>Pune</td></tr>
+              <tr><td>4</td><td>Sara</td><td>Jaipur</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;">Sara (ID=4) has NOT enrolled in any course yet.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title green">Table: ENROLLMENTS</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>enroll_id</th><th>student_id</th><th>course</th><th>marks</th></tr></thead>
+            <tbody>
+              <tr><td>101</td><td>1</td><td>Maths</td><td>85</td></tr>
+              <tr><td>102</td><td>2</td><td>Science</td><td>90</td></tr>
+              <tr><td>103</td><td>1</td><td>English</td><td>78</td></tr>
+              <tr><td>104</td><td>3</td><td>Maths</td><td>72</td></tr>
+              <tr><td>105</td><td>99</td><td>History</td><td>65</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;">student_id=99 in enrollments has NO matching student (orphan record).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert warn"><strong>Key Observation</strong>Student Sara (ID=4) exists in STUDENTS but NOT in ENROLLMENTS. student_id=99 exists in ENROLLMENTS but NOT in STUDENTS. Different JOINs handle these mismatches differently — that's the whole point!</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 03 INNER JOIN -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>INNER JOIN — Only Matched Rows</h2>
+  </div>
+
+  <div class="join-card">
+    <div class="join-card-header">
+      <span class="join-badge inner">INNER JOIN</span>
+      <span class="join-name">Returns rows that have matching values in BOTH tables</span>
+    </div>
+    <div class="join-card-body">
+
+      <div class="real-life">
+        <div class="real-life-tag">🌍 Real Life Example</div>
+        <p>You have a <strong>guest list</strong> (invited people) and a <strong>check-in list</strong> (people who actually came). <strong>INNER JOIN = only people who are on BOTH lists</strong> (invited AND came). If someone was invited but didn't come, they're OUT. If someone came but wasn't on the list, they're also OUT.</p>
+      </div>
+
+      <div class="card-title" style="margin-top:16px;">SQL Query</div>
+      <pre><span class="kw">SELECT</span> s.student_id, s.student_name, e.course, e.marks
+<span class="kw">FROM</span>   STUDENTS s
+<span class="kw">INNER JOIN</span> ENROLLMENTS e
+<span class="kw">ON</span>     s.student_id <span class="op">=</span> e.student_id;</pre>
+
+      <div class="card-title" style="margin-top:16px;">Result</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>student_id</th><th>student_name</th><th>course</th><th>marks</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Rahul</td><td>Maths</td><td>85</td></tr>
+            <tr><td>1</td><td>Rahul</td><td>English</td><td>78</td></tr>
+            <tr><td>2</td><td>Priya</td><td>Science</td><td>90</td></tr>
+            <tr><td>3</td><td>Amit</td><td>Maths</td><td>72</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert danger"><strong>❌ Missing from result</strong>Sara (ID=4) is NOT here — she has no enrollment. student_id=99 is NOT here — no matching student. INNER JOIN only keeps perfect matches!</div>
+
+      <div class="trick">
+        <div class="trick-tag">💡 Memory Trick</div>
+        INNER JOIN = Intersection = Only the <strong>common</strong> part. Like a Venn diagram — only the overlapping middle section.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 04 LEFT JOIN -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num green">04</span>
+    <h2>LEFT JOIN — All Left + Matched Right</h2>
+  </div>
+
+  <div class="join-card">
+    <div class="join-card-header">
+      <span class="join-badge left">LEFT JOIN</span>
+      <span class="join-name">Returns ALL rows from LEFT table + matched rows from RIGHT table</span>
+    </div>
+    <div class="join-card-body">
+
+      <div class="real-life">
+        <div class="real-life-tag">🌍 Real Life Example</div>
+        <p>You're a <strong>teacher</strong> taking attendance. You have a <strong>class roll list</strong> (all students) and a <strong>homework submission list</strong>. LEFT JOIN = <strong>show ALL students</strong>, and if they submitted homework, show that too. If a student didn't submit — still show them, but put <strong>NULL</strong> in the homework column.</p>
+      </div>
+
+      <div class="card-title" style="margin-top:16px;">SQL Query</div>
+      <pre><span class="kw">SELECT</span> s.student_id, s.student_name, e.course, e.marks
+<span class="kw">FROM</span>   STUDENTS s
+<span class="kw">LEFT JOIN</span> ENROLLMENTS e
+<span class="kw">ON</span>     s.student_id <span class="op">=</span> e.student_id;</pre>
+
+      <div class="card-title" style="margin-top:16px;">Result</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>student_id</th><th>student_name</th><th>course</th><th>marks</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Rahul</td><td>Maths</td><td>85</td></tr>
+            <tr><td>1</td><td>Rahul</td><td>English</td><td>78</td></tr>
+            <tr><td>2</td><td>Priya</td><td>Science</td><td>90</td></tr>
+            <tr><td>3</td><td>Amit</td><td>Maths</td><td>72</td></tr>
+            <tr><td>4</td><td>Sara</td><td class="null-val">NULL</td><td class="null-val">NULL</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert success"><strong>✅ Sara is included now!</strong>Sara (ID=4) appears with NULL in course and marks — she's a student, but hasn't enrolled. LEFT JOIN never drops anyone from the LEFT table.</div>
+
+      <div class="card-title green" style="margin-top:14px;">Practical Use Case — Find students with NO enrollment</div>
+      <pre><span class="cm">-- Find students who haven't enrolled in any course</span>
+<span class="kw">SELECT</span> s.student_name
+<span class="kw">FROM</span>   STUDENTS s
+<span class="kw">LEFT JOIN</span> ENROLLMENTS e <span class="kw">ON</span> s.student_id <span class="op">=</span> e.student_id
+<span class="kw">WHERE</span>  e.student_id <span class="kw">IS NULL</span>;
+
+<span class="cm">-- Result: Sara</span></pre>
+
+      <div class="trick">
+        <div class="trick-tag">💡 Memory Trick</div>
+        LEFT JOIN = <strong>Left table is the BOSS</strong>. All rows from left, no matter what. Right table fills in where it can, puts NULL where it can't.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 05 RIGHT JOIN -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num orange">05</span>
+    <h2>RIGHT JOIN — All Right + Matched Left</h2>
+  </div>
+
+  <div class="join-card">
+    <div class="join-card-header">
+      <span class="join-badge right">RIGHT JOIN</span>
+      <span class="join-name">Returns ALL rows from RIGHT table + matched rows from LEFT table</span>
+    </div>
+    <div class="join-card-body">
+
+      <div class="real-life">
+        <div class="real-life-tag">🌍 Real Life Example</div>
+        <p>Imagine you have a <strong>list of all courses offered</strong> and a <strong>list of enrolled students</strong>. RIGHT JOIN = <strong>show ALL enrollment records</strong>, and if the student exists in student table, show their name. If the enrollment has a student_id that doesn't exist — still show enrollment, put NULL for student details.</p>
+      </div>
+
+      <div class="card-title" style="margin-top:16px;">SQL Query</div>
+      <pre><span class="kw">SELECT</span> s.student_id, s.student_name, e.course, e.marks
+<span class="kw">FROM</span>   STUDENTS s
+<span class="kw">RIGHT JOIN</span> ENROLLMENTS e
+<span class="kw">ON</span>     s.student_id <span class="op">=</span> e.student_id;</pre>
+
+      <div class="card-title" style="margin-top:16px;">Result</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>student_id (from S)</th><th>student_name</th><th>course</th><th>marks</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Rahul</td><td>Maths</td><td>85</td></tr>
+            <tr><td>2</td><td>Priya</td><td>Science</td><td>90</td></tr>
+            <tr><td>1</td><td>Rahul</td><td>English</td><td>78</td></tr>
+            <tr><td>3</td><td>Amit</td><td>Maths</td><td>72</td></tr>
+            <tr><td class="null-val">NULL</td><td class="null-val">NULL</td><td>History</td><td>65</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert warn"><strong>⚠ The orphan enrollment appears!</strong>The enrollment with student_id=99 (History, 65 marks) appears — but since no student with ID=99 exists, the student columns show NULL. Sara is NOT here because she has no enrollment row.</div>
+
+      <div class="trick">
+        <div class="trick-tag">💡 Memory Trick</div>
+        RIGHT JOIN = Exact OPPOSITE of LEFT JOIN. Right table is the boss now. Simply swap the table order + use LEFT JOIN for the same result.
+      </div>
+
+      <div class="alert info"><strong>💡 Pro Tip</strong>Most developers avoid RIGHT JOIN — instead, they just swap the table order and use LEFT JOIN. Both give same result. LEFT JOIN is more commonly used.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 06 FULL OUTER JOIN -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num pink">06</span>
+    <h2>FULL OUTER JOIN — Everything from Both Tables</h2>
+  </div>
+
+  <div class="join-card">
+    <div class="join-card-header">
+      <span class="join-badge full">FULL OUTER JOIN</span>
+      <span class="join-name">Returns ALL rows from BOTH tables — matched and unmatched</span>
+    </div>
+    <div class="join-card-body">
+
+      <div class="real-life">
+        <div class="real-life-tag">🌍 Real Life Example</div>
+        <p>You have two companies merging. <strong>Company A's employee list</strong> + <strong>Company B's employee list</strong>. FULL OUTER JOIN = <strong>show EVERYONE from both companies</strong>. If someone works in both — show once with combined data. If only in Company A — show with NULL for Company B fields. If only in Company B — show with NULL for Company A fields.</p>
+      </div>
+
+      <div class="card-title" style="margin-top:16px;">SQL Query</div>
+      <pre><span class="kw">SELECT</span> s.student_id, s.student_name, e.course, e.marks
+<span class="kw">FROM</span>   STUDENTS s
+<span class="kw">FULL OUTER JOIN</span> ENROLLMENTS e
+<span class="kw">ON</span>     s.student_id <span class="op">=</span> e.student_id;</pre>
+
+      <div class="card-title" style="margin-top:16px;">Result</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>student_id</th><th>student_name</th><th>course</th><th>marks</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Rahul</td><td>Maths</td><td>85</td><td class="ok">Matched</td></tr>
+            <tr><td>1</td><td>Rahul</td><td>English</td><td>78</td><td class="ok">Matched</td></tr>
+            <tr><td>2</td><td>Priya</td><td>Science</td><td>90</td><td class="ok">Matched</td></tr>
+            <tr><td>3</td><td>Amit</td><td>Maths</td><td>72</td><td class="ok">Matched</td></tr>
+            <tr><td>4</td><td>Sara</td><td class="null-val">NULL</td><td class="null-val">NULL</td><td class="warn">Left only</td></tr>
+            <tr><td class="null-val">NULL</td><td class="null-val">NULL</td><td>History</td><td>65</td><td class="bad">Right only</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert danger"><strong>Result Explanation</strong>Matched rows appear once. Sara (only in STUDENTS) appears with NULL enrollment. The ID=99 enrollment (only in ENROLLMENTS) appears with NULL student info. FULL OUTER JOIN = LEFT JOIN + RIGHT JOIN combined (minus duplicates).</div>
+
+      <div class="alert blue"><strong>⚠ MySQL Note</strong>MySQL does NOT support FULL OUTER JOIN directly. Workaround: Use LEFT JOIN UNION RIGHT JOIN.</div>
+      <pre><span class="cm">-- MySQL workaround for FULL OUTER JOIN</span>
+<span class="kw">SELECT</span> s.student_name, e.course <span class="kw">FROM</span> STUDENTS s <span class="kw">LEFT JOIN</span> ENROLLMENTS e <span class="kw">ON</span> s.student_id <span class="op">=</span> e.student_id
+<span class="kw">UNION</span>
+<span class="kw">SELECT</span> s.student_name, e.course <span class="kw">FROM</span> STUDENTS s <span class="kw">RIGHT JOIN</span> ENROLLMENTS e <span class="kw">ON</span> s.student_id <span class="op">=</span> e.student_id;</pre>
+
+      <div class="trick">
+        <div class="trick-tag">💡 Memory Trick</div>
+        FULL OUTER JOIN = LEFT JOIN + RIGHT JOIN = "Nobody gets left behind." Every row from everywhere shows up.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 07 CROSS JOIN -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num blue">07</span>
+    <h2>CROSS JOIN — Every Row × Every Row</h2>
+  </div>
+
+  <div class="join-card">
+    <div class="join-card-header">
+      <span class="join-badge cross">CROSS JOIN</span>
+      <span class="join-name">Cartesian Product — Every row from Table1 combined with every row from Table2</span>
+    </div>
+    <div class="join-card-body">
+
+      <div class="real-life">
+        <div class="real-life-tag">🌍 Real Life Example</div>
+        <p>You run a <strong>T-shirt shop</strong>. You have <strong>3 colors</strong> (Red, Blue, Green) and <strong>3 sizes</strong> (S, M, L). How many combinations? <strong>3 × 3 = 9</strong>. CROSS JOIN generates ALL possible combinations — Red-S, Red-M, Red-L, Blue-S, Blue-M ... That's a Cartesian product.</p>
+      </div>
+
+      <div class="card-title" style="margin-top:16px;">Simple Example — Colors × Sizes</div>
+      <div class="grid2">
+        <div>
+          <p style="font-family:var(--mono);font-size:11px;color:var(--accent5);margin-bottom:6px">COLORS table</p>
+          <div class="table-wrap"><table><thead><tr><th>color</th></tr></thead><tbody><tr><td>Red</td></tr><tr><td>Blue</td></tr><tr><td>Green</td></tr></tbody></table></div>
+        </div>
+        <div>
+          <p style="font-family:var(--mono);font-size:11px;color:var(--accent5);margin-bottom:6px">SIZES table</p>
+          <div class="table-wrap"><table><thead><tr><th>size</th></tr></thead><tbody><tr><td>S</td></tr><tr><td>M</td></tr><tr><td>L</td></tr></tbody></table></div>
+        </div>
+      </div>
+
+      <pre><span class="kw">SELECT</span> color, size
+<span class="kw">FROM</span>   COLORS
+<span class="kw">CROSS JOIN</span> SIZES;</pre>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>color</th><th>size</th></tr></thead>
+          <tbody>
+            <tr><td>Red</td><td>S</td></tr>
+            <tr><td>Red</td><td>M</td></tr>
+            <tr><td>Red</td><td>L</td></tr>
+            <tr><td>Blue</td><td>S</td></tr>
+            <tr><td>Blue</td><td>M</td></tr>
+            <tr><td>Blue</td><td>L</td></tr>
+            <tr><td>Green</td><td>S</td></tr>
+            <tr><td>Green</td><td>M</td></tr>
+            <tr><td>Green</td><td>L</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert danger"><strong>⚠ Warning — Can be HUGE!</strong>If Table1 has 1000 rows and Table2 has 1000 rows → CROSS JOIN gives 1,000,000 rows! Use carefully. There's NO ON condition in CROSS JOIN.</div>
+
+      <div class="trick">
+        <div class="trick-tag">💡 Formula</div>
+        Result rows = Rows in Table1 × Rows in Table2. No ON clause needed. No filter — every combination!
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 08 SELF JOIN -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2>SELF JOIN — A Table Joining Itself</h2>
+  </div>
+
+  <div class="join-card">
+    <div class="join-card-header">
+      <span class="join-badge self">SELF JOIN</span>
+      <span class="join-name">A table is joined with itself using different aliases</span>
+    </div>
+    <div class="join-card-body">
+
+      <div class="real-life">
+        <div class="real-life-tag">🌍 Real Life Example</div>
+        <p>You have an <strong>EMPLOYEE table</strong> where each employee has a <strong>manager_id</strong>. The manager is ALSO an employee in the same table! To find "who manages whom" — you need to JOIN the EMPLOYEE table with itself. One copy = employees, other copy = managers.</p>
+      </div>
+
+      <div class="card-title" style="margin-top:16px;">Table: EMPLOYEES</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>emp_id</th><th>emp_name</th><th>manager_id</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Ravi (CEO)</td><td class="null-val">NULL</td></tr>
+            <tr><td>2</td><td>Sunita</td><td>1</td></tr>
+            <tr><td>3</td><td>Deepak</td><td>1</td></tr>
+            <tr><td>4</td><td>Neha</td><td>2</td></tr>
+            <tr><td>5</td><td>Rohan</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card-title green" style="margin-top:14px;">SQL Query — Find Employee + Their Manager Name</div>
+      <pre><span class="kw">SELECT</span>
+  e.emp_name  <span class="kw">AS</span> <span class="str">"Employee"</span>,
+  m.emp_name  <span class="kw">AS</span> <span class="str">"Manager"</span>
+<span class="kw">FROM</span>   EMPLOYEES e
+<span class="kw">INNER JOIN</span> EMPLOYEES m   <span class="cm">-- Same table, different alias</span>
+<span class="kw">ON</span>     e.manager_id <span class="op">=</span> m.emp_id;</pre>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Employee</th><th>Manager</th></tr></thead>
+          <tbody>
+            <tr><td>Sunita</td><td>Ravi (CEO)</td></tr>
+            <tr><td>Deepak</td><td>Ravi (CEO)</td></tr>
+            <tr><td>Neha</td><td>Sunita</td></tr>
+            <tr><td>Rohan</td><td>Sunita</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert warn"><strong>Note</strong>Ravi doesn't appear as Employee because his manager_id is NULL — INNER JOIN skips NULLs. Use LEFT JOIN to include Ravi too.</div>
+
+      <div class="trick">
+        <div class="trick-tag">💡 Memory Trick</div>
+        SELF JOIN = Table talks to itself using two different nicknames (aliases). Always use aliases: <code>e</code> for employee, <code>m</code> for manager.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 09 NATURAL JOIN -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <span class="section-num green">09</span>
+    <h2>NATURAL JOIN — Automatic Column Matching</h2>
+  </div>
+
+  <div class="join-card">
+    <div class="join-card-header">
+      <span class="join-badge natural">NATURAL JOIN</span>
+      <span class="join-name">Automatically joins on ALL columns with the SAME NAME in both tables</span>
+    </div>
+    <div class="join-card-body">
+
+      <div class="real-life">
+        <div class="real-life-tag">🌍 Real Life Example</div>
+        <p>Imagine two spreadsheets that both have a column called <strong>"student_id"</strong>. NATURAL JOIN says: <em>"I'll figure out which column to join on by myself — any column with the same name in both sheets."</em> No need to write ON condition. It automatically finds <code>student_id</code> and joins on it.</p>
+      </div>
+
+      <pre><span class="kw">SELECT</span> <span class="op">*</span>
+<span class="kw">FROM</span>   STUDENTS
+<span class="kw">NATURAL JOIN</span> ENROLLMENTS;
+
+<span class="cm">-- Automatically joins on: student_id (same name in both tables)
+-- No ON clause needed!</span></pre>
+
+      <div class="grid2">
+        <div class="alert success">
+          <strong>✅ Advantage</strong>
+          Shorter, cleaner syntax. No need to write ON clause. Good when tables are well-designed with consistent column names.
+        </div>
+        <div class="alert danger">
+          <strong>❌ Danger</strong>
+          If both tables have multiple same-named columns (like "name"), it joins on ALL of them — which can give wrong/unexpected results!
+        </div>
+      </div>
+
+      <div class="trick">
+        <div class="trick-tag">💡 Memory Trick</div>
+        NATURAL JOIN = Lazy JOIN. It finds common column names on its own. But be careful — too "lazy" can cause bugs if you're not careful about column names.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 10 EQUI vs NON-EQUI JOIN -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s10">
+  <div class="section-header">
+    <span class="section-num orange">10</span>
+    <h2>EQUI JOIN vs NON-EQUI JOIN</h2>
+  </div>
+
+  <div class="grid2">
+    <div class="join-card">
+      <div class="join-card-header">
+        <span class="join-badge inner">EQUI JOIN</span>
+        <span class="join-name">Join using = (equals)</span>
+      </div>
+      <div class="join-card-body">
+        <div class="real-life">
+          <div class="real-life-tag">🌍 Example</div>
+          <p>Match students where <strong>student_id is equal</strong> in both tables. This is what we've been doing all along — the standard JOIN using <code>=</code>.</p>
+        </div>
+        <pre><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> STUDENTS s
+<span class="kw">JOIN</span> ENROLLMENTS e
+<span class="kw">ON</span> s.student_id <span class="op">=</span> e.student_id;</pre>
+        <p style="color:var(--accent3);font-size:13px;margin-top:8px;">Uses <code>=</code> operator — most common type of JOIN.</p>
+      </div>
+    </div>
+
+    <div class="join-card">
+      <div class="join-card-header">
+        <span class="join-badge right">NON-EQUI JOIN</span>
+        <span class="join-name">Join using &lt;, &gt;, BETWEEN, !=</span>
+      </div>
+      <div class="join-card-body">
+        <div class="real-life">
+          <div class="real-life-tag">🌍 Real Life Example</div>
+          <p>A bank has a <strong>salary table</strong> and a <strong>tax bracket table</strong>. To find which tax bracket each employee falls into — salary is BETWEEN a range, not equal to something.</p>
+        </div>
+        <pre><span class="cm">-- Salary vs Tax Bracket</span>
+<span class="kw">SELECT</span> e.name, e.salary, t.tax_rate
+<span class="kw">FROM</span>   EMPLOYEES e
+<span class="kw">JOIN</span>   TAX_BRACKETS t
+<span class="kw">ON</span>     e.salary <span class="kw">BETWEEN</span> t.min_sal <span class="kw">AND</span> t.max_sal;</pre>
+        <p style="color:var(--accent2);font-size:13px;margin-top:8px;">Uses <code>BETWEEN</code> — not equality.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap" style="margin-top:16px;">
+    <table>
+      <thead><tr><th>Type</th><th>Operator Used</th><th>Common Use Case</th></tr></thead>
+      <tbody>
+        <tr><td>EQUI JOIN</td><td><code>=</code></td><td>Match IDs, match foreign keys (most common)</td></tr>
+        <tr><td>NON-EQUI JOIN</td><td><code>&lt;, &gt;, &lt;=, &gt;=, BETWEEN, !=</code></td><td>Salary ranges, date ranges, score grades</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 11 VENN DIAGRAM -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s11">
+  <div class="section-header">
+    <span class="section-num pink">11</span>
+    <h2>Venn Diagram — All JOINs Visualized</h2>
+  </div>
+
+  <div class="venn-wrap">
+    <svg class="venn-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" style="max-width:900px;width:100%;">
+      <defs>
+        <clipPath id="leftCirc"><circle cx="140" cy="100" r="55"/></clipPath>
+        <clipPath id="rightCirc"><circle cx="210" cy="100" r="55"/></clipPath>
+      </defs>
+
+      <!-- INNER JOIN -->
+      <g transform="translate(0,20)">
+        <text x="88" y="30" font-family="'Space Mono',monospace" font-size="11" fill="#7c6af7" letter-spacing="1">INNER JOIN</text>
+        <circle cx="140" cy="100" r="55" fill="none" stroke="#2a2a3d" stroke-width="2"/>
+        <circle cx="210" cy="100" r="55" fill="none" stroke="#2a2a3d" stroke-width="2"/>
+        <path d="M175,52 A55,55,0,0,1,210,100 A55,55,0,0,1,175,148 A55,55,0,0,1,140,100 A55,55,0,0,1,175,52Z" fill="#7c6af7" opacity="0.6"/>
+        <text x="88" y="175" font-family="'Sora',sans-serif" font-size="10" fill="#888899">Only matching rows</text>
+      </g>
+
+      <!-- LEFT JOIN -->
+      <g transform="translate(220,20)">
+        <text x="83" y="30" font-family="'Space Mono',monospace" font-size="11" fill="#6af7b8" letter-spacing="1">LEFT JOIN</text>
+        <circle cx="140" cy="100" r="55" fill="#6af7b8" opacity="0.4"/>
+        <circle cx="210" cy="100" r="55" fill="none" stroke="#2a2a3d" stroke-width="2"/>
+        <path d="M175,52 A55,55,0,0,1,210,100 A55,55,0,0,1,175,148 A55,55,0,0,1,140,100 A55,55,0,0,1,175,52Z" fill="#6af7b8" opacity="0.5"/>
+        <text x="73" y="175" font-family="'Sora',sans-serif" font-size="10" fill="#888899">All left + matched right</text>
+      </g>
+
+      <!-- RIGHT JOIN -->
+      <g transform="translate(440,20)">
+        <text x="78" y="30" font-family="'Space Mono',monospace" font-size="11" fill="#f7a56a" letter-spacing="1">RIGHT JOIN</text>
+        <circle cx="140" cy="100" r="55" fill="none" stroke="#2a2a3d" stroke-width="2"/>
+        <circle cx="210" cy="100" r="55" fill="#f7a56a" opacity="0.4"/>
+        <path d="M175,52 A55,55,0,0,1,210,100 A55,55,0,0,1,175,148 A55,55,0,0,1,140,100 A55,55,0,0,1,175,52Z" fill="#f7a56a" opacity="0.5"/>
+        <text x="68" y="175" font-family="'Sora',sans-serif" font-size="10" fill="#888899">All right + matched left</text>
+      </g>
+
+      <!-- FULL OUTER JOIN -->
+      <g transform="translate(660,20)">
+        <text x="58" y="30" font-family="'Space Mono',monospace" font-size="11" fill="#f76a8a" letter-spacing="1">FULL OUTER</text>
+        <circle cx="140" cy="100" r="55" fill="#f76a8a" opacity="0.35"/>
+        <circle cx="210" cy="100" r="55" fill="#f76a8a" opacity="0.35"/>
+        <text x="60" y="175" font-family="'Sora',sans-serif" font-size="10" fill="#888899">All rows from both tables</text>
+      </g>
+
+      <!-- Labels row 1 -->
+      <text x="155" y="117" font-family="'Sora'" font-size="9" fill="#1a1a24" font-weight="700">A</text>
+      <text x="240" y="117" font-family="'Sora'" font-size="9" fill="#1a1a24" font-weight="700">B</text>
+
+      <!-- LEFT ONLY -->
+      <g transform="translate(0,230)">
+        <text x="78" y="30" font-family="'Space Mono',monospace" font-size="11" fill="#6af7b8" letter-spacing="1">LEFT ONLY</text>
+        <circle cx="140" cy="100" r="55" fill="#6af7b8" opacity="0.45"/>
+        <circle cx="210" cy="100" r="55" fill="#0d0d0f" stroke="#2a2a3d" stroke-width="2"/>
+        <path d="M175,52 A55,55,0,0,1,210,100 A55,55,0,0,1,175,148 A55,55,0,0,1,140,100 A55,55,0,0,1,175,52Z" fill="#0d0d0f"/>
+        <text x="55" y="175" font-family="'Sora',sans-serif" font-size="10" fill="#888899">Rows in Left NOT in Right</text>
+      </g>
+
+      <!-- RIGHT ONLY -->
+      <g transform="translate(220,230)">
+        <text x="73" y="30" font-family="'Space Mono',monospace" font-size="11" fill="#f7a56a" letter-spacing="1">RIGHT ONLY</text>
+        <circle cx="140" cy="100" r="55" fill="#0d0d0f" stroke="#2a2a3d" stroke-width="2"/>
+        <circle cx="210" cy="100" r="55" fill="#f7a56a" opacity="0.45"/>
+        <path d="M175,52 A55,55,0,0,1,210,100 A55,55,0,0,1,175,148 A55,55,0,0,1,140,100 A55,55,0,0,1,175,52Z" fill="#0d0d0f"/>
+        <text x="60" y="175" font-family="'Sora',sans-serif" font-size="10" fill="#888899">Rows in Right NOT in Left</text>
+      </g>
+
+      <!-- CROSS JOIN -->
+      <g transform="translate(440,230)">
+        <text x="83" y="30" font-family="'Space Mono',monospace" font-size="11" fill="#6ab4f7" letter-spacing="1">CROSS JOIN</text>
+        <rect x="85" y="55" width="200" height="90" rx="6" fill="#6ab4f7" opacity="0.15" stroke="#6ab4f7" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="102" y="96" font-family="'Space Mono'" font-size="10" fill="#6ab4f7">n × m rows</text>
+        <text x="95" y="113" font-family="'Space Mono'" font-size="9" fill="#6ab4f7" opacity="0.7">ALL combinations</text>
+        <text x="67" y="175" font-family="'Sora',sans-serif" font-size="10" fill="#888899">No ON clause — every pair</text>
+      </g>
+
+      <!-- SELF JOIN -->
+      <g transform="translate(660,230)">
+        <text x="83" y="30" font-family="'Space Mono',monospace" font-size="11" fill="#d4d46a" letter-spacing="1">SELF JOIN</text>
+        <circle cx="165" cy="95" r="50" fill="none" stroke="#d4d46a" stroke-width="2" opacity="0.5"/>
+        <circle cx="195" cy="108" r="50" fill="none" stroke="#d4d46a" stroke-width="2" opacity="0.3" stroke-dasharray="5,3"/>
+        <text x="154" y="99" font-family="'Space Mono'" font-size="9" fill="#d4d46a">T</text>
+        <text x="184" y="112" font-family="'Space Mono'" font-size="9" fill="#d4d46a" opacity="0.6">T</text>
+        <text x="65" y="175" font-family="'Sora',sans-serif" font-size="10" fill="#888899">Table joined with itself</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="alert info"><strong>How to Read the Diagrams</strong>Shaded / highlighted area = rows that appear in the result. Unshaded circle = rows that are excluded. The middle overlap = rows that exist in BOTH tables (matched rows).</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 12 JOIN vs WHERE vs SUBQUERY -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s12">
+  <div class="section-header">
+    <span class="section-num blue">12</span>
+    <h2>JOIN vs WHERE Condition vs Subquery</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title blue">Same Result — 3 Different Ways</div>
+    <p>Task: <em>"Get names of students who enrolled in Maths"</em></p>
+
+    <div class="card-title" style="margin-top:16px;">Method 1 — JOIN (Recommended)</div>
+    <pre><span class="kw">SELECT</span> s.student_name
+<span class="kw">FROM</span>   STUDENTS s
+<span class="kw">JOIN</span>   ENROLLMENTS e <span class="kw">ON</span> s.student_id <span class="op">=</span> e.student_id
+<span class="kw">WHERE</span>  e.course <span class="op">=</span> <span class="str">'Maths'</span>;</pre>
+
+    <div class="card-title" style="margin-top:16px;">Method 2 — Old-style WHERE (Implicit JOIN)</div>
+    <pre><span class="kw">SELECT</span> s.student_name
+<span class="kw">FROM</span>   STUDENTS s, ENROLLMENTS e
+<span class="kw">WHERE</span>  s.student_id <span class="op">=</span> e.student_id
+<span class="kw">AND</span>    e.course <span class="op">=</span> <span class="str">'Maths'</span>;</pre>
+
+    <div class="card-title" style="margin-top:16px;">Method 3 — Subquery</div>
+    <pre><span class="kw">SELECT</span> student_name
+<span class="kw">FROM</span>   STUDENTS
+<span class="kw">WHERE</span>  student_id <span class="kw">IN</span> (
+    <span class="kw">SELECT</span> student_id <span class="kw">FROM</span> ENROLLMENTS <span class="kw">WHERE</span> course <span class="op">=</span> <span class="str">'Maths'</span>
+);</pre>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Approach</th><th>Readability</th><th>Performance</th><th>When to Use</th></tr></thead>
+      <tbody>
+        <tr><td>JOIN</td><td class="ok">Best</td><td class="ok">Best</td><td>Most cases — preferred modern style</td></tr>
+        <tr><td>WHERE (implicit)</td><td class="warn">Old-style</td><td class="warn">Same</td><td>Avoid — hard to read, easy to miss conditions</td></tr>
+        <tr><td>Subquery</td><td class="warn">Medium</td><td class="warn">Slower</td><td>When JOIN would be complex, or for EXISTS checks</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 13 MULTIPLE TABLE JOINs -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s13">
+  <div class="section-header">
+    <span class="section-num">13</span>
+    <h2>Joining Multiple Tables — 3+ Tables</h2>
+  </div>
+
+  <div class="real-life">
+    <div class="real-life-tag">🌍 Real Life Example</div>
+    <p>A hospital has: <strong>PATIENTS</strong> → <strong>APPOINTMENTS</strong> → <strong>DOCTORS</strong>. To show "Which patient met which doctor on which date" — you need to JOIN all 3 tables together.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">School Example — Students + Enrollments + Teachers</div>
+    <p>Adding a TEACHERS table: each enrollment has a teacher assigned.</p>
+
+    <div class="table-wrap" style="margin-top:10px;">
+      <table>
+        <thead><tr><th>teacher_id</th><th>teacher_name</th><th>subject</th></tr></thead>
+        <tbody>
+          <tr><td>T1</td><td>Mr. Sharma</td><td>Maths</td></tr>
+          <tr><td>T2</td><td>Ms. Gupta</td><td>Science</td></tr>
+          <tr><td>T3</td><td>Mr. Khan</td><td>English</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <pre><span class="cm">-- Join 3 tables: Students + Enrollments + Teachers</span>
+<span class="kw">SELECT</span>
+  s.student_name,
+  e.course,
+  e.marks,
+  t.teacher_name
+<span class="kw">FROM</span>     STUDENTS s
+<span class="kw">JOIN</span>     ENROLLMENTS e  <span class="kw">ON</span> s.student_id <span class="op">=</span> e.student_id
+<span class="kw">JOIN</span>     TEACHERS t     <span class="kw">ON</span> e.teacher_id <span class="op">=</span> t.teacher_id;</pre>
+
+    <div class="alert info"><strong>Rule</strong>For each additional table, add another JOIN...ON block. Chain them one by one. Order generally doesn't affect result for INNER JOIN, but matters for LEFT/RIGHT JOIN.</div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-tag">💡 Formula for N tables</div>
+    You need <strong>N-1 JOINs</strong> to join N tables. 3 tables → 2 JOINs. 5 tables → 4 JOINs.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 14 COMMON MISTAKES & EXAM TIPS -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s14">
+  <div class="section-header">
+    <span class="section-num pink">14</span>
+    <h2>Common Mistakes & Exam Tips</h2>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title pink">❌ Common Mistakes</div>
+      <ul>
+        <li><strong>Forgetting ON clause</strong> — gives accidental CROSS JOIN (millions of rows!)</li>
+        <li><strong>Ambiguous column names</strong> — if both tables have <code>id</code>, write <code>s.id</code> not just <code>id</code></li>
+        <li><strong>NATURAL JOIN with wrong columns</strong> — if both tables share a "name" column, it joins on that too!</li>
+        <li><strong>Expecting CROSS JOIN to be small</strong> — 1000 × 1000 = 1 million rows</li>
+        <li><strong>MySQL FULL OUTER JOIN</strong> — MySQL doesn't support it, use UNION trick</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title green">✅ Exam Tips</div>
+      <ul>
+        <li>INNER JOIN = intersection (middle of Venn)</li>
+        <li>LEFT JOIN always includes ALL rows of left table</li>
+        <li>NULL in result means no match was found</li>
+        <li>CROSS JOIN has no ON clause — Cartesian product</li>
+        <li>SELF JOIN requires alias for the table</li>
+        <li>N tables → N-1 JOINs needed</li>
+        <li>EQUI JOIN uses <code>=</code>, NON-EQUI uses <code>&lt;</code>, <code>&gt;</code>, <code>BETWEEN</code></li>
+        <li>LEFT JOIN + WHERE IS NULL = rows in Left NOT in Right</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:8px;">
+    <div class="card-title orange">Important Distinctions — Frequently Asked in Exams</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Question</th><th>Answer</th></tr></thead>
+        <tbody>
+          <tr><td>INNER JOIN vs EQUI JOIN</td><td>INNER JOIN is a type of JOIN. EQUI JOIN describes the condition (using =). An INNER JOIN with = is an EQUI JOIN.</td></tr>
+          <tr><td>LEFT JOIN vs LEFT OUTER JOIN</td><td>Same thing! OUTER is optional keyword.</td></tr>
+          <tr><td>NATURAL JOIN vs INNER JOIN</td><td>NATURAL JOIN auto-detects common columns. INNER JOIN you specify ON condition manually.</td></tr>
+          <tr><td>Can CROSS JOIN have WHERE?</td><td>Yes! WHERE filters the Cartesian product. CROSS JOIN + WHERE = similar to INNER JOIN.</td></tr>
+          <tr><td>Which JOIN returns most rows?</td><td>CROSS JOIN (m×n rows), then FULL OUTER JOIN, then LEFT/RIGHT JOIN, then INNER JOIN (fewest).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- 15 QUICK REFERENCE SUMMARY -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="s15">
+  <div class="section-header">
+    <span class="section-num green">15</span>
+    <h2>Quick Reference Summary — All JOINs at a Glance</h2>
+  </div>
+
+  <div class="qref-row"><span class="qref-emoji">🔵</span><span class="qref-name" style="color:var(--accent);">INNER JOIN</span><span class="qref-desc">Only rows that match in BOTH tables. Most common. Like intersection.</span></div>
+  <div class="qref-row"><span class="qref-emoji">🟢</span><span class="qref-name" style="color:var(--accent3);">LEFT JOIN</span><span class="qref-desc">All rows from LEFT + matched from RIGHT. Unmatched right = NULL. Left table is boss.</span></div>
+  <div class="qref-row"><span class="qref-emoji">🟠</span><span class="qref-name" style="color:var(--accent2);">RIGHT JOIN</span><span class="qref-desc">All rows from RIGHT + matched from LEFT. Opposite of LEFT JOIN.</span></div>
+  <div class="qref-row"><span class="qref-emoji">🔴</span><span class="qref-name" style="color:var(--accent4);">FULL OUTER JOIN</span><span class="qref-desc">ALL rows from BOTH tables. Unmatched = NULL on the other side.</span></div>
+  <div class="qref-row"><span class="qref-emoji">🔵</span><span class="qref-name" style="color:var(--accent5);">CROSS JOIN</span><span class="qref-desc">Every row × every row. No ON clause. m × n rows result. Cartesian product.</span></div>
+  <div class="qref-row"><span class="qref-emoji">🟡</span><span class="qref-name" style="color:#d4d46a;">SELF JOIN</span><span class="qref-desc">Table joined with itself using two aliases. Used for hierarchical data (manager-employee).</span></div>
+  <div class="qref-row"><span class="qref-emoji">🟣</span><span class="qref-name" style="color:#c09aff;">NATURAL JOIN</span><span class="qref-desc">Auto-detects common column names. No ON clause. Risky if tables share multiple column names.</span></div>
+  <div class="qref-row"><span class="qref-emoji">🟢</span><span class="qref-name" style="color:var(--accent3);">EQUI JOIN</span><span class="qref-desc">Any JOIN using = in ON condition. Not a keyword — describes condition type.</span></div>
+  <div class="qref-row"><span class="qref-emoji">🟠</span><span class="qref-name" style="color:var(--accent2);">NON-EQUI JOIN</span><span class="qref-desc">JOIN using &lt;, &gt;, BETWEEN in ON condition. Used for range-based matching.</span></div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">Number of Result Rows (Approximate)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>JOIN Type</th><th>Min Rows</th><th>Max Rows</th></tr></thead>
+        <tbody>
+          <tr><td>INNER JOIN</td><td>0</td><td class="warn">min(m, n)</td></tr>
+          <tr><td>LEFT JOIN</td><td class="ok">m (rows in left)</td><td>m + unmatched right</td></tr>
+          <tr><td>RIGHT JOIN</td><td class="ok">n (rows in right)</td><td>n + unmatched left</td></tr>
+          <tr><td>FULL OUTER JOIN</td><td class="ok">max(m, n)</td><td>m + n</td></tr>
+          <tr><td>CROSS JOIN</td><td class="bad">m × n</td><td class="bad">m × n</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:8px;">m = rows in Left table, n = rows in Right table</p>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ══════════════════════════════════════════════════ -->
+<div style="border-top:1px solid var(--border);padding:48px 40px 32px;text-align:center;">
+
+  <div style="background:linear-gradient(135deg,rgba(124,106,247,0.12),rgba(106,247,184,0.07));border:1px solid var(--border);border-radius:14px;padding:24px 32px;max-width:680px;margin:0 auto 36px;">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--accent3);text-transform:uppercase;margin-bottom:10px;">💬 A Message for You</div>
+    <p style="font-size:15px;color:var(--text);line-height:1.8;">
+      Hey student! 🎓 JOINs seem confusing at first — but once you get the real-life analogies, they click forever. 
+      <span style="color:var(--accent);font-weight:600;">Draw the Venn diagram in your exam to never go wrong.</span> You've got this! 💪
+    </p>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:12px;letter-spacing:1px;">— Shanib, your study companion 🚀</div>
+  </div>
+
+  <div style="font-family:var(--mono);font-size:10px;color:var(--border);letter-spacing:4px;margin-bottom:28px;">· · · · · · · · · ·</div>
+
+  <div style="margin-bottom:20px;">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Created &amp; Developed by</div>
+    <div style="font-size:22px;font-weight:700;letter-spacing:-0.5px;color:var(--text);">Shanib <span style="color:var(--accent);">Khan</span></div>
+  </div>
+
+  <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:28px;">
+    <a href="https://github.com/shanib-techie" target="_blank" style="display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 18px;text-decoration:none;color:var(--text);font-family:var(--mono);font-size:12px;letter-spacing:0.5px;" onmouseover="this.style.borderColor='#7c6af7'" onmouseout="this.style.borderColor='var(--border)'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      shanib-techie
+    </a>
+    <a href="https://www.linkedin.com/in/shanib-khan-515a8a316/" target="_blank" style="display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 18px;text-decoration:none;color:var(--text);font-family:var(--mono);font-size:12px;letter-spacing:0.5px;" onmouseover="this.style.borderColor='#0a66c2'" onmouseout="this.style.borderColor='var(--border)'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#0a66c2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      Shanib Khan
+    </a>
+    <a href="https://www.instagram.com/shanib99" target="_blank" style="display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 18px;text-decoration:none;color:var(--text);font-family:var(--mono);font-size:12px;letter-spacing:0.5px;" onmouseover="this.style.borderColor='#e1306c'" onmouseout="this.style.borderColor='var(--border)'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="url(#ig2)"><defs><linearGradient id="ig2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f09433"/><stop offset="50%" style="stop-color:#dc2743"/><stop offset="100%" style="stop-color:#bc1888"/></linearGradient></defs><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      shanib99
+    </a>
+  </div>
+
+  <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;">SQL JOINS COMPLETE NOTES · EXAM READY</div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--border);letter-spacing:1px;margin-top:6px;">© 2024 Shanib Khan · Made with ❤️ for students</div>
+</div>
+
+</body>
+</html>
