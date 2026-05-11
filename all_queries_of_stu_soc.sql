@@ -115,13 +115,167 @@ ORDER BY total_students asc
 LIMIT 2; 
 
 -- 12. Find the student names who are not enrolled in any society 
+
 select count(student.name) from student
 left join enrollment
 on student.rollno = enrollment.rollno
 where enrollment.rollno is null;
-
+SELECT *
+FROM   student
+LEFT JOIN enrollment
+ON     student.rollno = enrollment.rollno
+WHERE enrollment.rollno IS NULL;
 SELECT student.name
 FROM student
 LEFT JOIN enrollment
 ON student.rollno = enrollment.rollno
 WHERE enrollment.rollno IS NULL;
+
+-- 13. Find the student names enrolled in at least two societies 
+-- 14. Find society names in which maximum students are enrolled 
+-- 15. Find names of all students who have enrolled in any society and society names in which at 
+least one student has enrolled  
+select student.name ,count(student.rollno) as total_enrollments from student 
+join enrollment 
+ON student.rollno = enrollment.rollno
+group by  student.name , student.rollno;
+having count(enrollment.socID) >=2;
+use student_society;
+
+
+SELECT SUM(total_enrollments)
+from(
+SELECT student.name, COUNT(student.rollno) AS total_enrollments
+FROM student
+JOIN enrollment
+ON student.rollno = enrollment.rollno
+GROUP BY student.rollno, student.name
+)as temp;
+SELECT *
+FROM student
+JOIN enrollment
+ON student.rollno = enrollment.rollno
+GROUP BY student.name, enrollment.rollno
+HAVING COUNT(enrollment.socID) >= 1 ;
+
+-- 16. Find names of students who are enrolled in any of the three societies ‘Debating’(we dont have debating soo we take drama), ‘Dancing’ 
+-- and ‘Sashakt' we take singing society)
+
+select student.name from student
+join enrollment
+on student.rollno = enrollment.rollno
+join society
+on enrollment.socID = society.socID
+where society.socname in ("Dance Society","Drama Society","Singing Society");
+
+-- 17. Find society names such that its mentor has a name with   ‘Gupta’ in it.  
+select * from society
+where society.mentorname like "%Gupta%";
+
+-- 18. Find the society names in which the number of enrolled students is only 10% of  its 
+-- capacity. 
+SELECT society.socname
+FROM society
+JOIN enrollment
+ON society.socID = enrollment.socID
+GROUP BY society.socID, society.socname, society.totalseat
+HAVING COUNT(enrollment.rollno) = 0.1 * society.totalseat;
+
+-- 19. Display the vacant seats for each society
+SELECT society.socname,
+       society.totalseat - COUNT(enrollment.rollno) AS vacant_seats
+FROM society
+LEFT JOIN enrollment
+ON society.socID = enrollment.socID
+GROUP BY  society.socname, society.totalseat;
+
+
+-- 20. Increment Total Seats of each society by 10%
+UPDATE society
+SET totalseat = totalseat * 1.10;
+select * from society;
+
+
+-- 21 Add the enrollment fees paid (‘yes’/’No’) field in the enrollment table.
+ALTER TABLE enrollment
+ADD fees_paid VARCHAR(3);
+select * from enrollment;
+
+
+SELECT society.socname, COUNT(enrollment.rollno)
+FROM society
+LEFT JOIN enrollment
+ON society.socID = enrollment.socID
+GROUP BY  society.socname;
+
+
+CREATE VIEW society_enrollment_view AS
+SELECT society.socname,
+       COUNT(enrollment.rollno) AS total_students
+FROM society
+LEFT JOIN enrollment
+ON society.socID = enrollment.socID
+GROUP BY society.socID, society.socname;
+
+SELECT * FROM society_enrollment_view;
+
+-- 25. Count the number of societies with more than 5 students enrolled in it 
+
+select society.name , count(enrollment.socID)
+from society
+join enrollment
+on society.socID = enrollment.socID;
+
+
+-- 26. Add column Mobile number in student table with default value ‘9999999999’ 
+alter table student
+add mobile_number varchar(10)
+default "9999999999";
+
+select * from student;
+
+-- 27. Find the total number of students whose age is > 20 years. 
+
+SELECT COUNT(*) AS total_students
+FROM student
+WHERE TIMESTAMPDIFF(YEAR, dob, CURDATE()) > 20;
+
+SELECT * 
+FROM student
+WHERE TIMESTAMPDIFF(YEAR, dob, CURDATE()) > 20;
+
+
+
+-- 28. Find names of students who are born in 2001 and are enrolled in at least one society.
+
+SELECT DISTINCT student.name
+FROM student
+JOIN enrollment
+ON student.rollno = enrollment.rollno
+WHERE YEAR(student.dob) = 2001;
+
+-- 29. Count all societies whose name starts with ‘S’ and ends with ‘t’ and at least 5 students are  enrolled in the society.
+
+SELECT COUNT(*) AS total_societies
+FROM (
+    SELECT society.socID
+    FROM society
+    JOIN enrollment
+    ON society.socID = enrollment.socID
+    WHERE society.socname LIKE 'S%t'
+    GROUP BY society.socID, society.socname
+    HAVING COUNT(enrollment.rollno) >= 5
+) AS temp;
+
+-- 30. Display the following information: 
+-- Society name     Mentor name     Total Capacity    Total Enrolled    Unfilled Seats
+
+SELECT society.socname,
+       society.mentorname,
+       society.totalseat AS total_capacity,
+       COUNT(enrollment.rollno) AS total_enrolled,
+       society.totalseat - COUNT(enrollment.rollno) AS unfilled_seats
+FROM society
+LEFT JOIN enrollment
+ON society.socID = enrollment.socID
+GROUP BY society.socID, society.socname, society.mentorname, society.totalseat;
