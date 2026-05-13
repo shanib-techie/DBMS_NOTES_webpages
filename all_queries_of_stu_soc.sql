@@ -1,5 +1,10 @@
 use  student_society;
 
+
+-- practice 
+SELECT course , COUNT(*) from student
+GROUP BY course;
+
 -- 1. Retrieve names of students enrolled in any society. 
 
 SELECT distinct count(student.name)

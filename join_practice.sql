@@ -1,5 +1,11 @@
 use student_society;
+-- kudd hi comment dunde gaa and ek baar ayga
+SELECT *  from student  
+NATURAL JOIN enrollment;
 
+SELECT * FROM student s,
+enrollment e
+WHERE e.rollno = s.rollno;
 
 SELECT *
 FROM student

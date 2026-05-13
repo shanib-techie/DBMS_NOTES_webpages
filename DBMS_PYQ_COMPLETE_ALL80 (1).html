@@ -1,0 +1,2497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBMS PYQ — COMPLETE ALL 80 QUESTIONS</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05080f;--s1:#0a0f1e;--s2:#0f1628;--s3:#141d35;
+  --edge:#1c2a45;--edge2:#253455;
+  --teal:#00d4b4;--rose:#f03e5e;--gold:#f0b429;
+  --lilac:#b08ef0;--sky:#22d8e0;--lime:#a0e838;
+  --pink:#f46eb0;--sage:#34d08e;--wht:#eef8f2;
+  --dim:#3a5a4e;--cdbg:#030610;
+  --kw:#f0b429;--str:#f03e5e;--fn:#00d4b4;--num:#b08ef0;--cm:#1c2a45;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:#c8e0d4;font-family:'Space Grotesk',sans-serif;font-size:14.5px;line-height:1.8;}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-thumb{background:var(--teal);border-radius:2px;}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:999;background:rgba(5,8,15,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--edge);padding:.9rem 2rem;}
+.hr{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
+.logo{font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;}
+.logo .t{color:var(--teal);}.logo .r{color:var(--rose);}.logo .g{color:var(--gold);}
+.sub{font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--dim);letter-spacing:2px;margin-top:2px;}
+.hpills{margin-left:auto;display:flex;gap:.35rem;flex-wrap:wrap;}
+.hp{font-family:'JetBrains Mono',monospace;font-size:.55rem;padding:2px 8px;border-radius:20px;border:1px solid;}
+.hpa{color:var(--teal);border-color:var(--teal);background:rgba(0,212,180,.07);}
+.hpb{color:var(--rose);border-color:var(--rose);background:rgba(240,62,94,.07);}
+.hpc{color:var(--gold);border-color:var(--gold);background:rgba(240,180,41,.07);}
+
+/* NAV */
+.nav{background:var(--s1);border-bottom:1px solid var(--edge);position:sticky;top:58px;z-index:998;overflow-x:auto;white-space:nowrap;}
+.nav::-webkit-scrollbar{height:2px;}
+.nav ul{max-width:1280px;margin:0 auto;display:flex;list-style:none;padding:0 1.5rem;}
+.nav a{display:inline-block;padding:.55rem .9rem;color:var(--dim);font-size:.74rem;font-weight:500;text-decoration:none;border-bottom:2px solid transparent;transition:all .2s;}
+.nav a:hover,.nav a.on{color:var(--teal);border-bottom-color:var(--teal);}
+
+/* MAIN */
+main{max-width:1280px;margin:0 auto;padding:2rem 1.8rem 6rem;}
+
+/* PROGRESS */
+.prog{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.7rem;margin-bottom:2rem;}
+.pcard{background:var(--s1);border:1px solid var(--edge);border-radius:10px;padding:.8rem;text-align:center;}
+.pcard .n{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--teal);display:block;}
+.pcard .l{font-size:.65rem;color:var(--dim);margin-top:2px;}
+
+/* PAPER SECTION */
+.paper{margin-bottom:4rem;}
+.paper-head{
+  background:linear-gradient(135deg,var(--s2),var(--s3));
+  border:1px solid var(--edge);border-left:4px solid var(--teal);
+  border-radius:0 10px 10px 0;
+  padding:1rem 1.5rem;margin-bottom:1.5rem;
+}
+.paper-head h2{font-size:1.1rem;font-weight:700;color:var(--wht);margin-bottom:.3rem;}
+.paper-head p{font-size:.8rem;color:var(--dim);}
+.paper-meta{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem;}
+.pmeta{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:2px 8px;border-radius:20px;border:1px solid var(--edge);color:var(--dim);}
+
+/* SECTION */
+.sec{margin-bottom:3rem;padding-left:1.3rem;border-left:2px solid var(--edge2);position:relative;}
+.sec::before{content:'';position:absolute;left:-5px;top:2px;width:8px;height:8px;background:var(--teal);border-radius:50%;box-shadow:0 0 8px rgba(0,212,180,.5);}
+.sech{display:flex;align-items:baseline;gap:.7rem;margin-bottom:1.3rem;flex-wrap:wrap;}
+.secn{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--teal);background:rgba(0,212,180,.07);border:1px solid rgba(0,212,180,.22);padding:2px 8px;border-radius:20px;}
+.sect{font-size:1.1rem;font-weight:700;color:var(--wht);}
+.sect span{color:var(--teal);}
+
+/* Q CARD */
+.qc{background:var(--s1);border:1px solid var(--edge);border-radius:11px;margin-bottom:.7rem;overflow:hidden;transition:border-color .2s;}
+.qc:hover{border-color:var(--edge2);}
+.qc.open{border-color:rgba(0,212,180,.28);}
+.qh{display:flex;align-items:center;gap:.55rem;padding:.8rem 1.1rem;background:var(--s2);cursor:pointer;user-select:none;flex-wrap:wrap;}
+.qh:hover{background:var(--s3);}
+.yt{font-family:'JetBrains Mono',monospace;font-size:.57rem;padding:2px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.ya{color:var(--teal);border:1px solid var(--teal);background:rgba(0,212,180,.07);}
+.yb{color:var(--rose);border:1px solid var(--rose);background:rgba(240,62,94,.07);}
+.yc{color:var(--gold);border:1px solid var(--gold);background:rgba(240,180,41,.07);}
+.yd{color:var(--lilac);border:1px solid var(--lilac);background:rgba(176,142,240,.07);}
+.ye{color:var(--sky);border:1px solid var(--sky);background:rgba(34,216,224,.07);}
+.yf{color:var(--lime);border:1px solid var(--lime);background:rgba(160,232,56,.07);}
+.qtit{font-weight:500;font-size:.87rem;flex:1;min-width:160px;}
+.qimp{font-family:'JetBrains Mono',monospace;font-size:.57rem;color:var(--rose);border:1px solid var(--rose);background:rgba(240,62,94,.07);padding:2px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.qmk{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--sage);border:1px solid rgba(52,208,142,.3);padding:2px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-left:auto;}
+.qtg{color:var(--dim);font-size:.9rem;transition:transform .3s;flex-shrink:0;}
+.qc.open .qtg{transform:rotate(45deg);color:var(--teal);}
+.qb{display:none;padding:1.4rem;border-top:1px solid var(--edge);}
+.qc.open .qb{display:block;}
+
+/* BOXES */
+.cb{background:rgba(0,212,180,.04);border:1px solid rgba(0,212,180,.14);border-left:3px solid var(--teal);border-radius:0 8px 8px 0;padding:.9rem 1.2rem;margin-bottom:.9rem;}
+.cb h4{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--teal);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.4rem;}
+.cb p,.cb li{color:#88c0a4;font-size:.86rem;}
+.cb ul{padding-left:1.1rem;}
+.cb li{margin-bottom:.25rem;}
+.cb strong{color:var(--teal);}
+.ab{background:rgba(3,6,16,.65);border:1px solid var(--edge);border-radius:8px;padding:1.1rem 1.3rem;}
+.ab h4{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.7rem;}
+.ab p,.ab li{color:#c8e0d4;font-size:.86rem;}
+.ab ul,.ab ol{padding-left:1.3rem;margin:.3rem 0;}
+.ab li{margin-bottom:.28rem;}
+.ab strong{color:var(--sage);}
+.ab em{color:var(--gold);}
+
+/* CODE */
+code{font-family:'JetBrains Mono',monospace;background:var(--cdbg);color:var(--sage);padding:2px 5px;border-radius:3px;font-size:.82em;border:1px solid var(--edge);}
+pre{font-family:'JetBrains Mono',monospace;background:var(--cdbg);border:1px solid var(--edge);border-radius:8px;padding:1rem 1.2rem;overflow-x:auto;font-size:.76rem;line-height:1.8;margin:.65rem 0;}
+pre .kw{color:var(--kw);}pre .str{color:var(--str);}
+pre .fn{color:var(--fn);}pre .num{color:var(--num);}
+pre .cm{color:#1c3a30;}
+
+/* TABLES */
+.dt{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:.72rem;margin:.6rem 0;border-radius:7px;overflow:hidden;}
+.dt th{background:rgba(0,212,180,.09);color:var(--teal);padding:7px 11px;text-align:left;border-bottom:1px solid rgba(0,212,180,.18);font-size:.65rem;}
+.dt td{padding:6px 11px;border-bottom:1px solid var(--edge);color:#c8e0d4;}
+.dt tr:last-child td{border-bottom:none;}
+.dt tr:hover td{background:rgba(0,212,180,.02);}
+.dt .pk{color:var(--gold);text-decoration:underline;}
+.dt .fk{color:var(--lilac);font-style:italic;}
+.dt .vio{color:var(--rose);font-weight:700;}
+.dt .ok{color:var(--teal);}
+.dt .hl{background:rgba(240,62,94,.07);}
+.dt .hlg{background:rgba(0,212,180,.05);}
+
+/* BADGES */
+.bvio{display:inline-flex;align-items:center;gap:3px;background:rgba(240,62,94,.1);color:var(--rose);border:1px solid var(--rose);border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:2px 9px;margin:2px;}
+.bok{display:inline-flex;align-items:center;gap:3px;background:rgba(0,212,180,.08);color:var(--teal);border:1px solid var(--teal);border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:2px 9px;margin:2px;}
+
+/* FD */
+.fd{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.75rem;background:rgba(240,180,41,.06);border:1px dashed rgba(240,180,41,.35);color:var(--gold);padding:3px 10px;border-radius:5px;margin:3px;}
+
+/* SCHEMA */
+.schema{font-family:'JetBrains Mono',monospace;font-size:.75rem;background:var(--cdbg);border-left:3px solid var(--sky);padding:.5rem .85rem;margin:.35rem 0;border-radius:0 5px 5px 0;color:#88c0a4;}
+.schema .pk{color:var(--gold);text-decoration:underline;}
+.schema .fk{color:var(--rose);font-style:italic;}
+
+/* NOTE */
+.note{background:rgba(240,180,41,.05);border:1px solid rgba(240,180,41,.2);border-radius:6px;padding:.7rem .9rem;margin:.55rem 0;font-size:.83rem;color:#c4a440;}
+.note::before{content:"📝  ";}
+
+/* KEY HIGHLIGHT */
+.kh{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.76rem;background:rgba(240,180,41,.08);border:1px solid var(--gold);color:var(--gold);padding:2px 9px;border-radius:4px;margin:2px;}
+
+/* STEP */
+.step{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.7rem;}
+.sn{min-width:22px;height:22px;background:var(--teal);color:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.68rem;flex-shrink:0;margin-top:3px;}
+.sc{flex:1;}
+.sc strong{color:var(--sage);}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;}
+@media(max-width:680px){.g2,.g3,.g4{grid-template-columns:1fr;}}
+
+/* VIZ */
+.viz{background:var(--cdbg);border:1px solid var(--edge);border-radius:9px;padding:1.2rem;margin:.8rem 0;overflow-x:auto;}
+.vlbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:1px solid var(--edge);}
+
+/* COMPARISON */
+.cmpt{width:100%;border-collapse:collapse;font-size:.84rem;border-radius:7px;overflow:hidden;}
+.cmpt th{background:rgba(0,212,180,.07);color:var(--teal);padding:7px 11px;text-align:left;border-bottom:1px solid var(--edge);font-family:'JetBrains Mono',monospace;font-size:.64rem;}
+.cmpt td{padding:7px 11px;border-bottom:1px solid var(--edge);vertical-align:top;}
+.cmpt tr:last-child td{border-bottom:none;}
+.cmpt .ca{color:var(--sage);}
+.cmpt .cb2{color:var(--lilac);}
+.cmpt .cl{color:var(--dim);font-size:.79rem;}
+
+/* B TREE */
+.btlv{display:flex;justify-content:center;gap:.45rem;margin:.5rem 0;flex-wrap:wrap;align-items:center;}
+.btn{display:inline-flex;background:var(--s3);border:1.5px solid var(--sky);border-radius:5px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.68rem;}
+.btn.leaf{border-color:var(--teal);}
+.btn.root{border-color:var(--gold);}
+.btn .k{padding:4px 8px;border-right:1px solid var(--edge);color:var(--sky);}
+.btn.leaf .k{color:var(--teal);}
+.btn.root .k{color:var(--gold);}
+.btn .k:last-child{border-right:none;}
+.btc{text-align:center;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim);}
+
+/* TX TABLE */
+.txt{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:.71rem;}
+.txt th,.txt td{border:1px solid var(--edge);padding:6px 10px;text-align:left;}
+.txt th{background:rgba(0,212,180,.07);color:var(--teal);}
+.txt .t1{color:var(--sage);}
+.txt .t2{color:var(--gold);}
+.txt .prob{background:rgba(240,62,94,.1);color:var(--rose);font-weight:700;}
+
+/* FORMULA CARD */
+.fc{background:var(--s2);border:1px solid var(--edge);border-radius:8px;padding:.8rem 1rem;}
+.fc h5{font-family:'JetBrains Mono',monospace;font-size:.63rem;margin-bottom:.45rem;letter-spacing:1px;}
+.fc p{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#c8e0d4;line-height:1.9;}
+
+/* CALLOUT */
+.cli{background:rgba(34,216,224,.05);border:1px solid rgba(34,216,224,.2);border-radius:6px;padding:.75rem .95rem;margin:.55rem 0;font-size:.84rem;color:#6ecfcf;display:flex;gap:.65rem;}
+.clw{background:rgba(240,180,41,.05);border:1px solid rgba(240,180,41,.2);border-radius:6px;padding:.75rem .95rem;margin:.55rem 0;font-size:.84rem;color:#c4a440;display:flex;gap:.65rem;}
+.cld{background:rgba(240,62,94,.06);border:1px solid rgba(240,62,94,.2);border-radius:6px;padding:.75rem .95rem;margin:.55rem 0;font-size:.84rem;color:#e06878;display:flex;gap:.65rem;}
+.clg{background:rgba(160,232,56,.05);border:1px solid rgba(160,232,56,.2);border-radius:6px;padding:.75rem .95rem;margin:.55rem 0;font-size:.84rem;color:#98c450;display:flex;gap:.65rem;}
+.ci{font-size:1rem;flex-shrink:0;margin-top:1px;}
+
+/* CLOSURE */
+.clt{background:var(--cdbg);border:1px solid var(--edge);border-radius:6px;padding:.8rem 1rem;margin:.5rem 0;font-family:'JetBrains Mono',monospace;font-size:.73rem;}
+.cr{display:flex;gap:.9rem;margin:.2rem 0;align-items:baseline;}
+.cs{color:var(--dim);min-width:52px;font-size:.64rem;}
+.cv{color:var(--sage);flex:1;}
+.crule{color:var(--lilac);font-size:.64rem;}
+
+/* ANOMALY */
+.ag{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:.7rem 0;}
+@media(max-width:640px){.ag{grid-template-columns:1fr;}}
+.acard{background:var(--s2);border:1px solid var(--edge);border-radius:8px;padding:.85rem;}
+.acard h5{font-family:'JetBrains Mono',monospace;font-size:.65rem;margin-bottom:.4rem;}
+.acard p{font-size:.82rem;color:var(--dim);}
+.acard.u h5{color:var(--rose);}
+.acard.i h5{color:var(--gold);}
+.acard.d h5{color:var(--lilac);}
+
+/* DIV */
+.div{height:1px;background:linear-gradient(to right,var(--teal),transparent);margin:3rem 0;opacity:.15;}
+
+/* SCROLL UP */
+#sup{position:fixed;bottom:2rem;right:2rem;background:var(--teal);color:var(--bg);border:none;border-radius:50%;width:38px;height:38px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.85rem;cursor:pointer;box-shadow:0 0 16px rgba(0,212,180,.35);transition:transform .2s,opacity .3s;z-index:1000;opacity:0;}
+#sup:hover{transform:scale(1.1);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hr">
+    <div>
+      <div class="logo"><span class="t">DB</span><span class="r">MS</span> <span class="g">PYQ</span></div>
+      <div class="sub">COMPLETE EDITION · ALL 80 QUESTIONS FROM ALL 4 PAPERS · FULLY SOLVED</div>
+    </div>
+    <div class="hpills">
+      <span class="hp hpa">80 Questions</span>
+      <span class="hp hpb">4 Papers</span>
+      <span class="hp hpc">100% Coverage</span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav">
+  <ul>
+    <li><a href="#p2024">📄 2024 Paper</a></li>
+    <li><a href="#p2023">📄 2023 Paper</a></li>
+    <li><a href="#p2019">📄 2019 Paper</a></li>
+    <li><a href="#p2018">📄 2018 Paper</a></li>
+    <li><a href="#formulas">📋 All Formulas</a></li>
+    <li><a href="#checklist">✅ Final Checklist</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<div class="prog">
+  <div class="pcard"><span class="n">80</span><div class="l">Total Qs</div></div>
+  <div class="pcard"><span class="n">19</span><div class="l">2024 Paper</div></div>
+  <div class="pcard"><span class="n">21</span><div class="l">2023 Paper</div></div>
+  <div class="pcard"><span class="n">17</span><div class="l">2019 Paper</div></div>
+  <div class="pcard"><span class="n">23</span><div class="l">2018 Paper</div></div>
+  <div class="pcard"><span class="n">⌨</span><div class="l">O=Open C=Close</div></div>
+</div>
+
+<!-- ════════════════════════
+  2024 PAPER (Paper 2210)
+════════════════════════ -->
+<div class="paper" id="p2024">
+  <div class="paper-head">
+    <h2>📄 2024 Paper — Sr. No. 2210 | B.Sc.(H) Computer Science Sem IV</h2>
+    <p>Maximum Marks: 75 | Duration: 3 Hours | Unique Code: 32341403</p>
+    <div class="paper-meta">
+      <span class="pmeta">Section A: Compulsory (Q1)</span>
+      <span class="pmeta">Section B: Any 4 of Q2-Q7</span>
+      <span class="pmeta">19 Sub-questions</span>
+    </div>
+  </div>
+
+  <div class="sec" id="s2024a">
+    <div class="sech"><span class="secn">SECTION A</span><h3 class="sect">Q1 — All Parts <span>(Compulsory)</span></h3></div>
+
+    <!-- Q1a -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q1a</span>
+        <span class="qtit">RESTAURANT table — Check FD violations: Dish_Desc→Price and Bill_No→Qty</span>
+        <span class="qimp">⭐ Always Asked</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="cb"><h4>🧠 Hinglish Concept</h4><p><strong>FD X→Y violated</strong> hoti hai jab table mein koi 2 rows milein jahan X same ho par Y alag ho. Systematically har FD ke liye check karo.</p></div>
+        <div class="ab">
+          <table class="dt">
+            <tr><th>DishNo</th><th>Dish_Desc</th><th>Price</th><th>Bill_No</th><th>Qty</th><th>Table_No</th><th>Day</th><th>Waiter</th></tr>
+            <tr><td class="pk">D1</td><td>Idli</td><td>60</td><td>B1</td><td>2</td><td>T1</td><td>Mon</td><td>Wt1</td></tr>
+            <tr><td class="pk">D2</td><td>Dosa</td><td>80</td><td>B2</td><td>3</td><td>T1</td><td>Mon</td><td>Wt2</td></tr>
+            <tr><td class="pk">D3</td><td>Poha</td><td>50</td><td>B3</td><td>2</td><td>T3</td><td>Tue</td><td>Wt3</td></tr>
+          </table>
+          <p><strong>(i) Dish_Desc → Price:</strong> Idli→60 (once), Dosa→80 (once), Poha→50 (once). Every Dish_Desc value has exactly one Price. <span class="bok">✓ NOT VIOLATED</span></p>
+          <p><strong>(ii) Bill_No → Qty:</strong> B1→2 (once), B2→3 (once), B3→2 (once). Every Bill_No uniquely determines Qty. <span class="bok">✓ NOT VIOLATED</span></p>
+          <div class="note">Both FDs hold in this specific instance. Remember: a FD may hold in one instance but not in general. The question asks about THIS given instance only.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1b -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q1b</span>
+        <span class="qtit">Four types of database users and their roles</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt">
+            <tr><th>#</th><th>User Type</th><th>Role</th><th>Key Responsibility</th></tr>
+            <tr><td>1</td><td><strong>DBA</strong></td><td>Database Administrator</td><td>Defines schemas, grants privileges, backup/recovery, performance tuning, security management</td></tr>
+            <tr><td>2</td><td><strong>Database Designers</strong></td><td>Schema designers</td><td>Design conceptual and logical schemas — entities, attributes, relationships, constraints</td></tr>
+            <tr><td>3</td><td><strong>Application Programmers</strong></td><td>Software developers</td><td>Write programs using DML embedded in host language (Java/Python). Create end-user applications via JDBC/ODBC</td></tr>
+            <tr><td>4</td><td><strong>End Users</strong></td><td>Casual/Naive/Sophisticated</td><td>Interact with DB through GUI or direct queries. Naive=forms, Sophisticated=write own SQL, Standalone=personal DB</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1c -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q1c</span>
+        <span class="qtit">Justify that Primary Key cannot be NULL</span>
+        <span class="qmk">2 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>Entity Integrity Rule:</strong> No attribute of the primary key can take a NULL value. Justification:</p>
+          <ul>
+            <li><strong>NULL = unknown.</strong> If PK is NULL, we cannot uniquely identify that tuple — we don't know which entity it represents.</li>
+            <li><strong>NULL ≠ NULL in SQL.</strong> Comparing NULL with any value (including another NULL) returns UNKNOWN, not TRUE. So uniqueness cannot be enforced for NULL PKs.</li>
+            <li><strong>FK references break.</strong> Foreign keys in child tables reference the PK. A NULL PK means no meaningful FK reference is possible.</li>
+            <li><strong>Uniqueness violated.</strong> Two tuples with NULL PKs cannot be distinguished — the relation degenerates.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1d -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q1d</span>
+        <span class="qtit">Concurrent T1 and T2 — X=50, Y=5 — Find final X value, identify the problem</span>
+        <span class="qimp">⭐ Lost Update</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="txt">
+            <tr><th>Step</th><th class="t1">T1</th><th class="t2">T2</th><th>X in DB</th></tr>
+            <tr><td>1</td><td class="t1">read_item(X) → local_X=50</td><td></td><td>50</td></tr>
+            <tr><td>2</td><td class="t1">X = X+10 → local_X=60</td><td></td><td>50</td></tr>
+            <tr><td>3</td><td></td><td class="t2">read_item(X) → local_X=50 ⚠️</td><td>50</td></tr>
+            <tr><td>4</td><td></td><td class="t2">X = X+Y = 50+5 = 55</td><td>50</td></tr>
+            <tr><td>5</td><td class="t1">write_item(X) → DB X=60</td><td></td><td>60</td></tr>
+            <tr><td>6</td><td class="t1">read_item(Y)</td><td></td><td>60</td></tr>
+            <tr><td>7</td><td></td><td class="prob">write_item(X) → DB X=55 ← T1's update LOST!</td><td class="vio">55</td></tr>
+          </table>
+          <p><strong>Final value of X = 55</strong></p>
+          <p><strong>Is this correct? NO.</strong> Expected: T1 should set X=60, then T2 should set X=60+5=65. Correct answer = 65.</p>
+          <p><strong>Problem: LOST UPDATE PROBLEM.</strong> T2 read X=50 (old value) before T1 wrote X=60. T2's write (55) overwrote T1's write (60). T1's update of +10 is permanently lost.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1e -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q1e</span>
+        <span class="qtit">Map SUPPLIER-SUPPLIES-PART ER diagram to relational tables</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>ER: SUPPLIER(SNO, SNAME, Address) — M via SUPPLIES(Quantity, Supply_date) — N PART(Part_no, Part_name)</p>
+          <p><strong>Rule R1 (Strong Entity):</strong></p>
+          <div class="schema">SUPPLIER(<span class="pk">SNO</span>, SNAME, Address)</div>
+          <div class="schema">PART(<span class="pk">Part_no</span>, Part_name)</div>
+          <p><strong>Rule R5 (M:N Relationship → new table):</strong></p>
+          <div class="schema">SUPPLIES(<span class="pk">SNO</span>, <span class="pk">Part_no</span>, Quantity, Supply_date)</div>
+          <p>FK: SUPPLIES.SNO → SUPPLIER.SNO &nbsp;|&nbsp; SUPPLIES.Part_no → PART.Part_no</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1f -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q1f</span>
+        <span class="qtit">T1(A,B,C) and T2(X,Y,Z) — (i) Theta Join A=X (ii) T1∩T2 (iii) Π with σ on Cartesian</span>
+        <span class="qimp">⭐ RA Calculation</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="g2">
+            <div><p><strong>T1:</strong></p><table class="dt"><tr><th>A</th><th>B</th><th>C</th></tr><tr><td>1</td><td>3</td><td>1</td></tr><tr><td>3</td><td>2</td><td>1</td></tr></table></div>
+            <div><p><strong>T2:</strong></p><table class="dt"><tr><th>X</th><th>Y</th><th>Z</th></tr><tr><td>1</td><td>3</td><td>1</td></tr><tr><td>2</td><td>5</td><td>4</td></tr></table></div>
+          </div>
+          <p><strong>(i) T1 ⋈<sub>A=X</sub> T2:</strong> Match rows where T1.A = T2.X: A=1 matches X=1 only.</p>
+          <table class="dt"><tr><th>A</th><th>B</th><th>C</th><th>X</th><th>Y</th><th>Z</th></tr><tr class="hlg"><td>1</td><td>3</td><td>1</td><td>1</td><td>3</td><td>1</td></tr></table>
+          <p><strong>(ii) T1 ∩ T2:</strong> Tuples common to both (A↔X, B↔Y, C↔Z): (1,3,1) is in both.</p>
+          <table class="dt"><tr><th>A</th><th>B</th><th>C</th></tr><tr class="hlg"><td>1</td><td>3</td><td>1</td></tr></table>
+          <p><strong>(iii) Π<sub>T1.C, T2.Z</sub>(σ<sub>T1.B=T2.Y</sub>(T1×T2)):</strong></p>
+          <p>Cartesian product (4 rows) → filter where T1.B=T2.Y → only (1,3,1)×(1,3,1) qualifies (B=3,Y=3) → project C,Z:</p>
+          <table class="dt"><tr><th>T1.C</th><th>T2.Z</th></tr><tr class="hlg"><td>1</td><td>1</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1g -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q1g</span>
+        <span class="qtit">Why is it necessary to give role names in a recursive relationship?</span>
+        <span class="qmk">2 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>In a <strong>recursive (unary) relationship</strong>, the same entity type participates more than once in different semantic roles. Role names are necessary to:</p>
+          <ul>
+            <li><strong>Distinguish the two participations</strong> of the same entity type in the relationship.</li>
+            <li><strong>Avoid ambiguity</strong> in the ER diagram and when mapping to relational tables.</li>
+          </ul>
+          <p><strong>Example:</strong> EMPLOYEE entity has a SUPERVISES relationship on itself.</p>
+          <ul>
+            <li>Role 1: <em>supervisor</em> (the one who supervises)</li>
+            <li>Role 2: <em>supervisee</em> (the one being supervised)</li>
+          </ul>
+          <p>Mapped table: <code>SUPERVISES(supervisor_SSN, supervisee_SSN)</code> — both FKs reference EMPLOYEE. Without role names, we cannot tell which SSN is which.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1h -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q1h</span>
+        <span class="qtit">CREATE TABLE T — A(NUMBER 10, NOT NULL), B(VARCHAR 50), PK(A,B), C(INT DEFAULT 6), D(INT FK→S.E)</span>
+        <span class="qimp">⭐ SQL CREATE TABLE</span>
+        <span class="qmk">5 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+<pre><span class="kw">CREATE TABLE</span> T (
+    A   <span class="fn">NUMBER</span>(<span class="num">10</span>)    <span class="kw">NOT NULL</span>,
+    B   <span class="fn">VARCHAR2</span>(<span class="num">50</span>),
+    C   <span class="fn">INTEGER</span>      <span class="kw">DEFAULT</span> <span class="num">6</span>,
+    D   <span class="fn">INTEGER</span>,
+    <span class="kw">CONSTRAINT</span> pk_T   <span class="kw">PRIMARY KEY</span> (A, B),
+    <span class="kw">CONSTRAINT</span> fk_D   <span class="kw">FOREIGN KEY</span> (D)
+                      <span class="kw">REFERENCES</span> S(E)
+);</pre>
+          <div class="note">A is NOT NULL because it is part of the primary key. B is also implicitly NOT NULL as part of PK (you may add NOT NULL explicitly). (A,B) together form a composite primary key. C defaults to 6 when no value is provided. D references column E from table S.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1i -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q1i</span>
+        <span class="qtit">EER diagram for Total-Disjoint and Partial-Disjoint specialization</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="g2">
+            <div>
+              <p><strong>Total-Disjoint (d):</strong></p>
+              <div class="viz">
+                <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:200px;">
+                  <rect x="60" y="5" width="80" height="32" rx="4" fill="#071812" stroke="#00d4b4" stroke-width="2"/>
+                  <text x="100" y="26" text-anchor="middle" font-size="9" fill="#00d4b4" font-family="JetBrains Mono,monospace">VEHICLE</text>
+                  <line x1="100" y1="37" x2="100" y2="50" stroke="#00d4b4" stroke-width="4"/>
+                  <line x1="100" y1="37" x2="100" y2="50" stroke="#05080f" stroke-width="2"/>
+                  <circle cx="100" cy="62" r="11" fill="#121007" stroke="#f0b429" stroke-width="1.8"/>
+                  <text x="100" y="67" text-anchor="middle" font-size="10" fill="#f0b429" font-family="JetBrains Mono,monospace">d</text>
+                  <line x1="89" y1="71" x2="40" y2="108" stroke="#1c2a45" stroke-width="1.5"/>
+                  <line x1="100" y1="73" x2="100" y2="108" stroke="#1c2a45" stroke-width="1.5"/>
+                  <line x1="111" y1="71" x2="160" y2="108" stroke="#1c2a45" stroke-width="1.5"/>
+                  <rect x="15" y="108" width="50" height="25" rx="3" fill="#071812" stroke="#00d4b4" stroke-width="1.5"/>
+                  <text x="40" y="124" text-anchor="middle" font-size="7" fill="#00d4b4" font-family="JetBrains Mono,monospace">CAR</text>
+                  <rect x="75" y="108" width="50" height="25" rx="3" fill="#071812" stroke="#00d4b4" stroke-width="1.5"/>
+                  <text x="100" y="124" text-anchor="middle" font-size="7" fill="#00d4b4" font-family="JetBrains Mono,monospace">TRUCK</text>
+                  <rect x="135" y="108" width="50" height="25" rx="3" fill="#071812" stroke="#00d4b4" stroke-width="1.5"/>
+                  <text x="160" y="124" text-anchor="middle" font-size="7" fill="#00d4b4" font-family="JetBrains Mono,monospace">SUV</text>
+                  <text x="100" y="155" text-anchor="middle" font-size="7" fill="#3a5a4e" font-family="JetBrains Mono,monospace">Double line=Total, d=Disjoint</text>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <p><strong>Partial-Disjoint (d):</strong></p>
+              <div class="viz">
+                <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:200px;">
+                  <rect x="60" y="5" width="80" height="32" rx="4" fill="#071812" stroke="#00d4b4" stroke-width="2"/>
+                  <text x="100" y="26" text-anchor="middle" font-size="9" fill="#00d4b4" font-family="JetBrains Mono,monospace">PERSON</text>
+                  <line x1="100" y1="37" x2="100" y2="51" stroke="#1c2a45" stroke-width="1.5"/>
+                  <circle cx="100" cy="62" r="11" fill="#121007" stroke="#f0b429" stroke-width="1.8"/>
+                  <text x="100" y="67" text-anchor="middle" font-size="10" fill="#f0b429" font-family="JetBrains Mono,monospace">d</text>
+                  <line x1="89" y1="71" x2="45" y2="108" stroke="#1c2a45" stroke-width="1.5"/>
+                  <line x1="111" y1="71" x2="155" y2="108" stroke="#1c2a45" stroke-width="1.5"/>
+                  <rect x="10" y="108" width="70" height="25" rx="3" fill="#071812" stroke="#00d4b4" stroke-width="1.5"/>
+                  <text x="45" y="124" text-anchor="middle" font-size="7" fill="#00d4b4" font-family="JetBrains Mono,monospace">EMPLOYEE</text>
+                  <rect x="120" y="108" width="70" height="25" rx="3" fill="#071812" stroke="#00d4b4" stroke-width="1.5"/>
+                  <text x="155" y="124" text-anchor="middle" font-size="7" fill="#00d4b4" font-family="JetBrains Mono,monospace">CUSTOMER</text>
+                  <text x="100" y="150" text-anchor="middle" font-size="7" fill="#3a5a4e" font-family="JetBrains Mono,monospace">Single line=Partial, d=Disjoint</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <table class="dt"><tr><th>Constraint</th><th>Symbol</th><th>Meaning</th></tr><tr><td>Total</td><td>Double line</td><td>Every superclass entity MUST be in at least one subclass</td></tr><tr><td>Partial</td><td>Single line</td><td>Superclass entity MAY or may NOT be in any subclass</td></tr><tr><td>Disjoint (d)</td><td>Circle with 'd'</td><td>Entity can belong to AT MOST ONE subclass</td></tr><tr><td>Overlapping (o)</td><td>Circle with 'o'</td><td>Entity can belong to MULTIPLE subclasses</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end section A 2024 -->
+
+  <div class="sec">
+    <div class="sech"><span class="secn">SECTION B</span><h3 class="sect">Q2–Q7 <span>(Attempt any 4)</span></h3></div>
+
+    <!-- Q2 University Registrar -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q2</span>
+        <span class="qtit">University Registrar ER Schema — Courses, Offerings, Students, Instructors</span>
+        <span class="qimp">⭐ 10 marks</span>
+        <span class="qmk">10 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>Entities and Keys:</strong></p>
+          <table class="dt"><tr><th>Entity</th><th>PK</th><th>Key Attributes</th></tr><tr><td>COURSE</td><td class="pk">Course_number</td><td>Number, Title, Credits, Syllabus, Prerequisites (multi-valued)</td></tr><tr><td>COURSE_OFFERING</td><td class="pk">(Course_no, Year, Semester, Section_no)</td><td>Instructor(s), Timings, Classroom</td></tr><tr><td>STUDENT</td><td class="pk">Student_id</td><td>Name, Program</td></tr><tr><td>INSTRUCTOR</td><td class="pk">Identification_number</td><td>Name, Department, Title</td></tr></table>
+          <p><strong>Relationships:</strong></p>
+          <table class="dt"><tr><th>Relationship</th><th>Entities</th><th>Cardinality</th><th>Participation</th></tr><tr><td>OFFERING_OF</td><td>COURSE_OFFERING → COURSE</td><td>N:1</td><td>Total (every offering belongs to a course)</td></tr><tr><td>TEACHES</td><td>INSTRUCTOR → COURSE_OFFERING</td><td>1:N</td><td>Partial for instructor</td></tr><tr><td>ENROLLED_IN</td><td>STUDENT ↔ COURSE_OFFERING</td><td>M:N</td><td>Partial for both</td></tr><tr><td>PREREQ_OF</td><td>COURSE ↔ COURSE (recursive)</td><td>M:N</td><td>Partial</td></tr></table>
+          <p><strong>Relational Mapping:</strong></p>
+          <div class="schema">COURSE(<span class="pk">Course_number</span>, Title, Credits, Syllabus)</div>
+          <div class="schema">COURSE_PREREQ(<span class="pk">Course_no</span>, <span class="pk">Prereq_no</span>) — both FK → COURSE</div>
+          <div class="schema">COURSE_OFFERING(<span class="pk">Course_no</span>, <span class="pk">Year</span>, <span class="pk">Semester</span>, <span class="pk">Sec_no</span>, Timings, Classroom, <span class="fk">Instructor_id</span>)</div>
+          <div class="schema">INSTRUCTOR(<span class="pk">Identification_number</span>, Name, Department, Title)</div>
+          <div class="schema">STUDENT(<span class="pk">Student_id</span>, Name, Program)</div>
+          <div class="schema">ENROLLMENT(<span class="pk">Student_id</span>, <span class="pk">Course_no</span>, <span class="pk">Year</span>, <span class="pk">Semester</span>, <span class="pk">Sec_no</span>)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3a -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q3a</span>
+        <span class="qtit">CUSTOMER/PRODUCT — SQL: INSERT col, DELETE rows, SELECT with P3 AND P4, COUNT products</span>
+        <span class="qimp">⭐ SQL Q</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>CUSTOMER(<span class="pk">Customer#</span>, Customer_Name, City, Product#) | PRODUCT(<span class="pk">Prod#</span>, Prod_Name, Prod_Details)</p>
+<pre><span class="cm">-- (i) Insert new attribute Price in PRODUCT</span>
+<span class="kw">ALTER TABLE</span> PRODUCT <span class="kw">ADD</span> Price <span class="fn">DECIMAL</span>(<span class="num">10</span>, <span class="num">2</span>);
+
+<span class="cm">-- (ii) Delete rows from PRODUCT where Prod_Name = 'P2'</span>
+<span class="kw">DELETE FROM</span> PRODUCT <span class="kw">WHERE</span> Prod_Name = <span class="str">'P2'</span>;
+
+<span class="cm">-- (iii) Customers who purchased 'P3' AND 'P4'</span>
+<span class="kw">SELECT</span> C.Customer_Name
+<span class="kw">FROM</span>   CUSTOMER C <span class="kw">JOIN</span> PRODUCT P <span class="kw">ON</span> C.Product# = P.Prod#
+<span class="kw">WHERE</span>  P.Prod_Name = <span class="str">'P3'</span>
+<span class="kw">INTERSECT</span>
+<span class="kw">SELECT</span> C.Customer_Name
+<span class="kw">FROM</span>   CUSTOMER C <span class="kw">JOIN</span> PRODUCT P <span class="kw">ON</span> C.Product# = P.Prod#
+<span class="kw">WHERE</span>  P.Prod_Name = <span class="str">'P4'</span>;
+
+<span class="cm">-- (iv) Total number of products bought by each customer</span>
+<span class="kw">SELECT</span>   Customer_Name,
+         <span class="fn">COUNT</span>(Product#) <span class="kw">AS</span> Total_Products
+<span class="kw">FROM</span>     CUSTOMER
+<span class="kw">GROUP BY</span> Customer#, Customer_Name;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3b -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q3b</span>
+        <span class="qtit">F = {A→B, AB→C, D→AC, D→E} and G = {A→BC, D→AE} — Are they equivalent?</span>
+        <span class="qimp">⭐ FD Equivalence</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>Check F ⊆ G⁺ (derive every FD in F from G):</strong></p>
+          <div class="clt">
+            <div class="cr"><span class="cs">A→B?</span><span class="cv">A⁺ under G: {A}→A→BC→{A,B,C}. B∈A⁺ ✓</span></div>
+            <div class="cr"><span class="cs">AB→C?</span><span class="cv">{AB}⁺ under G: {A,B}→A→BC→{A,B,C}. C∈{AB}⁺ ✓</span></div>
+            <div class="cr"><span class="cs">D→AC?</span><span class="cv">D⁺ under G: {D}→D→AE→{D,A,E}→A→BC→{D,A,B,C,E}. AC⊆D⁺ ✓</span></div>
+            <div class="cr"><span class="cs">D→E?</span><span class="cv">D⁺ already has E. ✓</span></div>
+          </div>
+          <p><strong>Check G ⊆ F⁺ (derive every FD in G from F):</strong></p>
+          <div class="clt">
+            <div class="cr"><span class="cs">A→BC?</span><span class="cv">A⁺ under F: {A}→A→B→{A,B}→AB→C→{A,B,C}. BC⊆A⁺ ✓</span></div>
+            <div class="cr"><span class="cs">D→AE?</span><span class="cv">D⁺ under F: {D}→D→AC→{D,A,C}→D→E→{D,A,C,E}. AE⊆D⁺ ✓</span></div>
+          </div>
+          <p><strong>Conclusion: YES, F and G are EQUIVALENT. F⁺ = G⁺</strong></p>
+          <div class="note">G is a more compact representation of F. G has 2 FDs while F has 4, but both express the same dependencies.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4a -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q4a</span>
+        <span class="qtit">STUDENT(ID,NAME,COURSE,PHONENO,PROJECTNO,PROJECTNAME) — Anomalies + 3NF</span>
+        <span class="qimp">⭐ Most Important</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="schema">STUDENT(<span class="pk">ID</span>, NAME, COURSE, PHONENO, PROJECTNO, PROJECTNAME)</div>
+          <p>Given: ID=PK, <span class="fd">PROJECTNO → PROJECTNAME</span></p>
+          <p><strong>Sample Instance:</strong></p>
+          <table class="dt"><tr><th>ID</th><th>NAME</th><th>COURSE</th><th>PHONENO</th><th>PROJECTNO</th><th>PROJECTNAME</th></tr><tr><td class="pk">101</td><td>Anu</td><td>CS</td><td>9876</td><td class="hl">P1</td><td class="hl">AI Research</td></tr><tr><td class="pk">102</td><td>Ravi</td><td>IT</td><td>9123</td><td class="hl">P1</td><td class="hl">AI Research</td></tr><tr><td class="pk">103</td><td>Priya</td><td>CS</td><td>8800</td><td>P2</td><td>Web Dev</td></tr></table>
+          <div class="ag">
+            <div class="acard u"><h5>🔄 UPDATE ANOMALY</h5><p>Rename P1 from "AI Research" to "Machine Learning" → must update rows 101 AND 102. Miss one → inconsistency.</p></div>
+            <div class="acard i"><h5>➕ INSERTION ANOMALY</h5><p>Cannot store new project P3="Cloud Computing" without a student — PK (ID) would be NULL.</p></div>
+            <div class="acard d"><h5>🗑️ DELETION ANOMALY</h5><p>Delete student 103 (only student in P2) → all info about project "Web Dev" is lost forever.</p></div>
+          </div>
+          <p><strong>Why not 3NF?</strong> Transitive dependency: ID → PROJECTNO → PROJECTNAME (non-prime→non-prime chain)</p>
+          <p><strong>3NF Decomposition:</strong></p>
+          <div class="schema">STUDENT(<span class="pk">ID</span>, NAME, COURSE, PHONENO, PROJECTNO)</div>
+          <div class="schema">PROJECT(<span class="pk">PROJECTNO</span>, PROJECTNAME)</div>
+          <p>All anomalies resolved. ✓</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4b -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q4b</span>
+        <span class="qtit">Cardinality ratios: College-Principal, Student-Course, Course-Book, Book-Author</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>Entity 1</th><th>Entity 2</th><th>Ratio</th><th>Justification</th></tr><tr><td>College</td><td>Principal</td><td><strong>1:1</strong></td><td>One college has exactly one principal at a time</td></tr><tr><td>Student</td><td>Course</td><td><strong>M:N</strong></td><td>A student takes many courses; a course has many students</td></tr><tr><td>Course</td><td>Book</td><td><strong>1:N</strong></td><td>One course may prescribe many books; typically a book belongs to one course</td></tr><tr><td>Book</td><td>Author</td><td><strong>M:N</strong></td><td>A book can have multiple authors; an author can write multiple books</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 WORKER/DEPT -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q5</span>
+        <span class="qtit">WORKER &amp; DEPARTMENT — 5 SQL queries: join, count, group, avg, date filter</span>
+        <span class="qimp">⭐ Full SQL Q</span>
+        <span class="qmk">10 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>WORKER(<span class="pk">ID</span>, Name, Salary, JoiningDate, <span class="fk">Department#</span>) | DEPARTMENT(<span class="pk">DepID</span>, DName, Location, <span class="fk">Mgr#</span>)</p>
+<pre><span class="cm">-- (i) Workers with department name and manager name</span>
+<span class="kw">SELECT</span> W.Name, D.DName, M.Name <span class="kw">AS</span> Manager
+<span class="kw">FROM</span>   WORKER W
+       <span class="kw">JOIN</span> DEPARTMENT D <span class="kw">ON</span> W.Department# = D.DepID
+       <span class="kw">JOIN</span> WORKER M     <span class="kw">ON</span> D.Mgr# = M.ID;
+
+<span class="cm">-- (ii) Count workers in Finance department</span>
+<span class="kw">SELECT</span> <span class="fn">COUNT</span>(*) <span class="kw">AS</span> Finance_Count
+<span class="kw">FROM</span>   WORKER W <span class="kw">JOIN</span> DEPARTMENT D <span class="kw">ON</span> W.Department# = D.DepID
+<span class="kw">WHERE</span>  D.DName = <span class="str">'Finance'</span>;
+
+<span class="cm">-- (iii) Workers per department with department name</span>
+<span class="kw">SELECT</span>   D.DName, <span class="fn">COUNT</span>(W.ID) <span class="kw">AS</span> Worker_Count
+<span class="kw">FROM</span>     DEPARTMENT D <span class="kw">LEFT JOIN</span> WORKER W <span class="kw">ON</span> D.DepID = W.Department#
+<span class="kw">GROUP BY</span> D.DepID, D.DName;
+
+<span class="cm">-- (iv) Average salary of each department</span>
+<span class="kw">SELECT</span>   D.DName, <span class="fn">AVG</span>(W.Salary) <span class="kw">AS</span> Avg_Salary
+<span class="kw">FROM</span>     DEPARTMENT D <span class="kw">JOIN</span> WORKER W <span class="kw">ON</span> D.DepID = W.Department#
+<span class="kw">GROUP BY</span> D.DepID, D.DName;
+
+<span class="cm">-- (v) Workers who joined after year 2010</span>
+<span class="kw">SELECT</span> Name <span class="kw">FROM</span> WORKER
+<span class="kw">WHERE</span>  <span class="fn">YEAR</span>(JoiningDate) > <span class="num">2010</span>;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6a BOOK -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q6a</span>
+        <span class="qtit">BOOK(BookID,GenreID,GenreType,Price) — Find PK, normalize to 3NF</span>
+        <span class="qimp">⭐ Normalization</span>
+        <span class="qmk">5 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>FDs: <span class="fd">BookID → GenreID, Price</span> <span class="fd">GenreID → GenreType</span></p>
+          <div class="step"><div class="sn">1</div><div class="sc"><strong>Find PK:</strong> BookID⁺ = {BookID,GenreID,Price,GenreType} = all attrs. <span class="kh">PK = BookID</span></div></div>
+          <div class="step"><div class="sn">2</div><div class="sc"><strong>2NF check:</strong> Single-attribute PK → no partial dependencies possible. Already in 2NF ✓</div></div>
+          <div class="step"><div class="sn">3</div><div class="sc"><strong>3NF check:</strong> GenreID → GenreType: GenreID is non-prime, GenreType is non-prime → <strong>Transitive dependency!</strong> <span class="bvio">NOT 3NF</span></div></div>
+          <div class="step"><div class="sn">4</div><div class="sc"><strong>Decompose to 3NF:</strong><br>
+          <div class="schema">BOOK(<span class="pk">BookID</span>, GenreID, Price)</div>
+          <div class="schema">GENRE(<span class="pk">GenreID</span>, GenreType)</div>Both are in 3NF ✓</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6b FILE CALC -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q6b</span>
+        <span class="qtit">r=30000, B=1024, R=100, V=9, P=6 — blocking factor, blocks, binary search, primary index</span>
+        <span class="qimp">⭐ File Calculations</span>
+        <span class="qmk">5 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="g2">
+            <div class="fc"><h5 style="color:var(--teal)">(i) Blocking Factor</h5><p>bfr = ⌊B/R⌋ = ⌊1024/100⌋ = <strong>10 records/block</strong></p></div>
+            <div class="fc"><h5 style="color:var(--gold)">(ii) Number of Blocks</h5><p>b = ⌈r/bfr⌉ = ⌈30000/10⌉ = <strong>3000 blocks</strong></p></div>
+            <div class="fc"><h5 style="color:var(--lilac)">(iii) Binary Search (no index)</h5><p>= ⌈log₂(3000)⌉ = ⌈11.55⌉ = <strong>12 accesses</strong></p></div>
+            <div class="fc"><h5 style="color:var(--rose)">(iv) Primary Index</h5><p>r_i = 9+6 = 15 bytes<br>bfr_i = ⌊1024/15⌋ = 68<br>b_i = ⌈3000/68⌉ = 45 blocks<br>Search = ⌈log₂(45)⌉+1 = 6+1 = <strong>7 accesses</strong></p></div>
+          </div>
+          <div class="clg"><span class="ci">✅</span><span>Index reduces accesses from 12 → 7 (42% improvement). This is why indexing is critical for large databases.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7a B+ TREE -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q7a</span>
+        <span class="qtit">B+ tree order p=3 — Insert 19,5,12,7,40,3,15 step by step</span>
+        <span class="qimp">⭐ B+ Tree Steps</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>Order p=3: max 2 keys per node. Overflow on 3rd key → split. Leaf split: middle COPIED up. Leaves linked ↔.</p>
+          <p><strong>Insert 19:</strong></p><div class="btlv"><div class="btn leaf"><span class="k">19</span></div></div>
+          <p><strong>Insert 5:</strong></p><div class="btlv"><div class="btn leaf"><span class="k">5</span><span class="k">19</span></div></div>
+          <p><strong>Insert 12 → overflow [5,12,19] → split → 12 copied to root:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">12</span></div></div>
+          <div class="btc">↙ &nbsp;&nbsp;&nbsp; ↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">5</span></div><span style="color:var(--dim);padding:0 .4rem">↔</span><div class="btn leaf"><span class="k">12</span><span class="k">19</span></div></div>
+          <p><strong>Insert 7 → left leaf [5,7]:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">12</span></div></div>
+          <div class="btc">↙ &nbsp;&nbsp;&nbsp; ↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">5</span><span class="k">7</span></div><span style="color:var(--dim);padding:0 .4rem">↔</span><div class="btn leaf"><span class="k">12</span><span class="k">19</span></div></div>
+          <p><strong>Insert 40 → right leaf overflow [12,19,40] → split → 19 copied up → root=[12,19]:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">12</span><span class="k">19</span></div></div>
+          <div class="btc">↙ &nbsp; ↓ &nbsp; ↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">5</span><span class="k">7</span></div><span style="color:var(--dim);padding:0 .3rem">↔</span><div class="btn leaf"><span class="k">12</span></div><span style="color:var(--dim);padding:0 .3rem">↔</span><div class="btn leaf"><span class="k">19</span><span class="k">40</span></div></div>
+          <p><strong>Insert 3 → left leaf overflow [3,5,7] → split → 5 up → root overflow [5,12,19] → new root=12:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">12</span></div></div>
+          <div class="btc">↙ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↘</div>
+          <div class="btlv"><div class="btn"><span class="k">5</span></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="btn"><span class="k">19</span></div></div>
+          <div class="btc">↙↘ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↙↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">3</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">5</span><span class="k">7</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">12</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">19</span><span class="k">40</span></div></div>
+          <p><strong>Insert 15 → leaf after 12 → [12,15]. No overflow. FINAL TREE:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">12</span></div></div>
+          <div class="btc">↙ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↘</div>
+          <div class="btlv"><div class="btn"><span class="k">5</span></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="btn"><span class="k">19</span></div></div>
+          <div class="btc">↙↘ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↙↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">3</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">5</span><span class="k">7</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">12</span><span class="k">15</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">19</span><span class="k">40</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7b Library schema -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt ya">2024 · Q7b</span>
+        <span class="qtit">Library DB — Referential integrity constraints as schema diagram</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="schema">Book(<span class="pk">Book_Id</span>, Title, Publisher)</div>
+          <div class="schema">Book_copies(<span class="pk">Book_Id</span>, <span class="pk">Branch_Id</span>, No_of_Copies) — FK: Book_Id→Book, Branch_Id→Library_branch</div>
+          <div class="schema">Library_branch(<span class="pk">Branch_Id</span>, BranchName, Address)</div>
+          <div class="schema">Book_Authors(<span class="pk">Book_Id</span>, <span class="pk">AuthorName</span>) — FK: Book_Id→Book</div>
+          <p><strong>Referential Integrity Constraints:</strong></p>
+          <ul>
+            <li>Book_copies.Book_Id → references Book.Book_Id</li>
+            <li>Book_copies.Branch_Id → references Library_branch.Branch_Id</li>
+            <li>Book_Authors.Book_Id → references Book.Book_Id</li>
+          </ul>
+          <div class="note">Schema diagram shows tables as boxes with attributes, connected by arrows pointing FROM the FK TO the referenced PK. Arrow direction indicates the reference direction.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end section B 2024 -->
+</div><!-- end 2024 paper -->
+
+<div class="div"></div>
+
+<!-- ════════════════════
+  2023 PAPER (Paper 5587)
+════════════════════ -->
+<div class="paper" id="p2023">
+  <div class="paper-head" style="border-left-color:var(--rose)">
+    <h2>📄 2023 Paper — Sr. No. 5587 | B.Sc.(H) Computer Science (NEP-UGCF) Sem IV</h2>
+    <p>Maximum Marks: 90 | Duration: 3 Hours | Unique Code: 2342012402</p>
+    <div class="paper-meta"><span class="pmeta">Section A: All parts compulsory</span><span class="pmeta">Section B: Any 4 of Q2-Q7</span><span class="pmeta">21 Sub-questions</span></div>
+  </div>
+
+  <div class="sec">
+    <div class="sech"><span class="secn">SECTION A</span><h3 class="sect">Q1 — All Parts</h3></div>
+
+    <!-- Q1a File system vs DB -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q1a</span>
+        <span class="qtit">Employee Management System vs CAD tools — File system or Database approach?</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="cmpt"><tr><th>Application</th><th class="ca">Best Approach</th><th class="cb2">Reason</th></tr><tr><td><strong>(i) Employee Management</strong></td><td class="ca">DATABASE ✓</td><td class="cb2">Multi-user concurrent access, complex queries, data integrity constraints, ACID transactions for payroll, data sharing across departments, reporting needs</td></tr><tr><td><strong>(ii) CAD Tools</strong></td><td class="ca">FILE SYSTEM ✓</td><td class="cb2">Specialized binary/geometric data, single-user or tightly-coupled app, no complex multi-user querying, better raw I/O performance for design files, DBMS overhead not justified</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1b 3 schema languages -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q1b</span>
+        <span class="qtit">3 schema definition languages supporting three-schema architecture</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>Language</th><th>Full Form</th><th>Schema Level</th><th>Purpose</th></tr><tr><td><strong>DDL</strong></td><td>Data Definition Language</td><td>Conceptual Level</td><td>Defines community conceptual schema (tables, types, constraints)</td></tr><tr><td><strong>VDL</strong></td><td>View Definition Language</td><td>External Level</td><td>Defines user views and external schemas (virtual tables per user group)</td></tr><tr><td><strong>SDL</strong></td><td>Storage Definition Language</td><td>Internal Level</td><td>Defines physical storage structures, indexes, file organization</td></tr></table>
+          <div class="note">In modern RDBMS, DDL handles all levels. SQL's CREATE VIEW acts as VDL. Physical storage is managed automatically by the DBMS engine.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1c STUDENT ERD -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q1c</span>
+        <span class="qtit">STUDENT entity ERD — Rollno, Name, Address (composite), DOB, Age (derived), Phone (multi-valued)</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>Attribute types in this entity:</strong></p>
+          <table class="dt"><tr><th>Attribute</th><th>Type</th><th>ER Notation</th></tr><tr><td>Rollno</td><td>Simple, Key attribute</td><td>Single ellipse with underline</td></tr><tr><td>Name</td><td>Simple</td><td>Single ellipse</td></tr><tr><td>Address</td><td>Composite (House_no, Street, City, Zipcode)</td><td>Single ellipse with sub-ellipses</td></tr><tr><td>DOB (Date of Birth)</td><td>Simple</td><td>Single ellipse</td></tr><tr><td>Age</td><td>Derived (calculated from DOB)</td><td>Dashed ellipse</td></tr><tr><td>Phone</td><td>Multi-valued (multiple phone numbers)</td><td>Double ellipse</td></tr></table>
+          <div class="note">Age is derived from DOB → shown as dashed ellipse. Phone can have multiple values → double ellipse. Address is composite → single ellipse with child ellipses for each component.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1d STUDENT_COURSE constraints -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q1d</span>
+        <span class="qtit">STUDENT_COURSE — Which constraint violated for each of 3 operations?</span>
+        <span class="qimp">⭐ Constraint Check</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>STUDENT_COURSE(SNO, CourseID, Date-of-enrollment) — PK = (SNO, CourseID)</p>
+          <p>Existing: (1,C1), (2,C2), (2,C1), (4,C3)</p>
+          <table class="dt"><tr><th>Operation</th><th>Check</th><th>Result</th></tr><tr><td>(i) Insert &lt;4, 'C1', '2022-05-05'&gt;</td><td>(4,C1) already exists? No. PK unique? Yes. Valid.</td><td class="ok">✓ No Violation</td></tr><tr><td>(ii) Insert &lt;4, 'C3', '2022-05-05'&gt;</td><td>(4,C3) already exists! Duplicate PK.</td><td class="vio">PRIMARY KEY VIOLATION</td></tr><tr><td>(iii) Update &lt;4, NULL, '2023-06-07'&gt;</td><td>Setting CourseID=NULL but CourseID is part of PK.</td><td class="vio">ENTITY INTEGRITY VIOLATION</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1e FK clauses -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q1e</span>
+        <span class="qtit">SUPPLIER/PART — ON UPDATE CASCADE and ON DELETE SET NULL effects</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>SUPPLIER(Sid, Sname, Pnumber) — Pnumber FK → PART(Pno, Pname)</p>
+          <p><strong>(i) ON UPDATE CASCADE:</strong> When Pno in PART is updated, all matching Pnumber values in SUPPLIER are automatically updated to the new value.</p>
+          <p>Example: UPDATE PART SET Pno='P100' WHERE Pno='P1' → All SUPPLIER rows with Pnumber='P1' auto-change to 'P100'</p>
+          <p><strong>(ii) ON DELETE SET NULL:</strong> When a row in PART is deleted, the corresponding Pnumber values in SUPPLIER are set to NULL.</p>
+          <p>Example: DELETE FROM PART WHERE Pno='P1' → All SUPPLIER rows with Pnumber='P1' get Pnumber=NULL</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1f T1 T2 Intersection Full Outer Join -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q1f</span>
+        <span class="qtit">T1(P,Q,R) and T2(A,B,C) — (i) T1 INTERSECTION T2 (ii) T1 FULL OUTER JOIN on P=A</span>
+        <span class="qimp">⭐ RA Calc</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="g2">
+            <div><p><strong>T1:</strong></p><table class="dt"><tr><th>P</th><th>Q</th><th>R</th></tr><tr><td>2</td><td>20</td><td>b</td></tr><tr><td>1</td><td>10</td><td>b</td></tr><tr><td>3</td><td>30</td><td>c</td></tr><tr><td>5</td><td>40</td><td>a</td></tr></table></div>
+            <div><p><strong>T2:</strong></p><table class="dt"><tr><th>A</th><th>B</th><th>C</th></tr><tr><td>1</td><td>10</td><td>a</td></tr><tr><td>2</td><td>20</td><td>b</td></tr><tr><td>3</td><td>10</td><td>a</td></tr><tr><td>4</td><td>30</td><td>d</td></tr></table></div>
+          </div>
+          <p><strong>(i) T1 INTERSECTION T2</strong> (P↔A, Q↔B, R↔C — domains compatible):</p>
+          <p>Check each T1 row against T2: (2,20,b)=(2,20,b)✓; (1,10,b)≠(1,10,a)✗; (3,30,c)≠any✗; (5,40,a)≠any✗</p>
+          <table class="dt"><tr><th>P</th><th>Q</th><th>R</th></tr><tr class="hlg"><td>2</td><td>20</td><td>b</td></tr></table>
+          <p><strong>(ii) T1 FULL OUTER JOIN on T1.P = T2.A:</strong></p>
+          <table class="dt"><tr><th>P</th><th>Q</th><th>R</th><th>A</th><th>B</th><th>C</th></tr><tr><td>2</td><td>20</td><td>b</td><td>2</td><td>20</td><td>b</td></tr><tr><td>1</td><td>10</td><td>b</td><td>1</td><td>10</td><td>a</td></tr><tr><td>3</td><td>30</td><td>c</td><td>3</td><td>10</td><td>a</td></tr><tr><td>5</td><td>40</td><td>a</td><td class="vio">NULL</td><td class="vio">NULL</td><td class="vio">NULL</td></tr><tr><td class="vio">NULL</td><td class="vio">NULL</td><td class="vio">NULL</td><td>4</td><td>30</td><td>d</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1g RA to SQL -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q1g</span>
+        <span class="qtit">Convert RA to SQL: π_c,a(σ_b=20(R)) and π_b,d(R*S)</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>R(<span class="pk">a</span>, b, c) and S(<span class="pk">a</span>, d)</p>
+          <p><strong>(i) Π<sub>c,a</sub>(σ<sub>b=20</sub>(R)):</strong></p>
+<pre><span class="kw">SELECT</span> c, a
+<span class="kw">FROM</span>   R
+<span class="kw">WHERE</span>  b = <span class="num">20</span>;</pre>
+          <p><strong>(ii) Π<sub>b,d</sub>(R * S)</strong> (* = natural join on common attribute 'a'):</p>
+<pre><span class="kw">SELECT</span> R.b, S.d
+<span class="kw">FROM</span>   R <span class="kw">JOIN</span> S <span class="kw">ON</span> R.a = S.a;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1h QRST FD violations -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q1h</span>
+        <span class="qtit">Relation QRST — Which FDs violated: Q→R, S→T, R→T?</span>
+        <span class="qimp">⭐ FD Check</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>Q</th><th>R</th><th>S</th><th>T</th></tr><tr><td>Q1</td><td>50</td><td>S1</td><td>20</td></tr><tr><td>Q2</td><td>60</td><td>S2</td><td>20</td></tr><tr class="hl"><td>Q1</td><td>60</td><td>S3</td><td>30</td></tr></table>
+          <p><strong>(i) Q→R:</strong> Q1 appears in rows 1 and 3 with R=50 and R=60 (different). <span class="bvio">✗ VIOLATED</span></p>
+          <p><strong>(ii) S→T:</strong> S1→20, S2→20, S3→30. Each S value maps to exactly one T. <span class="bok">✓ NOT VIOLATED</span></p>
+          <p><strong>(iii) R→T:</strong> R=50→T=20 (row 1), R=60→T=20 (row 2), R=60→T=30 (row 3). R=60 gives two different T values. <span class="bvio">✗ VIOLATED</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1i Lost Update definition -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q1i</span>
+        <span class="qtit">State the Lost Update problem in concurrent transaction processing</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>The <strong>Lost Update Problem</strong> occurs when two transactions T1 and T2 both read the same data item X, then both update X based on the original value. T2's write overwrites T1's write, so T1's update is "lost".</p>
+          <p><strong>Example:</strong> X=50. T1 reads X=50, T2 reads X=50. T1 sets X=60 and writes. T2 sets X=55 (50+5) and writes, overwriting X=60. Final X=55 but should be 65.</p>
+          <p><strong>Solution:</strong> Use locking — T2 must wait for T1 to release its write lock before T2 can read X. This ensures serializability.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1j CANDIDATE 1NF -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q1j</span>
+        <span class="qtit">CANDIDATE(Ssn, Name, {JOB_HIST(Company, High_pos)}) — Convert to 1NF</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>The relation has a <strong>repeating group</strong> JOB_HIST which is a composite multi-valued attribute — violates 1NF.</p>
+          <p><strong>1NF Conversion:</strong> Remove the repeating group by creating a separate table:</p>
+          <div class="schema">CANDIDATE(<span class="pk">Ssn</span>, Name)</div>
+          <div class="schema">JOB_HIST(<span class="pk">Ssn</span>, <span class="pk">Company</span>, High_pos) — FK: Ssn → CANDIDATE</div>
+          <p>Now each cell contains atomic values. JOB_HIST references CANDIDATE via FK. PK of JOB_HIST is (Ssn, Company) since an SSN can have multiple jobs and a company can employ multiple people.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end Q1 2023 -->
+
+  <div class="sec">
+    <div class="sech"><span class="secn">SECTION B</span><h3 class="sect">Q2–Q7</h3></div>
+
+    <!-- Q2a Three Schema Architecture -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q2a</span>
+        <span class="qtit">Three-Schema Architecture — describe, diagram, why mappings needed</span>
+        <span class="qimp">⭐ 9 marks</span>
+        <span class="qmk">9 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>The three-schema architecture separates the database into three abstraction levels to achieve data independence:</p>
+          <table class="dt"><tr><th>Level</th><th>Schema</th><th>What it describes</th><th>Language</th></tr><tr><td><strong>External</strong></td><td>External/View Schema</td><td>User-specific views — each user/app sees only their relevant data portion</td><td>VDL</td></tr><tr><td><strong>Conceptual</strong></td><td>Conceptual/Logical Schema</td><td>Community view of whole DB — entities, relationships, constraints, no physical details</td><td>DDL</td></tr><tr><td><strong>Internal</strong></td><td>Internal/Physical Schema</td><td>Physical storage — file organization, indexes, access paths, record formats</td><td>SDL</td></tr></table>
+          <p><strong>Why mappings between levels?</strong></p>
+          <ul>
+            <li><strong>External/Conceptual Mapping:</strong> Transforms between views and conceptual schema. Enables logical data independence — add new column to conceptual schema, update only this mapping, external schemas untouched.</li>
+            <li><strong>Conceptual/Internal Mapping:</strong> Transforms between logical and physical. Enables physical data independence — change file organization, update only this mapping, conceptual schema untouched.</li>
+          </ul>
+          <div class="note">Without mappings, any change at one level forces changes at all levels — defeating the entire purpose of the architecture.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2b Schema vs State + Employee example -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q2b</span>
+        <span class="qtit">Relational DB Schema vs Database State — 2 differences + Employee entity example</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="cmpt"><tr><th>#</th><th class="ca">Relational DB Schema</th><th class="cb2">Database State (Instance)</th></tr><tr><td>1</td><td class="ca">Defines STRUCTURE: relation names, attribute names, data types, domain constraints. Rarely changes.</td><td class="cb2">Actual DATA VALUES stored at a specific point in time. Changes with every DML operation.</td></tr><tr><td>2</td><td class="ca">Defined once during design using DDL. Stable over time.</td><td class="cb2">Valid state = satisfies all schema constraints. Many valid states possible for one schema.</td></tr></table>
+          <br>
+          <p><strong>Employee Schema:</strong></p>
+          <div class="schema">EMPLOYEE(<span class="pk">Emp_Id</span> INT, Emp_Name VARCHAR(50), Date_of_Birth DATE, Address VARCHAR(100), Department_No INT, Project_No INT)</div>
+          <p><strong>Possible Database State:</strong></p>
+          <table class="dt"><tr><th>Emp_Id</th><th>Emp_Name</th><th>Date_of_Birth</th><th>Address</th><th>Department_No</th><th>Project_No</th></tr><tr><td class="pk">E001</td><td>Anjali Sharma</td><td>1995-08-22</td><td>Delhi</td><td>D01</td><td>P101</td></tr><tr><td class="pk">E002</td><td>Rahul Verma</td><td>1992-03-10</td><td>Mumbai</td><td>D02</td><td>P102</td></tr><tr><td class="pk">E003</td><td>Priya Singh</td><td>1998-11-05</td><td>Bangalore</td><td>D01</td><td>P101</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3a Hospital ER -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q3a</span>
+        <span class="qtit">Hospital Management System — ER diagram (Patients, Doctors, Appointments, Treatments, Rooms)</span>
+        <span class="qimp">⭐ 9 marks</span>
+        <span class="qmk">9 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>Entity</th><th>PK</th><th>Attributes</th></tr><tr><td>PATIENT</td><td class="pk">PatientID</td><td>Name, Gender, DOB, Address, ContactNumber</td></tr><tr><td>DOCTOR</td><td class="pk">DoctorID</td><td>Name, Specialization, ContactNumber</td></tr><tr><td>APPOINTMENT</td><td class="pk">AppointmentID</td><td>Date, Time, Status</td></tr><tr><td>TREATMENT</td><td class="pk">TreatmentID</td><td>Description, Cost, Date</td></tr><tr><td>ROOM</td><td class="pk">RoomNumber</td><td>RoomType, AvailabilityStatus</td></tr></table>
+          <table class="dt"><tr><th>Relationship</th><th>Entities</th><th>Cardinality</th><th>Participation</th></tr><tr><td>BOOKS</td><td>PATIENT ↔ APPOINTMENT ↔ DOCTOR</td><td>M:N between Patient-Doctor via Appointment</td><td>Total for Appointment</td></tr><tr><td>PRESCRIBES</td><td>DOCTOR → TREATMENT for PATIENT</td><td>Ternary (Doctor, Patient, Treatment)</td><td>Total for Treatment</td></tr><tr><td>ASSIGNED_TO</td><td>PATIENT → ROOM</td><td>1:1</td><td>Partial for both</td></tr></table>
+          <p><strong>Relational Mapping:</strong></p>
+          <div class="schema">PATIENT(<span class="pk">PatientID</span>, Name, Gender, DOB, Address, Contact, <span class="fk">RoomNumber</span>)</div>
+          <div class="schema">DOCTOR(<span class="pk">DoctorID</span>, Name, Specialization, Contact)</div>
+          <div class="schema">APPOINTMENT(<span class="pk">AppointmentID</span>, Date, Time, Status, <span class="fk">PatientID</span>, <span class="fk">DoctorID</span>)</div>
+          <div class="schema">TREATMENT(<span class="pk">TreatmentID</span>, Description, Cost, Date, <span class="fk">PatientID</span>, <span class="fk">DoctorID</span>)</div>
+          <div class="schema">ROOM(<span class="pk">RoomNumber</span>, RoomType, AvailabilityStatus)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3b Binary vs Recursive -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q3b</span>
+        <span class="qtit">Binary relationship vs Recursive relationship — differences with examples</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="cmpt"><tr><th>Aspect</th><th class="ca">Binary Relationship</th><th class="cb2">Recursive Relationship</th></tr><tr><td class="cl">Definition</td><td class="ca">Relationship between TWO DIFFERENT entity types</td><td class="cb2">Relationship where SAME entity type participates multiple times in different roles</td></tr><tr><td class="cl">Also called</td><td class="ca">Binary, degree-2</td><td class="cb2">Unary, self-referencing, recursive</td></tr><tr><td class="cl">Role names</td><td class="ca">Optional (entities are different)</td><td class="cb2">Mandatory (to distinguish same entity's roles)</td></tr><tr><td class="cl">Example</td><td class="ca">EMPLOYEE works_for DEPARTMENT</td><td class="cb2">EMPLOYEE supervises EMPLOYEE (supervisor + supervisee roles)</td></tr><tr><td class="cl">Mapping</td><td class="ca">FK on N-side for 1:N; new table for M:N</td><td class="cb2">SUPERVISES(supervisor_SSN FK→EMP, supervisee_SSN FK→EMP)</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 CAR/SALE SQL -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q4</span>
+        <span class="qtit">CAR/SALE/SALESPERSON — FK identification, RI violation example, CREATE TABLE SALE</span>
+        <span class="qimp">⭐ SQL + Constraints</span>
+        <span class="qmk">15 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>CAR(<span class="pk">Serial_no</span>, Model, Manufacturer, Price) | SALE(<span class="pk">Salesperson_id, Serial_no</span>, Date, Sale_price) | SALESPERSON(<span class="pk">Salesperson_id</span>, Name, Phone)</p>
+          <p><strong>(i) Foreign Keys:</strong></p>
+          <ul><li>CAR: No FK</li><li>SALESPERSON: No FK</li><li>SALE: Salesperson_id → SALESPERSON.Salesperson_id; Serial_no → CAR.Serial_no</li></ul>
+          <p><strong>(ii) RI Violation Example — Update that violates:</strong></p>
+          <p>Sample SALE row: (SP1, C001, '2024-01-15', 25000). UPDATE SALE SET Serial_no='C999' WHERE Salesperson_id='SP1' — C999 doesn't exist in CAR → <span class="bvio">Referential Integrity Violation</span></p>
+          <p><strong>(iii) CREATE TABLE SALE:</strong></p>
+<pre><span class="kw">CREATE TABLE</span> SALE (
+  Salesperson_id  <span class="fn">INT</span>,
+  Serial_no       <span class="fn">INT</span>,
+  Date            <span class="fn">DATE</span>,
+  Sale_price      <span class="fn">DECIMAL</span>(<span class="num">10</span>, <span class="num">2</span>)
+                  <span class="kw">CHECK</span> (Sale_price <span class="kw">BETWEEN</span> <span class="num">10000</span> <span class="kw">AND</span> <span class="num">50000</span>),
+  <span class="kw">CONSTRAINT</span> pk_sale <span class="kw">PRIMARY KEY</span> (Salesperson_id, Serial_no),
+  <span class="kw">CONSTRAINT</span> fk_sp   <span class="kw">FOREIGN KEY</span> (Salesperson_id)
+                      <span class="kw">REFERENCES</span> SALESPERSON(Salesperson_id),
+  <span class="kw">CONSTRAINT</span> fk_car  <span class="kw">FOREIGN KEY</span> (Serial_no)
+                      <span class="kw">REFERENCES</span> CAR(Serial_no)
+);</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5a SUPPLIER-PART-PROJECT SQL 2023 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q5a</span>
+        <span class="qtit">SUPPLIER-PART-PROJECT-SUPPLY — 3 SQL queries (HAVING COUNT, VIEW, LIKE)</span>
+        <span class="qimp">⭐ SQL</span>
+        <span class="qmk">9 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+<pre><span class="cm">-- (i) Parts supplied to exactly 2 projects</span>
+<span class="kw">SELECT</span>   P.Pno, P.Pname
+<span class="kw">FROM</span>     PART P <span class="kw">JOIN</span> SUPPLY S <span class="kw">ON</span> P.Pno = S.Pno
+<span class="kw">GROUP BY</span> P.Pno, P.Pname
+<span class="kw">HAVING</span>   <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> S.Jno) = <span class="num">2</span>;
+
+<span class="cm">-- (ii) VIEW: project names with total suppliers</span>
+<span class="kw">CREATE VIEW</span> Proj_Supplier_Count <span class="kw">AS</span>
+<span class="kw">SELECT</span>   J.Jname, <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> S.Sno) <span class="kw">AS</span> Total_Suppliers
+<span class="kw">FROM</span>     PROJECT J <span class="kw">JOIN</span> SUPPLY S <span class="kw">ON</span> J.Jno = S.Jno
+<span class="kw">GROUP BY</span> J.Jno, J.Jname;
+
+<span class="cm">-- (iii) Projects, suppliers, parts for suppliers starting with 'R'</span>
+<span class="kw">SELECT</span>   J.Jname, Su.Sname, P.Pname
+<span class="kw">FROM</span>     SUPPLY S
+         <span class="kw">JOIN</span> SUPPLIER Su <span class="kw">ON</span> S.Sno = Su.Sno
+         <span class="kw">JOIN</span> PART P      <span class="kw">ON</span> S.Pno = P.Pno
+         <span class="kw">JOIN</span> PROJECT J   <span class="kw">ON</span> S.Jno = J.Jno
+<span class="kw">WHERE</span>    Su.Sname <span class="kw">LIKE</span> <span class="str">'R%'</span>;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5b File calc 2023 r=30000 B=4096 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q5b</span>
+        <span class="qtit">r=30000, B=4096, R=100, V=9, P=6 — All 6 index calculations</span>
+        <span class="qimp">⭐ File Calc</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="g3">
+            <div class="fc"><h5 style="color:var(--teal)">(i) bfr</h5><p>⌊4096/100⌋ = <strong>40 rec/block</strong></p></div>
+            <div class="fc"><h5 style="color:var(--gold)">(ii) b</h5><p>⌈30000/40⌉ = <strong>750 blocks</strong></p></div>
+            <div class="fc"><h5 style="color:var(--lilac)">(iii) r_i</h5><p>9+6 = <strong>15 bytes</strong></p></div>
+            <div class="fc"><h5 style="color:var(--rose)">(iv) bfr_i</h5><p>⌊4096/15⌋ = <strong>273 entries/block</strong></p></div>
+            <div class="fc"><h5 style="color:var(--sky)">(v) b_i</h5><p>⌈750/273⌉ = <strong>3 index blocks</strong></p></div>
+            <div class="fc"><h5 style="color:var(--lime)">(vi) Search</h5><p>⌈log₂(3)⌉+1 = 2+1 = <strong>3 accesses</strong></p></div>
+          </div>
+          <div class="clg"><span class="ci">✅</span><span>Without index: ⌈log₂(750)⌉ = 10 accesses. With primary index: only 3 accesses!</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6a CUSTOMER-ORDER-SHIPMENT RA 2023 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q6a</span>
+        <span class="qtit">CUSTOMER–ORDER–SHIPMENT — 3 SQL/RA queries (Warehouse filter, customer ABC, exactly 2 orders)</span>
+        <span class="qmk">9 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+<pre><span class="cm">-- (i) Order_no and Ship_date for orders from Warehouse W1</span>
+<span class="kw">SELECT</span> Order_no, Ship_date
+<span class="kw">FROM</span>   SHIPMENT <span class="kw">WHERE</span> Warehouse_no = <span class="str">'W1'</span>;
+
+<span class="cm">-- (ii) Warehouse_no where orders shipped for customer 'ABC'</span>
+<span class="kw">SELECT</span> S.Warehouse_no, S.Order_no
+<span class="kw">FROM</span>   CUSTOMER C
+       <span class="kw">JOIN</span> <span class="fn">ORDER</span> O    <span class="kw">ON</span> C.Cust_no  = O.Cust_no
+       <span class="kw">JOIN</span> SHIPMENT S <span class="kw">ON</span> O.Order_no = S.Order_no
+<span class="kw">WHERE</span>  C.Cname = <span class="str">'ABC'</span>;
+
+<span class="cm">-- (iii) Customer names who received exactly 2 orders</span>
+<span class="kw">SELECT</span>   C.Cname
+<span class="kw">FROM</span>     CUSTOMER C
+         <span class="kw">JOIN</span> <span class="fn">ORDER</span> O    <span class="kw">ON</span> C.Cust_no  = O.Cust_no
+         <span class="kw">JOIN</span> SHIPMENT S <span class="kw">ON</span> O.Order_no = S.Order_no
+<span class="kw">GROUP BY</span> C.Cust_no, C.Cname
+<span class="kw">HAVING</span>   <span class="fn">COUNT</span>(S.Order_no) = <span class="num">2</span>;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6b Universal relation 2NF -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q6b</span>
+        <span class="qtit">R={A,B,C,D,E,F,G,H}, F={{A,B}→C, {B,D}→{E,F}, {A,D}→{G,H}} — Find key, decompose to 2NF</span>
+        <span class="qimp">⭐ Normalization</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="step"><div class="sn">1</div><div class="sc"><strong>Find Candidate Key:</strong> Try {A,B,D}⁺: {A,B,D}→AB→C→{A,B,C,D}→BD→EF→{A,B,C,D,E,F}→AD→GH→{A,B,C,D,E,F,G,H}=all ✓<br><span class="kh">Candidate Key = {A,B,D}</span></div></div>
+          <div class="step"><div class="sn">2</div><div class="sc"><strong>Check 2NF (partial dependencies):</strong><br>AB→C: {A,B} ⊂ {A,B,D}, C is non-prime → <span class="bvio">Partial dep!</span><br>BD→EF: {B,D} ⊂ {A,B,D}, E,F non-prime → <span class="bvio">Partial dep!</span><br>AD→GH: {A,D} ⊂ {A,B,D}, G,H non-prime → <span class="bvio">Partial dep!</span></div></div>
+          <div class="step"><div class="sn">3</div><div class="sc"><strong>Decompose to 2NF:</strong><br>
+          <div class="schema">R1(<span class="pk">A, B</span>, C) — from AB→C</div>
+          <div class="schema">R2(<span class="pk">B, D</span>, E, F) — from BD→EF</div>
+          <div class="schema">R3(<span class="pk">A, D</span>, G, H) — from AD→GH</div>
+          <div class="schema">R4(<span class="pk">A, B, D</span>) — to preserve the key</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7a Bank ER mapping -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q7a</span>
+        <span class="qtit">Bank ER Diagram — Map to relational schema with all PKs and FKs</span>
+        <span class="qimp">⭐ 9 marks</span>
+        <span class="qmk">9 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>From the Bank ER diagram: BANK→BRANCHES→BANK_BRANCH; BANK_BRANCH→ACCTS→ACCOUNT; BANK_BRANCH→LOANS→LOAN; ACCOUNT and LOAN relate to CUSTOMER via A_C and L_C</p>
+          <div class="schema">BANK(<span class="pk">Code</span>, Name, Addr)</div>
+          <div class="schema">BANK_BRANCH(<span class="pk">Branch_no</span>, Addr, <span class="fk">Code</span>) — FK: Code → BANK</div>
+          <div class="schema">ACCOUNT(<span class="pk">Acct_no</span>, Balance, Type, <span class="fk">Branch_no</span>) — FK: Branch_no → BANK_BRANCH</div>
+          <div class="schema">LOAN(<span class="pk">Loan_no</span>, Amount, Type, <span class="fk">Branch_no</span>) — FK: Branch_no → BANK_BRANCH</div>
+          <div class="schema">CUSTOMER(<span class="pk">Ssn</span>, Name, Addr, Phone)</div>
+          <div class="schema">A_C(<span class="pk">Acct_no</span>, <span class="pk">Ssn</span>) — FKs: Acct_no→ACCOUNT, Ssn→CUSTOMER</div>
+          <div class="schema">L_C(<span class="pk">Loan_no</span>, <span class="pk">Ssn</span>) — FKs: Loan_no→LOAN, Ssn→CUSTOMER</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7b W1 W2 incorrect summary -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yb">2023 · Q7b</span>
+        <span class="qtit">W1 and W2 concurrent execution — identify the concurrency problem</span>
+        <span class="qimp">⭐ Incorrect Summary</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="txt">
+            <tr><th>Time</th><th class="t1">W1</th><th class="t2">W2</th></tr>
+            <tr><td>T₀</td><td></td><td class="t2">sum:=0</td></tr>
+            <tr><td>T₁</td><td></td><td class="t2">read_item(A); sum:=sum+A</td></tr>
+            <tr><td>T₃</td><td class="t1">read_item(X)</td><td></td></tr>
+            <tr><td>T₄</td><td class="t1">X:=X-N</td><td></td></tr>
+            <tr><td>T₅</td><td class="t1">write_item(X) ← X decreased by N</td><td></td></tr>
+            <tr><td>T₆</td><td></td><td class="prob">read_item(X) ← reads MODIFIED X!</td></tr>
+            <tr><td>T₇</td><td></td><td class="t2">sum:=sum+X (uses X-N instead of X)</td></tr>
+            <tr><td>T₈</td><td></td><td class="t2">read_item(Y); sum:=sum+Y</td></tr>
+            <tr><td>T₉</td><td></td><td class="t2">Final sum = A+(X-N)+Y</td></tr>
+          </table>
+          <p><strong>Problem: INCORRECT SUMMARY (Unrepeatable Read)</strong></p>
+          <p>W2 computing sum(A+X+Y). W1 modified X mid-computation. W2 reads original A, Y but modified X. Result: A+(X-N)+Y instead of correct A+X+Y. Error = N.</p>
+          <p><strong>Solution:</strong> Serializable scheduling; repeatable read isolation level; 2PL locking.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end section B 2023 -->
+</div><!-- end 2023 paper -->
+
+<div class="div"></div>
+
+<!-- ════════════════════
+  2019 PAPER (Paper 6514)
+════════════════════ -->
+<div class="paper" id="p2019">
+  <div class="paper-head" style="border-left-color:var(--gold)">
+    <h2>📄 2019 Paper — Sr. No. 6514 | B.Sc.(H) Computer Science Sem IV</h2>
+    <p>Maximum Marks: 75 | Duration: 3 Hours | Unique Code: 32341403</p>
+    <div class="paper-meta"><span class="pmeta">Q1 compulsory</span><span class="pmeta">Any 4 of Q2-Q7</span><span class="pmeta">17 questions</span></div>
+  </div>
+
+  <div class="sec">
+    <div class="sech"><span class="secn">ALL QUESTIONS</span><h3 class="sect">Q1–Q7 <span>Complete</span></h3></div>
+
+    <!-- Q1a FD Equivalence 2019 -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q1a</span>
+        <span class="qtit">F={A→B, AB→C, D→AC, D→E} and G={A→BC, D→AE} — Are F and G equivalent?</span>
+        <span class="qimp">⭐ FD Equiv</span>
+        <span class="qmk">5 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>Check F ⊆ G⁺:</strong></p>
+          <div class="clt">
+            <div class="cr"><span class="cs">A→B?</span><span class="cv">A⁺ under G: {A}→A→BC→{A,B,C}. B∈A⁺ ✓</span></div>
+            <div class="cr"><span class="cs">AB→C?</span><span class="cv">{A,B}⁺: {A,B}→A→BC→{A,B,C}. C∈{AB}⁺ ✓</span></div>
+            <div class="cr"><span class="cs">D→AC?</span><span class="cv">D⁺: {D}→D→AE→{D,A,E}→A→BC→{D,A,B,C,E}. AC⊆D⁺ ✓</span></div>
+            <div class="cr"><span class="cs">D→E?</span><span class="cv">D⁺ has E. ✓</span></div>
+          </div>
+          <p><strong>Check G ⊆ F⁺:</strong></p>
+          <div class="clt">
+            <div class="cr"><span class="cs">A→BC?</span><span class="cv">A⁺: {A}→A→B→{A,B}→AB→C→{A,B,C}. BC⊆A⁺ ✓</span></div>
+            <div class="cr"><span class="cs">D→AE?</span><span class="cv">D⁺: {D}→D→AC→{D,A,C}→D→E→{D,A,C,E}. AE⊆D⁺ ✓</span></div>
+          </div>
+          <p><strong>YES — F and G are EQUIVALENT. F⁺ = G⁺ ✓</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1b Vehicle Dealer EER mapping 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q1b</span>
+        <span class="qtit">Vehicle Dealer EER — Convert 1:N (SALE) and Specialization to relational tables</span>
+        <span class="qmk">5 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>(i) 1:N Relationship (SALE: SALESPERSON 1 to N VEHICLE):</strong></p>
+          <p>For 1:N, add FK on the N-side:</p>
+          <div class="schema">SALESPERSON(<span class="pk">Sid</span>, Name)</div>
+          <div class="schema">VEHICLE(<span class="pk">Vin</span>, Price, Model, <span class="fk">Sid</span>, Sale_Date) — FK: Sid → SALESPERSON</div>
+          <p><strong>(ii) Specialization (VEHICLE → CAR, TRUCK, SUV) — Option A:</strong></p>
+          <div class="schema">VEHICLE(<span class="pk">Vin</span>, Price, Model, <span class="fk">Sid</span>, Sale_Date)</div>
+          <div class="schema">CAR(<span class="pk">Vin</span>, Engine_size) — FK: Vin → VEHICLE</div>
+          <div class="schema">TRUCK(<span class="pk">Vin</span>, Tonnage) — FK: Vin → VEHICLE</div>
+          <div class="schema">SUV(<span class="pk">Vin</span>, No_seats) — FK: Vin → VEHICLE</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1c CREATE TABLE 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q1c</span>
+        <span class="qtit">CREATE TABLE T — T1(int), T2(char 20), T3(int default 6), T4(char 6 CHECK Male/Female), T5(FK from S)</span>
+        <span class="qmk">5 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+<pre><span class="kw">CREATE TABLE</span> T (
+  T1  <span class="fn">INT</span>          <span class="kw">NOT NULL</span>,
+  T2  <span class="fn">CHAR</span>(<span class="num">20</span>)     <span class="kw">NOT NULL</span>,
+  T3  <span class="fn">INT</span>          <span class="kw">DEFAULT</span> <span class="num">6</span>,
+  T4  <span class="fn">CHAR</span>(<span class="num">6</span>)
+      <span class="kw">CHECK</span> (T4 <span class="kw">IN</span> (<span class="str">'Male'</span>, <span class="str">'Female'</span>)),
+  T5  <span class="fn">INT</span>,
+  <span class="kw">CONSTRAINT</span> pk_T   <span class="kw">PRIMARY KEY</span>  (T1, T2),
+  <span class="kw">CONSTRAINT</span> fk_T5  <span class="kw">FOREIGN KEY</span>  (T5)
+                    <span class="kw">REFERENCES</span>   S(some_col)
+);</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1d Tables A B Union Join Projection 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q1d</span>
+        <span class="qtit">Tables A(X,Y,Z) and B(U,V,W) — (i) A∪B (ii) A⋈_X=U B (iii) Π_AZ,BW(σ_AY=BV(A×B))</span>
+        <span class="qimp">⭐ RA Calc</span>
+        <span class="qmk">5 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="g2">
+            <div><p><strong>A:</strong></p><table class="dt"><tr><th>X</th><th>Y</th><th>Z</th></tr><tr><td>15</td><td>a</td><td>7</td></tr><tr><td>25</td><td>b</td><td>8</td></tr><tr><td>35</td><td>d</td><td>6</td></tr></table></div>
+            <div><p><strong>B:</strong></p><table class="dt"><tr><th>U</th><th>V</th><th>W</th></tr><tr><td>25</td><td>a</td><td>9</td></tr><tr><td>35</td><td>d</td><td>6</td></tr><tr><td>25</td><td>c</td><td>7</td></tr></table></div>
+          </div>
+          <p><strong>(i) A∪B:</strong> All unique tuples from both (35,d,6) is in both → included once:</p>
+          <table class="dt"><tr><th>X/U</th><th>Y/V</th><th>Z/W</th></tr><tr><td>15</td><td>a</td><td>7</td></tr><tr><td>25</td><td>b</td><td>8</td></tr><tr class="hlg"><td>35</td><td>d</td><td>6</td></tr><tr><td>25</td><td>a</td><td>9</td></tr><tr><td>25</td><td>c</td><td>7</td></tr></table>
+          <p><strong>(ii) A⋈<sub>A.X=B.U</sub> B:</strong> X=25 matches U=25 twice; X=35 matches U=35:</p>
+          <table class="dt"><tr><th>X</th><th>Y</th><th>Z</th><th>U</th><th>V</th><th>W</th></tr><tr><td>25</td><td>b</td><td>8</td><td>25</td><td>a</td><td>9</td></tr><tr><td>25</td><td>b</td><td>8</td><td>25</td><td>c</td><td>7</td></tr><tr><td>35</td><td>d</td><td>6</td><td>35</td><td>d</td><td>6</td></tr></table>
+          <p><strong>(iii) Π<sub>A.Z, B.W</sub>(σ<sub>A.Y=B.V</sub>(A×B)):</strong> A×B=9 rows. Filter A.Y=B.V: (15,a,7)×(25,a,9)→a=a✓; (35,d,6)×(35,d,6)→d=d✓. Project Z,W:</p>
+          <table class="dt"><tr><th>A.Z</th><th>B.W</th></tr><tr class="hlg"><td>7</td><td>9</td></tr><tr class="hlg"><td>6</td><td>6</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1e Data Independence 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q1e</span>
+        <span class="qtit">What is data independence? Logical vs Physical with examples</span>
+        <span class="qmk">5 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>Data Independence:</strong> Capacity to change the schema at one level without having to change the schema at the next higher level.</p>
+          <table class="cmpt"><tr><th>Aspect</th><th class="ca">Logical Data Independence</th><th class="cb2">Physical Data Independence</th></tr><tr><td class="cl">Definition</td><td class="ca">Change conceptual schema without changing external schemas/apps</td><td class="cb2">Change internal schema without changing conceptual schema</td></tr><tr><td class="cl">Example</td><td class="ca">Add "Phone" column to EMPLOYEE → existing apps still work</td><td class="cb2">Change file organization to hashed → SQL queries unchanged</td></tr><tr><td class="cl">Difficulty</td><td class="ca">Harder to achieve</td><td class="cb2">Easier to achieve</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1f EMPLOYEE primary/secondary index 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q1f</span>
+        <span class="qtit">EMPLOYEE file — Create primary index (EmpId) and secondary index (DeptNo) diagrammatically</span>
+        <span class="qmk">5 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>EMPLOYEE(EmpId, Ename, Salary, DeptNo, Dob, Designation) — ordered by EmpId</p>
+          <table class="cmpt"><tr><th>Aspect</th><th class="ca">Primary Index (on EmpId)</th><th class="cb2">Secondary Index (on DeptNo)</th></tr><tr><td class="cl">Type</td><td class="ca">Sparse (1 entry per block)</td><td class="cb2">Dense (1 entry per record or per distinct value)</td></tr><tr><td class="cl">Entries</td><td class="ca">= b (number of data blocks)</td><td class="cb2">= r (number of records)</td></tr><tr><td class="cl">Space</td><td class="ca">Less space</td><td class="cb2">More space (takes more space)</td></tr><tr><td class="cl">Data order</td><td class="ca">Data ordered by EmpId (ordering key)</td><td class="cb2">Data NOT ordered by DeptNo (non-ordering field)</td></tr><tr><td class="cl">Access</td><td class="ca">Binary search on index → 1 data block</td><td class="cb2">Binary search on index → may need extra indirection</td></tr></table>
+          <p><strong>Which takes MORE space?</strong> Secondary index (on DeptNo) — because it's a dense index with one entry per record (r=30,000 entries vs b=750 entries for primary).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1g ACID 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q1g</span>
+        <span class="qtit">Four desirable ACID properties + purpose of System Log</span>
+        <span class="qmk">5 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>Property</th><th>Meaning</th><th>Example</th></tr><tr><td><strong>Atomicity</strong></td><td>All or nothing — either all operations complete or none do</td><td>Bank transfer: both debit and credit happen, or neither</td></tr><tr><td><strong>Consistency</strong></td><td>DB moves from one valid state to another valid state</td><td>Total money in system same before and after transfer</td></tr><tr><td><strong>Isolation</strong></td><td>Concurrent transactions don't interfere with each other</td><td>Two simultaneous transfers don't see each other's intermediate states</td></tr><tr><td><strong>Durability</strong></td><td>Committed transaction effects are permanent even after crashes</td><td>After commit, transfer survives power failure</td></tr></table>
+          <p><strong>Purpose of System Log:</strong> A system log (Write-Ahead Log) records all database operations: [start_transaction T], [write_item T X old_val new_val], [commit T], [abort T]. Used for: <strong>UNDO</strong> (rollback failed transactions) and <strong>REDO</strong> (re-apply committed changes after crash) to maintain Durability and Atomicity.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 Movie DB ER 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q2</span>
+        <span class="qtit">Movie Database — Identify entities, attributes, draw ER diagram (Movies, Actors, Directors, Companies)</span>
+        <span class="qimp">⭐ 10 marks</span>
+        <span class="qmk">10 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>Entity</th><th>PK</th><th>Key Attributes</th></tr><tr><td>MOVIE</td><td class="pk">(Title, Year)</td><td>Length_mins, Plot_outline, {Genres} (multi-valued), Production_Co</td></tr><tr><td>ACTOR</td><td class="pk">(Name, DOB)</td><td>Can also direct</td></tr><tr><td>DIRECTOR</td><td class="pk">(Name, DOB)</td><td>Can also act</td></tr><tr><td>PRODUCTION_COMPANY</td><td class="pk">Company_Name</td><td>Address</td></tr></table>
+          <table class="dt"><tr><th>Relationship</th><th>Entities</th><th>Cardinality</th><th>Attributes</th></tr><tr><td>APPEARS_IN</td><td>ACTOR ↔ MOVIE</td><td>M:N</td><td>Role</td></tr><tr><td>DIRECTS</td><td>DIRECTOR ↔ MOVIE</td><td>M:N</td><td>—</td></tr><tr><td>PRODUCES</td><td>PROD_CO → MOVIE</td><td>1:N</td><td>—</td></tr><tr><td>SAYS (Ternary)</td><td>ACTOR+MOVIE→Quote</td><td>—</td><td>Quote_text</td></tr></table>
+          <p><strong>Relational Mapping:</strong></p>
+          <div class="schema">MOVIE(<span class="pk">Title</span>, <span class="pk">Year</span>, Length_mins, Plot_outline, <span class="fk">Company_Name</span>)</div>
+          <div class="schema">MOVIE_GENRE(<span class="pk">Title</span>, <span class="pk">Year</span>, <span class="pk">Genre</span>)</div>
+          <div class="schema">ACTOR(<span class="pk">Name</span>, <span class="pk">DOB</span>)</div>
+          <div class="schema">DIRECTOR(<span class="pk">Name</span>, <span class="pk">DOB</span>)</div>
+          <div class="schema">APPEARS_IN(<span class="pk">Actor_Name</span>, <span class="pk">Actor_DOB</span>, <span class="pk">Title</span>, <span class="pk">Year</span>, Role)</div>
+          <div class="schema">DIRECTS(<span class="pk">Dir_Name</span>, <span class="pk">Dir_DOB</span>, <span class="pk">Title</span>, <span class="pk">Year</span>)</div>
+          <div class="schema">PRODUCTION_COMPANY(<span class="pk">Company_Name</span>, Address)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3a Branch/Staff SQL 2019 -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q3a</span>
+        <span class="qtit">Branch &amp; Staff — CREATE TABLE + 4 SQL queries (IN, MIN/MAX/AVG, HAVING, ALL subquery)</span>
+        <span class="qimp">⭐ Full SQL</span>
+        <span class="qmk">10 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+<pre><span class="cm">-- CREATE TABLE Branch and Staff</span>
+<span class="kw">CREATE TABLE</span> Branch (
+  branchNo  <span class="fn">CHAR</span>(<span class="num">4</span>) <span class="kw">PRIMARY KEY</span>,
+  street    <span class="fn">VARCHAR</span>(<span class="num">30</span>),
+  city      <span class="fn">VARCHAR</span>(<span class="num">20</span>),
+  postcode  <span class="fn">CHAR</span>(<span class="num">8</span>)
+);
+<span class="kw">CREATE TABLE</span> Staff (
+  staffNo   <span class="fn">CHAR</span>(<span class="num">5</span>) <span class="kw">PRIMARY KEY</span>,
+  fname     <span class="fn">VARCHAR</span>(<span class="num">15</span>) <span class="kw">NOT NULL</span>,
+  lname     <span class="fn">VARCHAR</span>(<span class="num">15</span>) <span class="kw">NOT NULL</span>,
+  sex       <span class="fn">CHAR</span>(<span class="num">1</span>) <span class="kw">CHECK</span>(sex <span class="kw">IN</span>(<span class="str">'M'</span>,<span class="str">'F'</span>)),
+  DOB       <span class="fn">DATE</span>,
+  salary    <span class="fn">DECIMAL</span>(<span class="num">9</span>,<span class="num">2</span>),
+  branchNo  <span class="fn">CHAR</span>(<span class="num">4</span>) <span class="kw">REFERENCES</span> Branch(branchNo)
+);
+
+<span class="cm">-- (i) Branch offices in London or Bristol</span>
+<span class="kw">SELECT</span> street, city, postcode
+<span class="kw">FROM</span>   Branch
+<span class="kw">WHERE</span>  city <span class="kw">IN</span> (<span class="str">'London'</span>, <span class="str">'Bristol'</span>);
+
+<span class="cm">-- (ii) Min, max, avg salary</span>
+<span class="kw">SELECT</span> <span class="fn">MIN</span>(salary), <span class="fn">MAX</span>(salary), <span class="fn">AVG</span>(salary)
+<span class="kw">FROM</span>   Staff;
+
+<span class="cm">-- (iii) Branches with more than 1 staff — count and salary sum</span>
+<span class="kw">SELECT</span>   branchNo, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> Cnt, <span class="fn">SUM</span>(salary) <span class="kw">AS</span> TotSal
+<span class="kw">FROM</span>     Staff
+<span class="kw">GROUP BY</span> branchNo
+<span class="kw">HAVING</span>   <span class="fn">COUNT</span>(*) > <span class="num">1</span>;
+
+<span class="cm">-- (iv) Staff earning more than ALL staff at B003</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> Staff
+<span class="kw">WHERE</span>  salary > <span class="kw">ALL</span>(
+  <span class="kw">SELECT</span> salary <span class="kw">FROM</span> Staff <span class="kw">WHERE</span> branchNo=<span class="str">'B003'</span>);</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3b File calc 2019 r=30000 B=4096 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q3b</span>
+        <span class="qtit">r=30000, B=4096, R=100, V=9, P=6 — bfr, b, index bfr, index blocks, binary search</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="g3">
+            <div class="fc"><h5 style="color:var(--teal)">bfr</h5><p>⌊4096/100⌋ = <strong>40</strong></p></div>
+            <div class="fc"><h5 style="color:var(--gold)">b</h5><p>⌈30000/40⌉ = <strong>750</strong></p></div>
+            <div class="fc"><h5 style="color:var(--lilac)">r_i</h5><p>9+6 = <strong>15 bytes</strong></p></div>
+            <div class="fc"><h5 style="color:var(--rose)">bfr_i</h5><p>⌊4096/15⌋ = <strong>273</strong></p></div>
+            <div class="fc"><h5 style="color:var(--sky)">b_i</h5><p>⌈750/273⌉ = <strong>3 blocks</strong></p></div>
+            <div class="fc"><h5 style="color:var(--lime)">Search</h5><p>⌈log₂(3)⌉+1 = <strong>3 accesses</strong></p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 B+ tree 2019 -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q4</span>
+        <span class="qtit">B+ tree p=3, p_leaf=2 — Insert 9,5,2,7,4,15 step by step</span>
+        <span class="qimp">⭐ B+ Tree</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>p_leaf=2: max 2 keys per leaf. Overflow on 3rd key.</p>
+          <p><strong>Insert 9:</strong></p><div class="btlv"><div class="btn leaf"><span class="k">9</span></div></div>
+          <p><strong>Insert 5:</strong></p><div class="btlv"><div class="btn leaf"><span class="k">5</span><span class="k">9</span></div></div>
+          <p><strong>Insert 2 → [2,5,9] overflow → split: [2] | [5,9], 5 copied to root:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">5</span></div></div>
+          <div class="btc">↙ &nbsp;&nbsp;&nbsp; ↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">2</span></div><span style="color:var(--dim);padding:0 .4rem">↔</span><div class="btn leaf"><span class="k">5</span><span class="k">9</span></div></div>
+          <p><strong>Insert 7 → right leaf [5,7,9] overflow → split [5] | [7,9], 7 copied to root=[5,7]:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">5</span><span class="k">7</span></div></div>
+          <div class="btc">↙ &nbsp; ↓ &nbsp; ↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">2</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">5</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">7</span><span class="k">9</span></div></div>
+          <p><strong>Insert 4 → [2,4] in left leaf. No overflow:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">5</span><span class="k">7</span></div></div>
+          <div class="btc">↙ &nbsp; ↓ &nbsp; ↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">2</span><span class="k">4</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">5</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">7</span><span class="k">9</span></div></div>
+          <p><strong>Insert 15 → right leaf [7,9,15] overflow → split [7]|[9,15], 9 up → root=[5,7,9] overflow → new root=7:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">7</span></div></div>
+          <div class="btc">↙ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↘</div>
+          <div class="btlv"><div class="btn"><span class="k">5</span></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="btn"><span class="k">9</span></div></div>
+          <div class="btc">↙↘ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↙↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">2</span><span class="k">4</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">5</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">7</span></div><span style="color:var(--dim)">↔</span><div class="btn leaf"><span class="k">9</span><span class="k">15</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7b DBMS advantages 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q7b</span>
+        <span class="qtit">Four advantages of DBMS over conventional file system</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>#</th><th>Advantage</th><th>Explanation</th><th>File System Drawback</th></tr><tr><td>1</td><td><strong>Data Redundancy Control</strong></td><td>Normalization ensures each fact stored once</td><td>Same data duplicated across multiple files</td></tr><tr><td>2</td><td><strong>Data Consistency</strong></td><td>Single update propagates everywhere</td><td>Manual updates across files → inconsistency</td></tr><tr><td>3</td><td><strong>Concurrent Multi-user Access</strong></td><td>ACID transactions prevent conflicts</td><td>No built-in concurrency control</td></tr><tr><td>4</td><td><strong>Data Integrity &amp; Security</strong></td><td>Constraints (PK, FK, CHECK) auto-enforced; fine-grained access control</td><td>No enforcement, no per-user permissions</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5a SUPPLIER-PART-PROJECT SQL 2019 -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q5a</span>
+        <span class="qtit">SUPPLIER–PART–PROJECT–SUPPLY — 3 SQL queries: exactly 2 projects, VIEW, LIKE 'R%'</span>
+        <span class="qimp">⭐ Q5a — 9 marks</span>
+        <span class="qmk">9 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="cb"><h4>🧠 Hinglish Concept</h4><p><strong>COUNT DISTINCT</strong> — ek part ko kitne alag projects ke liye supply kiya gaya. HAVING clause aggregate ke baad filter karta hai. VIEW ek saved query hai jise table ki tarah use karte hain. LIKE 'R%' means R se shuru hone wale names.</p></div>
+        <div class="ab">
+          <p>SUPPLIER(<span class="pk">Sno</span>, Sname) | PART(<span class="pk">Pno</span>, Pname) | PROJECT(<span class="pk">Jno</span>, Jname) | SUPPLY(<span class="pk">Sno</span>, <span class="pk">Pno</span>, <span class="pk">Jno</span>)</p>
+<pre><span class="cm">-- (i) Part numbers and names supplied to EXACTLY 2 projects</span>
+<span class="kw">SELECT</span>   P.Pno, P.Pname
+<span class="kw">FROM</span>     PART P
+         <span class="kw">JOIN</span> SUPPLY S <span class="kw">ON</span> P.Pno = S.Pno
+<span class="kw">GROUP BY</span> P.Pno, P.Pname
+<span class="kw">HAVING</span>   <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> S.Jno) = <span class="num">2</span>;
+
+<span class="cm">-- (ii) VIEW: project names with total number of suppliers</span>
+<span class="kw">CREATE VIEW</span> ProjectSupplierCount <span class="kw">AS</span>
+<span class="kw">SELECT</span>   J.Jname,
+         <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> S.Sno) <span class="kw">AS</span> Total_Suppliers
+<span class="kw">FROM</span>     PROJECT J
+         <span class="kw">JOIN</span> SUPPLY S <span class="kw">ON</span> J.Jno = S.Jno
+<span class="kw">GROUP BY</span> J.Jno, J.Jname;
+
+<span class="cm">-- Use the view just like a table:</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> ProjectSupplierCount;
+
+<span class="cm">-- (iii) Project names, supplier names, part names for</span>
+<span class="cm">--       suppliers whose name starts with 'R'</span>
+<span class="kw">SELECT</span>   J.Jname   <span class="kw">AS</span> Project_Name,
+         Su.Sname  <span class="kw">AS</span> Supplier_Name,
+         P.Pname   <span class="kw">AS</span> Part_Name
+<span class="kw">FROM</span>     SUPPLY S
+         <span class="kw">JOIN</span> SUPPLIER Su <span class="kw">ON</span> S.Sno = Su.Sno
+         <span class="kw">JOIN</span> PART P      <span class="kw">ON</span> S.Pno = P.Pno
+         <span class="kw">JOIN</span> PROJECT J   <span class="kw">ON</span> S.Jno = J.Jno
+<span class="kw">WHERE</span>    Su.Sname <span class="kw">LIKE</span> <span class="str">'R%'</span>
+<span class="kw">ORDER BY</span> Su.Sname, J.Jname;</pre>
+          <div class="note">DISTINCT inside COUNT is critical — the same supplier may supply the same part to the same project multiple times (different shipments). COUNT(DISTINCT Jno) counts unique project IDs only.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5b Universal relation R={A..H} 2NF 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q5b</span>
+        <span class="qtit">Universal R = {A,B,C,D,E,F,G,H}, F = {{A,B}→C, {B,D}→{E,F}, {A,D}→{G,H}} — Key + 2NF</span>
+        <span class="qimp">⭐ Normalization</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="cb"><h4>🧠 Hinglish Concept</h4><p>Candidate key nikalne ke liye: jo attributes sirf RHS par hain woh key mein nahi aa sakte. Jo attributes sirf LHS mein hain woh key mein zaroor hone chahiye. Phir closures compute karo. 2NF ke liye partial dependencies hatao — non-prime attributes jo sirf PK ke subset par depend karte hain.</p></div>
+        <div class="ab">
+          <p><strong>Step 1 — Find Candidate Key:</strong></p>
+          <p>RHS-only (never on LHS): C, E, F, G, H — cannot be in any key.<br>
+          Must be in key: A, B, D (appear on LHS, never determined by others alone).</p>
+          <p>Try {A,B,D}⁺:</p>
+          <div class="clt">
+            <div class="cr"><span class="cs">Start:</span><span class="cv">{A, B, D}</span></div>
+            <div class="cr"><span class="cs">AB→C:</span><span class="cv">{A, B, C, D}</span><span class="crule">AB ⊆ result</span></div>
+            <div class="cr"><span class="cs">BD→EF:</span><span class="cv">{A, B, C, D, E, F}</span><span class="crule">BD ⊆ result</span></div>
+            <div class="cr"><span class="cs">AD→GH:</span><span class="cv">{A, B, C, D, E, F, G, H}</span><span class="crule">AD ⊆ result = all attrs ✓</span></div>
+          </div>
+          <p><span class="kh">Candidate Key = {A, B, D}</span></p>
+          <p>Prime attrs: A, B, D &nbsp;|&nbsp; Non-prime: C, E, F, G, H</p>
+          <br>
+          <p><strong>Step 2 — Check for Partial Dependencies (2NF):</strong></p>
+          <table class="dt">
+            <tr><th>FD</th><th>LHS subset of PK?</th><th>Partial dep?</th></tr>
+            <tr><td class="fd" style="display:table-cell">{A,B}→C</td><td>{A,B} ⊂ {A,B,D} ✓</td><td class="vio">Yes — C is non-prime</td></tr>
+            <tr><td class="fd" style="display:table-cell">{B,D}→{E,F}</td><td>{B,D} ⊂ {A,B,D} ✓</td><td class="vio">Yes — E,F are non-prime</td></tr>
+            <tr><td class="fd" style="display:table-cell">{A,D}→{G,H}</td><td>{A,D} ⊂ {A,B,D} ✓</td><td class="vio">Yes — G,H are non-prime</td></tr>
+          </table>
+          <p>All three FDs are partial dependencies → relation is NOT in 2NF.</p>
+          <br>
+          <p><strong>Step 3 — Decompose to 2NF:</strong></p>
+          <div class="schema">R1(<span class="pk">A</span>, <span class="pk">B</span>, C) — from {A,B}→C</div>
+          <div class="schema">R2(<span class="pk">B</span>, <span class="pk">D</span>, E, F) — from {B,D}→{E,F}</div>
+          <div class="schema">R3(<span class="pk">A</span>, <span class="pk">D</span>, G, H) — from {A,D}→{G,H}</div>
+          <div class="schema">R4(<span class="pk">A</span>, <span class="pk">B</span>, <span class="pk">D</span>) — to preserve the original candidate key</div>
+          <p>All partial dependencies removed. Each relation in 2NF ✓</p>
+          <div class="note">Check 3NF: In R1, R2, R3 — each has a simple composite PK with no further transitive deps. R4 is just a key relation. All are in 3NF as well.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6a CUSTOMER-ORDER-SHIPMENT RA 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q6a</span>
+        <span class="qtit">CUSTOMER–ORDER–SHIPMENT — 3 Relational Algebra queries (Warehouse W1, customer ABC, exactly 2 orders)</span>
+        <span class="qimp">⭐ Q6a — 9 marks</span>
+        <span class="qmk">9 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="cb"><h4>🧠 Hinglish Concept</h4><p>RA mein: <strong>σ</strong> (sigma) conditions filter karta hai, <strong>Π</strong> (pi) columns select karta hai, <strong>⋈</strong> (bowtie) join karta hai. Complex queries ko step by step todna easy hai — pehle join karo, phir filter, phir project.</p></div>
+        <div class="ab">
+          <p>CUSTOMER(<span class="pk">Cust_no</span>, Cname, City) | ORDER(<span class="pk">Order_no</span>, Odate, <span class="fk">Cust_no</span>, Ord_amt) | SHIPMENT(<span class="pk">Order_no</span>, <span class="pk">Warehouse_no</span>, Ship_date)</p>
+          <br>
+          <p><strong>(i) List Order_no and Ship_date for orders from Warehouse 'W1':</strong></p>
+          <pre>Π<sub>Order_no, Ship_date</sub> (σ<sub>Warehouse_no = 'W1'</sub> (SHIPMENT))</pre>
+          <p>SQL equivalent:</p>
+<pre><span class="kw">SELECT</span> Order_no, Ship_date
+<span class="kw">FROM</span>   SHIPMENT
+<span class="kw">WHERE</span>  Warehouse_no = <span class="str">'W1'</span>;</pre>
+          <br>
+          <p><strong>(ii) List Warehouse_no for orders shipped to customer 'ABC', with corresponding Order_no:</strong></p>
+          <pre>Π<sub>S.Warehouse_no, S.Order_no</sub> (σ<sub>Cname='ABC'</sub>(CUSTOMER) ⋈ ORDER ⋈ SHIPMENT)</pre>
+          <p>SQL equivalent:</p>
+<pre><span class="kw">SELECT</span> S.Warehouse_no, S.Order_no
+<span class="kw">FROM</span>   CUSTOMER C
+       <span class="kw">JOIN</span> <span class="fn">ORDER</span> O    <span class="kw">ON</span> C.Cust_no  = O.Cust_no
+       <span class="kw">JOIN</span> SHIPMENT S <span class="kw">ON</span> O.Order_no = S.Order_no
+<span class="kw">WHERE</span>  C.Cname = <span class="str">'ABC'</span>;</pre>
+          <br>
+          <p><strong>(iii) List Customer names who were shipped exactly 2 orders:</strong></p>
+          <pre>Temp ← <sub>Cust_no</sub>ℱ<sub>COUNT(Order_no)</sub> (CUSTOMER ⋈ ORDER ⋈ SHIPMENT)
+Result ← Π<sub>Cname</sub>(σ<sub>COUNT=2</sub>(Temp))</pre>
+          <p>SQL equivalent:</p>
+<pre><span class="kw">SELECT</span>   C.Cname
+<span class="kw">FROM</span>     CUSTOMER C
+         <span class="kw">JOIN</span> <span class="fn">ORDER</span> O    <span class="kw">ON</span> C.Cust_no  = O.Cust_no
+         <span class="kw">JOIN</span> SHIPMENT S <span class="kw">ON</span> O.Order_no = S.Order_no
+<span class="kw">GROUP BY</span> C.Cust_no, C.Cname
+<span class="kw">HAVING</span>   <span class="fn">COUNT</span>(S.Order_no) = <span class="num">2</span>;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6b Universal R={A..J} 2NF 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q6b</span>
+        <span class="qtit">R = {A,B,C,D,E,F,G,H,I,J}, F = {{A,B}→C, {A}→{D,E}, {B}→F, {F}→{G,H}, {D}→{I,J}} — Key + 2NF + 3NF</span>
+        <span class="qimp">⭐ Complex Normalization</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>Step 1 — Find Candidate Key:</strong></p>
+          <p>Attributes only on RHS (never LHS): C, D, E, F, G, H, I, J — cannot be in key.<br>
+          Must be in key: A, B (they appear on LHS and are not determined by anything).</p>
+          <p>Try {A,B}⁺:</p>
+          <div class="clt">
+            <div class="cr"><span class="cs">Start:</span><span class="cv">{A, B}</span></div>
+            <div class="cr"><span class="cs">AB→C:</span><span class="cv">{A, B, C}</span><span class="crule">AB ⊆ result</span></div>
+            <div class="cr"><span class="cs">A→DE:</span><span class="cv">{A, B, C, D, E}</span><span class="crule">A ⊆ result</span></div>
+            <div class="cr"><span class="cs">B→F:</span><span class="cv">{A, B, C, D, E, F}</span><span class="crule">B ⊆ result</span></div>
+            <div class="cr"><span class="cs">F→GH:</span><span class="cv">{A, B, C, D, E, F, G, H}</span><span class="crule">F ⊆ result</span></div>
+            <div class="cr"><span class="cs">D→IJ:</span><span class="cv">{A, B, C, D, E, F, G, H, I, J}</span><span class="crule">= all attrs ✓</span></div>
+          </div>
+          <p><span class="kh">Candidate Key = {A, B}</span></p>
+          <p>Prime: A, B &nbsp;|&nbsp; Non-prime: C, D, E, F, G, H, I, J</p>
+          <br>
+          <p><strong>Step 2 — Partial Dependencies (for 2NF):</strong></p>
+          <table class="dt">
+            <tr><th>FD</th><th>Subset of PK {A,B}?</th><th>Partial?</th></tr>
+            <tr><td class="fd" style="display:table-cell">A→{D,E}</td><td>A ⊂ {A,B} ✓</td><td class="vio">Yes — D,E non-prime</td></tr>
+            <tr><td class="fd" style="display:table-cell">B→F</td><td>B ⊂ {A,B} ✓</td><td class="vio">Yes — F non-prime</td></tr>
+          </table>
+          <br>
+          <p><strong>Step 3 — Decompose to 2NF:</strong></p>
+          <div class="schema">R1(<span class="pk">A</span>, D, E) — from A→{D,E}</div>
+          <div class="schema">R2(<span class="pk">B</span>, F) — from B→F</div>
+          <div class="schema">R3(<span class="pk">A</span>, <span class="pk">B</span>, C) — full dependency, keep AB as PK</div>
+          <br>
+          <p><strong>Step 4 — Check 3NF (transitive deps in each relation):</strong></p>
+          <table class="dt">
+            <tr><th>Relation</th><th>Transitive Dep?</th><th>Action</th></tr>
+            <tr><td>R1(A, D, E)</td><td>D→{I,J}: D is non-prime, I,J non-prime → <span class="bvio">Transitive!</span></td><td>Decompose</td></tr>
+            <tr><td>R2(B, F)</td><td>F→{G,H}: F is non-prime → <span class="bvio">Transitive!</span></td><td>Decompose</td></tr>
+            <tr><td>R3(A,B,C)</td><td>No further FDs among non-prime attrs</td><td class="ok">In 3NF ✓</td></tr>
+          </table>
+          <br>
+          <p><strong>Step 5 — Final 3NF Decomposition:</strong></p>
+          <div class="schema">R3(<span class="pk">A</span>, <span class="pk">B</span>, C)</div>
+          <div class="schema">R1a(<span class="pk">A</span>, D, E) — after removing D→IJ</div>
+          <div class="schema">R1b(<span class="pk">D</span>, I, J) — from D→{I,J}</div>
+          <div class="schema">R2a(<span class="pk">B</span>, F) — after removing F→GH</div>
+          <div class="schema">R2b(<span class="pk">F</span>, G, H) — from F→{G,H}</div>
+          <p>All partial and transitive dependencies eliminated. All relations in 3NF ✓</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7a Item/Customer/Issue RA 2019 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yc">2019 · Q7a</span>
+        <span class="qtit">ITEM, CUSTOMER, ISSUE — 3 Relational Algebra queries (price&gt;1000, costliest, item I005)</span>
+        <span class="qimp">⭐ Q7a — 6 marks</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="cb"><h4>🧠 Hinglish Concept</h4><p>"Costliest item" nikalna = wo item jiska price sabse zyada hai. RA mein isko outer join ya difference se solve karte hain — wo items jo kisi doosre item se bade nahi hain woh maximum hain. SQL mein MAX() aggregate use karo.</p></div>
+        <div class="ab">
+          <p>item(<span class="pk">ItemCode</span>, ItemName, ItemPrice, ItemQty) | customer(<span class="pk">CustCode</span>, CustName, CustAddress, CustPhone) | issue(<span class="pk">IssueCode</span>, <span class="pk">ItemCode</span>, IssueDate, IssueQty, <span class="fk">CustCode</span>)</p>
+          <br>
+          <p><strong>(i) Names of distinct customers who got an item with price above 1000:</strong></p>
+          <pre>Π<sub>CustName</sub>(σ<sub>ItemPrice &gt; 1000</sub>(item ⋈ issue ⋈ customer))</pre>
+          <p>SQL:</p>
+<pre><span class="kw">SELECT DISTINCT</span> C.CustName
+<span class="kw">FROM</span>   customer C
+       <span class="kw">JOIN</span> issue I  <span class="kw">ON</span> C.CustCode = I.CustCode
+       <span class="kw">JOIN</span> item It  <span class="kw">ON</span> I.ItemCode = It.ItemCode
+<span class="kw">WHERE</span>  It.ItemPrice &gt; <span class="num">1000</span>;</pre>
+          <br>
+          <p><strong>(ii) Details of the costliest item:</strong></p>
+          <pre><span class="cm">-- RA: items NOT exceeded by any other item's price</span>
+Exceeds ← Π<sub>item1.ItemCode</sub>(σ<sub>item1.ItemPrice &lt; item2.ItemPrice</sub>(ρ<sub>item1</sub>(item) × ρ<sub>item2</sub>(item)))
+Result ← item − (item ⋈ Exceeds)</pre>
+          <p>SQL (simpler):</p>
+<pre><span class="kw">SELECT</span> *
+<span class="kw">FROM</span>   item
+<span class="kw">WHERE</span>  ItemPrice = (<span class="kw">SELECT MAX</span>(ItemPrice) <span class="kw">FROM</span> item);</pre>
+          <br>
+          <p><strong>(iii) Details of all customers who bought item with ItemCode 'I005':</strong></p>
+          <pre>Π<sub>CustCode, CustName, CustAddress, CustPhone</sub>(customer ⋈ σ<sub>ItemCode='I005'</sub>(issue))</pre>
+          <p>SQL:</p>
+<pre><span class="kw">SELECT</span> C.CustCode, C.CustName, C.CustAddress, C.CustPhone
+<span class="kw">FROM</span>   customer C
+       <span class="kw">JOIN</span> issue I <span class="kw">ON</span> C.CustCode = I.CustCode
+<span class="kw">WHERE</span>  I.ItemCode = <span class="str">'I005'</span>;</pre>
+          <div class="note">For query (ii) in RA, the "Exceeds" relation finds all items that have at least one other item more expensive than them. Subtracting these from item gives us only the maximum-priced item(s).</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end 2019 -->
+</div><!-- end 2019 paper -->
+
+<div class="div"></div>
+
+<!-- ════════════════════
+  2018 PAPER (Paper 4803)
+════════════════════ -->
+<div class="paper" id="p2018">
+  <div class="paper-head" style="border-left-color:var(--lilac)">
+    <h2>📄 2018 Paper — Sr. No. 4803 | B.Sc.(H) Computer Science Sem IV</h2>
+    <p>Maximum Marks: 75 | Duration: 3 Hours | Unique Code: 32341403</p>
+    <div class="paper-meta"><span class="pmeta">Q1 compulsory</span><span class="pmeta">Any 4 of Q2-Q7</span><span class="pmeta">23 questions</span></div>
+  </div>
+
+  <div class="sec">
+    <div class="sech"><span class="secn">ALL QUESTIONS</span><h3 class="sect">Q1–Q7 <span>Complete</span></h3></div>
+
+    <!-- Q1a Surrogate key -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1a</span>
+        <span class="qtit">When is surrogate key necessary while mapping EER to relational DB?</span>
+        <span class="qmk">2 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>A <strong>surrogate key</strong> is a system-generated unique ID (e.g., auto-increment integer) used as PK. It is necessary when:</p>
+          <ul>
+            <li>The entity has <strong>no natural key</strong> (no attribute uniquely identifies it)</li>
+            <li>The natural key is <strong>too complex or large</strong> for efficient indexing and FK references</li>
+            <li>A <strong>weak entity</strong> is mapped — its identity depends on owner; surrogate replaces the partial key + owner PK combination</li>
+            <li>Natural keys can <strong>change over time</strong> (email, phone) — surrogate keys provide stable references</li>
+          </ul>
+          <p>Example: ORDER_LINE weak entity → surrogate key OrderLineID instead of composite (OrderID, LineNo)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1b FD violations B→C D→E 2018 -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1b</span>
+        <span class="qtit">R(A,B,C,D,E) — Which dependencies violated: B→C and D→E?</span>
+        <span class="qimp">⭐ FD Check</span>
+        <span class="qmk">2 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr><tr><td>a1</td><td class="hl">b1</td><td class="hl">60</td><td>d1</td><td>2</td></tr><tr><td>a2</td><td>b2</td><td>80</td><td>d2</td><td>3</td></tr><tr><td>a3</td><td class="hl">b1</td><td class="hl">50</td><td>d3</td><td>4</td></tr></table>
+          <p><strong>(i) B → C:</strong> b1 appears in rows 1 and 3 with C=60 and C=50 (different!)</p>
+          <p><span class="bvio">✗ VIOLATED</span> — b1 maps to two different C values</p>
+          <p><strong>(ii) D → E:</strong> d1→2, d2→3, d3→4 — all unique mappings.</p>
+          <p><span class="bok">✓ NOT VIOLATED</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1c Role names 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1c</span>
+        <span class="qtit">Why necessary to give role names in recursive relationship? Justify with example</span>
+        <span class="qmk">2 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>In a recursive relationship, the same entity type participates in multiple roles. Role names are needed to <strong>distinguish the different participations</strong> and avoid ambiguity.</p>
+          <p><strong>Example:</strong> EMPLOYEE entity with SUPERVISES relationship: one EMPLOYEE is the <em>supervisor</em>, another is the <em>supervisee</em>. When mapped: SUPERVISES(<span class="ok">supervisor_SSN</span>, <span class="ok">supervisee_SSN</span>) — without role names, both columns would be "SSN" and we cannot tell which is which.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1d ON UPDATE CASCADE / ON DELETE NULL 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1d</span>
+        <span class="qtit">SQL clauses: ON UPDATE CASCADE and ON DELETE NULL — explain usage</span>
+        <span class="qmk">2 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>ON UPDATE CASCADE:</strong> When the referenced PK value in the parent table is updated, the FK values in all child tables are automatically updated to match. Maintains referential integrity automatically.</p>
+          <p><strong>ON DELETE SET NULL:</strong> When a referenced row in the parent table is deleted, the FK values in the child table are automatically set to NULL (instead of causing an error or cascading delete).</p>
+          <p>Example: Department table (parent) referenced by Employee (child via DeptNo FK):</p>
+          <ul>
+            <li>ON UPDATE CASCADE: Change DeptNo 'D1' to 'D100' → all employees with DeptNo='D1' auto-update to 'D100'</li>
+            <li>ON DELETE SET NULL: Delete Department 'D1' → all employees in D1 get DeptNo=NULL</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1e Closure of CD 2018 -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1e</span>
+        <span class="qtit">R(A,B,C,D,E,F,G), F={A→BC, E→C, CD→AEG, ABG→BD, DG→BC} — Find (CD)⁺, is CD a candidate key?</span>
+        <span class="qimp">⭐ Closure</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="clt">
+            <div class="cr"><span class="cs">Start:</span><span class="cv">{C, D}</span></div>
+            <div class="cr"><span class="cs">Apply:</span><span class="cv">CD→AEG → {A, C, D, E, G}</span><span class="crule">CD∈result</span></div>
+            <div class="cr"><span class="cs">Apply:</span><span class="cv">A→BC → add B → {A, B, C, D, E, G}</span><span class="crule">A∈result</span></div>
+            <div class="cr"><span class="cs">Apply:</span><span class="cv">ABG→BD → B,D already in set, no change</span></div>
+            <div class="cr"><span class="cs">Apply:</span><span class="cv">DG→BC → B,C already there, no change</span></div>
+            <div class="cr"><span class="cs">Result:</span><span class="cv" style="color:var(--gold)">(CD)⁺ = {A, B, C, D, E, G} = all attributes ✓</span></div>
+          </div>
+          <p><span class="kh">CD IS a Candidate Key</span> — (CD)⁺ = all attributes of R, and neither C alone nor D alone is a superkey (C⁺={C}, D⁺={D} neither covers all).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1f Medical DB PK FK 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1f</span>
+        <span class="qtit">Medical DB (Patient, Physician, Test) — Identify PK and FK for each relation</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>Patient(PP#, PName) | Physician(Dname, Specialization) | Test(PP#, Test_name, Date, Time, Dname)</p>
+          <table class="dt"><tr><th>Table</th><th>Primary Key</th><th>Foreign Key</th><th>References</th></tr><tr><td>Patient</td><td class="pk">PP#</td><td>None</td><td>—</td></tr><tr><td>Physician</td><td class="pk">Dname</td><td>None</td><td>— (Assumption: Dname uniquely identifies physician)</td></tr><tr><td>Test</td><td class="pk">PP#, Test_name, Date, Time</td><td class="fk">PP#</td><td>Patient.PP#</td></tr><tr><td>Test</td><td></td><td class="fk">Dname</td><td>Physician.Dname</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1g Identifying Rel and Complex Attr 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1g</span>
+        <span class="qtit">Give example of Identifying Relationship and Complex Attribute with proper ER notation</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>(i) Identifying Relationship:</strong></p>
+          <p>Connects a weak entity to its owner strong entity. Notation: <strong>double diamond</strong>. The weak entity is shown with a <strong>double rectangle</strong>.</p>
+          <p>Example: ORDER (strong entity, PK=OrderID) → HAS (identifying relationship, double diamond) → ORDER_LINE (weak entity, double rectangle, partial key=LineNo)</p>
+          <p>ORDER_LINE PK = (OrderID from ORDER, LineNo) — cannot exist without ORDER.</p>
+          <br>
+          <p><strong>(ii) Complex Attribute:</strong></p>
+          <p>An attribute that is both <strong>composite</strong> (has sub-parts) AND <strong>multi-valued</strong> (can have multiple values). Notation: <strong>double ellipse with child ellipses</strong>.</p>
+          <p>Example: {Address(Street, City, Zip)} on EMPLOYEE — an employee can have multiple addresses, and each address has sub-components.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1h DDL DML etc 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1h</span>
+        <span class="qtit">Differentiate: DDL vs DML, Logical vs Physical Data Independence, Intension vs Extension</span>
+        <span class="qimp">⭐ 6 marks</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p><strong>(i) DDL vs DML</strong></p>
+          <table class="dt"><tr><th>DDL</th><th>DML</th></tr><tr><td>Data Definition Language</td><td>Data Manipulation Language</td></tr><tr><td>Defines/modifies DB structure (schema)</td><td>Manipulates actual data</td></tr><tr><td>CREATE, ALTER, DROP, TRUNCATE</td><td>SELECT, INSERT, UPDATE, DELETE</td></tr><tr><td>Auto-committed, cannot rollback</td><td>Can be rolled back in transaction</td></tr></table>
+          <p><strong>(ii) Logical vs Physical Data Independence</strong></p>
+          <table class="dt"><tr><th>Logical</th><th>Physical</th></tr><tr><td>Change conceptual schema without affecting external schemas</td><td>Change internal/storage schema without affecting conceptual</td></tr><tr><td>Example: Add Phone column to EMPLOYEE table</td><td>Example: Change from B-tree to hash file organization</td></tr><tr><td>Harder to achieve</td><td>Easier to achieve</td></tr></table>
+          <p><strong>(iii) Database Intension (Schema) vs Extension (State)</strong></p>
+          <table class="dt"><tr><th>Intension (Schema)</th><th>Extension (State/Instance)</th></tr><tr><td>Structure: table names, attribute names, data types, constraints</td><td>Actual data values at a specific time</td></tr><tr><td>Rarely changes (stable)</td><td>Changes frequently with every DML operation</td></tr><tr><td>STUDENT(ID INT, Name VARCHAR(50))</td><td>{(1,'Anu'), (2,'Ravi'), (3,'Priya')}</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1i RA B1-B2 and A/B3 2018 -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1i</span>
+        <span class="qtit">Relational Algebra — B1−B2 (Difference) and A/B3 (Division operator)</span>
+        <span class="qimp">⭐ RA Division</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>B1={P2,P4}, B2={P2}, B3={P1,P2,P4}, A has columns (S.No, P.No)</p>
+          <p><strong>(i) B1 − B2:</strong> tuples in B1 but NOT in B2:</p>
+          <table class="dt"><tr><th>P.No</th></tr><tr class="hlg"><td>P4</td></tr></table>
+          <p><strong>(ii) A ÷ B3:</strong> Find S.No values associated with ALL P.No in B3={P1,P2,P4}:</p>
+          <p>Check: S1 has {P1,P2,P3,P4} ⊇ {P1,P2,P4} ✓ | S2 has {P1,P2} ⊄ B3 ✗ | S3 has {P2} ✗ | S4 has {P2,P4} ✗</p>
+          <table class="dt"><tr><th>S.No</th></tr><tr class="hlg"><td>S1</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1j STUDENT_COURSE anomalies 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1j</span>
+        <span class="qtit">STUDENT_COURSE(Name,Course,Grade,Ph_no,Major,Department) — Insertion, Deletion, Modification anomalies</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>Assume: Major → Department (transitive dependency through Name→Major→Department)</p>
+          <div class="ag">
+            <div class="acard i"><h5>➕ INSERTION ANOMALY</h5><p>Cannot add a new department (say "Physics") without enrolling a student in a course in that department — PK components (Name,Course) would be null.</p></div>
+            <div class="acard d"><h5>🗑️ DELETION ANOMALY</h5><p>If the last student in Major="Chemistry" drops all courses, all information about Chemistry department is lost permanently.</p></div>
+            <div class="acard u"><h5>🔄 MODIFICATION ANOMALY</h5><p>If the department for Major="CS" changes, we must update every row where Major="CS". Missing any row causes inconsistency.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1k T1 fails dirty read 2018 -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q1k</span>
+        <span class="qtit">T1 fails at step 7, X=15, Y=5 — Value of X after T2, identify the concurrency problem</span>
+        <span class="qimp">⭐ Dirty Read</span>
+        <span class="qmk">3 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="txt">
+            <tr><th>Step</th><th class="t1">T1</th><th class="t2">T2</th><th>X in DB</th></tr>
+            <tr><td>1</td><td class="t1">Read_item(X) → 15</td><td></td><td>15</td></tr>
+            <tr><td>2</td><td class="t1">X = X+10 = 25</td><td></td><td>15</td></tr>
+            <tr><td>3</td><td class="t1">write_item(X) → X=25 (uncommitted)</td><td></td><td>25</td></tr>
+            <tr><td>4</td><td></td><td class="prob">Read_item(X) → 25 ← DIRTY READ!</td><td>25</td></tr>
+            <tr><td>5</td><td></td><td class="t2">X = X+Y = 25+5 = 30</td><td>25</td></tr>
+            <tr><td>6</td><td></td><td class="t2">write_item(X) → commit; X=30</td><td>30</td></tr>
+            <tr><td>7</td><td class="prob">T1 FAILS → rollback, X should be 15</td><td></td><td class="vio">30</td></tr>
+          </table>
+          <p><strong>Value of X after T2 = 30.</strong> This is NOT correct. Expected = 15+5 = 20 (only T2 should run with original X=15).</p>
+          <p><strong>Problem: DIRTY READ (Temporary Update Problem).</strong> T2 read T1's uncommitted value (25). T1 rolled back to 15, but T2 already committed with X=30. Correct final X should be 20.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2a Project Examination ER 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q2a</span>
+        <span class="qtit">PROJECT_EXAMINATION DB — ER diagram (Students, Projects, Examiners, Reviews)</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>Entity</th><th>PK</th><th>Attributes</th></tr><tr><td>STUDENT</td><td class="pk">Email</td><td>First_name, Last_name</td></tr><tr><td>PROJECT</td><td class="pk">Project_id (surrogate)</td><td>Title, Abstract, File_name</td></tr><tr><td>EXAMINER</td><td class="pk">Email</td><td>First_name, Last_name, Phone, {Areas_of_interest}</td></tr></table>
+          <table class="dt"><tr><th>Relationship</th><th>Entities</th><th>Cardinality</th><th>Attributes</th></tr><tr><td>WRITES</td><td>STUDENT ↔ PROJECT</td><td>M:N (one student writes multiple, multiple students write one)</td><td>Is_Coordinator (role)</td></tr><tr><td>REVIEWS</td><td>EXAMINER ↔ PROJECT</td><td>M:N (2-4 examiners per project)</td><td>Tech_merit, Readability, Originality, Presentation, Recommendation</td></tr></table>
+          <p><strong>Composite attributes:</strong> STUDENT.Name = {First_name, Last_name}, EXAMINER.Name = {First_name, Last_name}</p>
+          <p><strong>Relational Mapping:</strong></p>
+          <div class="schema">STUDENT(<span class="pk">Email</span>, First_name, Last_name)</div>
+          <div class="schema">PROJECT(<span class="pk">Project_id</span>, Title, Abstract, File_name)</div>
+          <div class="schema">EXAMINER(<span class="pk">Email</span>, First_name, Last_name, Phone)</div>
+          <div class="schema">EXAMINER_INTERESTS(<span class="pk">Email</span>, <span class="pk">Interest</span>)</div>
+          <div class="schema">WRITES(<span class="pk">Student_Email</span>, <span class="pk">Project_id</span>, Is_Coordinator)</div>
+          <div class="schema">REVIEWS(<span class="pk">Examiner_Email</span>, <span class="pk">Project_id</span>, Tech_merit, Readability, Originality, Presentation, Recommendation)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2b Cardinality ratios 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q2b</span>
+        <span class="qtit">Cardinality ratios: Country-President, Teacher-Course, Players-Team, Book-Author</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>Entity 1</th><th>Entity 2</th><th>Ratio</th><th>Justification</th></tr><tr><td>Country</td><td>President</td><td><strong>1:1</strong></td><td>One country has one president at a time</td></tr><tr><td>Teacher</td><td>Course</td><td><strong>1:N</strong></td><td>One teacher teaches many courses</td></tr><tr><td>Players</td><td>Team</td><td><strong>N:1</strong></td><td>Many players belong to one team</td></tr><tr><td>Book</td><td>Author</td><td><strong>M:N</strong></td><td>A book can have multiple authors; an author writes multiple books</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3a University timetable 3NF 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q3a</span>
+        <span class="qtit">University timetable relation R — Identify PK, normalize to 3NF</span>
+        <span class="qimp">⭐ 6 marks</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>R = {Course_no, Sec_no, Offering_dept, Credit_hours, Course_level, Instructor_ssn, Semester, Year, Days_hours, Room_no, No_of_students}</p>
+          <p>FDs: Course_no→{Offering_dept, Credit_hours, Course_level} | {Course_no,Sec_no,Semester,Year}→{Days_hours,Room_no,No_of_students,Instructor_ssn} | {Room_no,Days_hours,Semester,Year}→{Instructor_ssn,Course_no,Sec_no}</p>
+          <div class="step"><div class="sn">1</div><div class="sc"><strong>PK:</strong> {Course_no,Sec_no,Semester,Year}⁺ = all attributes. <span class="kh">PK = {Course_no, Sec_no, Semester, Year}</span></div></div>
+          <div class="step"><div class="sn">2</div><div class="sc"><strong>Partial dep check:</strong> Course_no → {Offering_dept,Credit_hours,Course_level} — Course_no ⊂ PK, these are non-prime → <span class="bvio">Partial dep!</span></div></div>
+          <div class="step"><div class="sn">3</div><div class="sc"><strong>3NF decomposition:</strong><br>
+          <div class="schema">R1(<span class="pk">Course_no</span>, Offering_dept, Credit_hours, Course_level)</div>
+          <div class="schema">R2(<span class="pk">Course_no</span>, <span class="pk">Sec_no</span>, <span class="pk">Semester</span>, <span class="pk">Year</span>, Days_hours, Room_no, No_of_students, Instructor_ssn)</div>
+          R2 has two candidate keys: {Course_no,Sec_no,Semester,Year} and {Room_no,Days_hours,Semester,Year} → in BCNF ✓</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3b Minimal Cover 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q3b</span>
+        <span class="qtit">Find Minimal Cover of F = {B→A, D→A, AB→D}</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="step"><div class="sn">1</div><div class="sc"><strong>Step 1: RHS single attribute:</strong> All FDs already have single RHS. F = {B→A, D→A, AB→D}</div></div>
+          <div class="step"><div class="sn">2</div><div class="sc"><strong>Step 2: LHS minimization for AB→D:</strong><br>Can we remove A? B⁺ without A in LHS: {B}→B→A→{A,B}. D∉{A,B} → cannot remove A.<br>Can we remove B? A⁺ without B in LHS: {A}. D∉{A} → cannot remove B.<br>AB→D stays.</div></div>
+          <div class="step"><div class="sn">3</div><div class="sc"><strong>Step 3: Remove redundant FDs:</strong><br>Is D→A redundant? Remove D→A. D⁺ = {D}→AB→D: D⁺ = {D,A,B} (using AB→D with D+A from B→A... wait: without D→A: {D}→AB→D → {D} then AB→D requires A,B both in closure. A∉{D} so can't apply AB→D. D⁺={D}. A∉D⁺ → NOT redundant.<br>Is B→A redundant? Remove B→A. B⁺ = {B}. A∉{B} → NOT redundant.<br>Is AB→D redundant? Remove AB→D. {A,B}⁺ = {A,B}→B→A (already have A,B). {A,B}⁺={A,B}. D∉{A,B} → NOT redundant.</div></div>
+          <p><strong>Minimal Cover = {B→A, D→A, AB→D}</strong> (same as F — all FDs are already minimal)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4a Ternary EER mapping 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q4a</span>
+        <span class="qtit">Ternary EER (CCI: Candidate-Company-Interview) — Map to relational DB</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>CANDIDATE(Name, Department) | COMPANY(Cname) | INTERVIEW(Dept_date) | CCI ternary relationship | RESULTS_IN → JOB_OFFER</p>
+          <p><strong>Strong Entities:</strong></p>
+          <div class="schema">CANDIDATE(<span class="pk">Name</span>, Department)</div>
+          <div class="schema">COMPANY(<span class="pk">Cname</span>)</div>
+          <div class="schema">INTERVIEW(<span class="pk">Interview_id</span>, Dept_date) — surrogate key used</div>
+          <div class="schema">JOB_OFFER(<span class="pk">Offer_id</span>, details)</div>
+          <p><strong>Ternary Relationship CCI (Rule R7):</strong></p>
+          <div class="schema">CCI(<span class="pk">Cand_Name</span>, <span class="pk">Cname</span>, <span class="pk">Interview_id</span>) — FKs to all three entities</div>
+          <p><strong>RESULTS_IN relationship:</strong></p>
+          <div class="schema">RESULTS_IN(<span class="pk">Interview_id</span>, <span class="pk">Offer_id</span>) — FK to INTERVIEW and JOB_OFFER</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4b Hierarchy vs Lattice 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q4b</span>
+        <span class="qtit">Specialization Hierarchy vs Specialization Lattice — differentiate with examples</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="cmpt"><tr><th>Aspect</th><th class="ca">Specialization Hierarchy</th><th class="cb2">Specialization Lattice</th></tr><tr><td class="cl">Structure</td><td class="ca">Tree — each subclass has EXACTLY ONE superclass</td><td class="cb2">DAG — a subclass can have MORE THAN ONE superclass</td></tr><tr><td class="cl">Inheritance</td><td class="ca">Single inheritance only</td><td class="cb2">Multiple inheritance allowed</td></tr><tr><td class="cl">Shared subclass</td><td class="ca">Not allowed</td><td class="cb2">Allowed — called "shared subclass"</td></tr><tr><td class="cl">Example</td><td class="ca">PERSON→{EMPLOYEE,STUDENT}; EMPLOYEE→{MANAGER,ENGINEER} — each has one parent</td><td class="cb2">STUDENT_ASSISTANT is both a STUDENT and an EMPLOYEE — two parents</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5a EMP_PROJ SQL 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q5a</span>
+        <span class="qtit">EMP_PROJ — 5 SQL queries (INTERSECT, JOIN, NOT EXISTS, INSERT, UPDATE)</span>
+        <span class="qimp">⭐ Full SQL</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+<pre><span class="cm">-- (i) Both Project 353 AND 354</span>
+<span class="kw">SELECT</span> Emp# <span class="kw">FROM</span> Allotted <span class="kw">WHERE</span> Project# = <span class="num">353</span>
+<span class="kw">INTERSECT</span>
+<span class="kw">SELECT</span> Emp# <span class="kw">FROM</span> Allotted <span class="kw">WHERE</span> Project# = <span class="num">354</span>;
+
+<span class="cm">-- (ii) "database" project details</span>
+<span class="kw">SELECT</span> E.* <span class="kw">FROM</span> Employee E
+<span class="kw">JOIN</span> Allotted A <span class="kw">ON</span> E.Emp# = A.Emp#
+<span class="kw">JOIN</span> Project P <span class="kw">ON</span> A.Project# = P.Project#
+<span class="kw">WHERE</span> <span class="fn">LOWER</span>(P.Project_Name) <span class="kw">LIKE</span> <span class="str">'%database%'</span>;
+
+<span class="cm">-- (iii) All projects Emp 107 works on (Division)</span>
+<span class="kw">SELECT DISTINCT</span> A1.Emp#
+<span class="kw">FROM</span> Allotted A1
+<span class="kw">WHERE NOT EXISTS</span>(
+  <span class="kw">SELECT</span> Project# <span class="kw">FROM</span> Allotted <span class="kw">WHERE</span> Emp#=<span class="num">107</span>
+  <span class="kw">EXCEPT</span>
+  <span class="kw">SELECT</span> Project# <span class="kw">FROM</span> Allotted <span class="kw">WHERE</span> Emp#=A1.Emp#
+);
+
+<span class="cm">-- (iv) Insert tuple</span>
+<span class="kw">INSERT INTO</span> Project(Project#,Project_Name,Project_Manager)
+<span class="kw">VALUES</span>(<span class="num">555</span>,<span class="str">'Operation Research'</span>,<span class="str">'Jim'</span>);
+
+<span class="cm">-- (v) Update city Delhi → Chennai for James</span>
+<span class="kw">UPDATE</span> Employee <span class="kw">SET</span> City=<span class="str">'Chennai'</span>
+<span class="kw">WHERE</span> Name=<span class="str">'James'</span> <span class="kw">AND</span> City=<span class="str">'Delhi'</span>;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5b List all FDs 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q5b</span>
+        <span class="qtit">Table (a1,b1,c1,d1), (a1,b1,c2,d2), (a2,b2,c2,d2), (a2,b2,c4,d4) — List all FDs</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>A</th><th>B</th><th>C</th><th>D</th></tr><tr><td>a1</td><td>b1</td><td>c1</td><td>d1</td></tr><tr><td>a1</td><td>b1</td><td>c2</td><td>d2</td></tr><tr><td>a2</td><td>b2</td><td>c2</td><td>d2</td></tr><tr><td>a2</td><td>b2</td><td>c4</td><td>d4</td></tr></table>
+          <p><strong>Non-trivial FDs that hold:</strong></p>
+          <p><span class="fd">A→B</span> a1→b1 (both rows), a2→b2 (both rows) ✓<br>
+          <span class="fd">B→A</span> b1→a1, b2→a2 ✓<br>
+          <span class="fd">C→D</span> c1→d1, c2→d2 (rows 2,3), c4→d4 ✓<br>
+          <span class="fd">D→C</span> d1→c1, d2→c2, d4→c4 ✓<br>
+          <span class="fd">AB→C</span> Wait: (a1,b1) gives c1 and c2 — two different C! <span class="bvio">AB→C does NOT hold</span><br>
+          <span class="fd">AC→BD</span> Each (A,C) combo: (a1,c1)→(b1,d1), (a1,c2)→(b1,d2), (a2,c2)→(b2,d2), (a2,c4)→(b2,d4). All consistent ✓<br>
+          <span class="fd">BC→AD</span> (b1,c1)→(a1,d1), (b1,c2)→(a1,d2), (b2,c2)→(a2,d2), (b2,c4)→(a2,d4) ✓<br>
+          <span class="fd">CD→AB</span> Each (C,D) combo maps uniquely ✓</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6a B-tree order 4 2018 -->
+    <div class="qc open">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q6a</span>
+        <span class="qtit">B-tree of order 4 — Insert 1,2,3,4,5,6,7,8,9,10,11,12 step by step</span>
+        <span class="qimp">⭐ B-Tree Steps</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>Order 4: max 3 keys per node. Overflow on 4th key → split, <strong>middle key PUSHED UP</strong> (removed from child, added to parent).</p>
+          <p><strong>Insert 1,2,3:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">1</span><span class="k">2</span><span class="k">3</span></div></div>
+          <p><strong>Insert 4 → overflow [1,2,3,4] → split: middle=2 PUSHED UP → left=[1], right=[3,4]:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">2</span></div></div>
+          <div class="btc">↙ &nbsp;&nbsp;&nbsp; ↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">1</span></div><div class="btn leaf"><span class="k">3</span><span class="k">4</span></div></div>
+          <p><strong>Insert 5,6 → right node [3,4,5,6] overflow → middle=5 pushed up → root=[2,5]:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">2</span><span class="k">5</span></div></div>
+          <div class="btc">↙ &nbsp; ↓ &nbsp; ↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">1</span></div><div class="btn leaf"><span class="k">3</span><span class="k">4</span></div><div class="btn leaf"><span class="k">6</span></div></div>
+          <p><strong>Insert 7,8 → right node [6,7,8]. Insert 9 → [6,7,8,9] overflow → middle=8 pushed up → root=[2,5,8]:</strong></p>
+          <div class="btlv"><div class="btn root"><span class="k">2</span><span class="k">5</span><span class="k">8</span></div></div>
+          <div class="btc">↙ &nbsp; ↓ &nbsp; ↓ &nbsp; ↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">1</span></div><div class="btn leaf"><span class="k">3</span><span class="k">4</span></div><div class="btn leaf"><span class="k">6</span><span class="k">7</span></div><div class="btn leaf"><span class="k">9</span></div></div>
+          <p><strong>Insert 10,11 → [9,10,11]. Insert 12 → [9,10,11,12] overflow → 11 pushed up → root=[2,5,8,11] overflow! → root split → new root=5 (or 8 depending on split point → middle of [2,5,8,11] is 5 or 8):</strong></p>
+          <p>Root [2,5,8,11] has 4 keys → overflow → split at middle: left=[2], right=[8,11], new root=5:</p>
+          <div class="btlv"><div class="btn root"><span class="k">5</span></div></div>
+          <div class="btc">↙ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↘</div>
+          <div class="btlv"><div class="btn"><span class="k">2</span></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="btn"><span class="k">8</span><span class="k">11</span></div></div>
+          <div class="btc">↙&nbsp;↘ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↙&nbsp;↓&nbsp;↘</div>
+          <div class="btlv"><div class="btn leaf"><span class="k">1</span></div><div class="btn leaf"><span class="k">3</span><span class="k">4</span></div>&nbsp;&nbsp;<div class="btn leaf"><span class="k">6</span><span class="k">7</span></div><div class="btn leaf"><span class="k">9</span><span class="k">10</span></div><div class="btn leaf"><span class="k">12</span></div></div>
+          <div class="note">In a B-tree (not B+), the middle key is PUSHED UP and removed from the child. In a B+ tree, the middle key is COPIED UP and stays in the leaf. All leaf nodes in B-tree contain data pointers.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6b EMP_PROJ RA 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q6b</span>
+        <span class="qtit">EMP_PROJ — 2 Relational Algebra queries: project details by James, count AI project employees</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <p>Employee(Emp#, Name, Age, Salary, City, Mobile) | Allotted(Project#, Emp#) | Project(Project#, Project_Name, Project_Manager)</p>
+          <p><strong>(i) Project details managed by "James":</strong></p>
+          <pre>σ<sub>Project_Manager='James'</sub>(Project)</pre>
+          <p>SQL: <code>SELECT * FROM Project WHERE Project_Manager='James';</code></p>
+          <br>
+          <p><strong>(ii) Count employees on "Artificial Intelligence" project:</strong></p>
+          <pre><sub>ℱ</sub> COUNT Emp# (σ<sub>Project_Name='Artificial Intelligence'</sub>(Project ⋈ Allotted))</pre>
+          <p>SQL:</p>
+<pre><span class="kw">SELECT COUNT</span>(A.Emp#) <span class="kw">AS</span> Count
+<span class="kw">FROM</span>   Allotted A <span class="kw">JOIN</span> Project P <span class="kw">ON</span> A.Project# = P.Project#
+<span class="kw">WHERE</span>  P.Project_Name = <span class="str">'Artificial Intelligence'</span>;</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7a File calc 2018 r=20000 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q7a</span>
+        <span class="qtit">r=20000, B=1024, R=100, V=9, P=6 — bfr, b, binary search, blocking factor</span>
+        <span class="qmk">6 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <div class="g3">
+            <div class="fc"><h5 style="color:var(--teal)">bfr</h5><p>⌊1024/100⌋ = <strong>10 rec/block</strong></p></div>
+            <div class="fc"><h5 style="color:var(--gold)">b</h5><p>⌈20000/10⌉ = <strong>2000 blocks</strong></p></div>
+            <div class="fc"><h5 style="color:var(--lilac)">Binary Search</h5><p>⌈log₂(2000)⌉ = <strong>11 accesses</strong></p></div>
+            <div class="fc"><h5 style="color:var(--rose)">r_i</h5><p>9+6 = <strong>15 bytes</strong></p></div>
+            <div class="fc"><h5 style="color:var(--sky)">bfr_i</h5><p>⌊1024/15⌋ = <strong>68</strong></p></div>
+            <div class="fc"><h5 style="color:var(--lime)">b_i, search</h5><p>⌈2000/68⌉=30 blocks<br>⌈log₂(30)⌉+1=5+1=<strong>6 accesses</strong></p></div>
+          </div>
+          <div class="clg"><span class="ci">✅</span><span>Without index: 11 accesses. With primary index: 6 accesses. Index reduces accesses by ~45%.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7b ACID 2018 -->
+    <div class="qc">
+      <div class="qh" onclick="tog(this)">
+        <span class="yt yd">2018 · Q7b</span>
+        <span class="qtit">Four desirable properties of a Transaction (ACID) enforced by concurrency control</span>
+        <span class="qmk">4 marks</span>
+        <span class="qtg">+</span>
+      </div>
+      <div class="qb">
+        <div class="ab">
+          <table class="dt"><tr><th>Property</th><th>Enforced By</th><th>Meaning</th><th>Example</th></tr><tr><td><strong>Atomicity</strong></td><td>Recovery manager, Undo log</td><td>All operations succeed or none do</td><td>Bank transfer: both debit+credit or neither</td></tr><tr><td><strong>Consistency</strong></td><td>Integrity constraints, Application logic</td><td>DB goes from one valid state to another</td><td>Total money in bank unchanged after transfer</td></tr><tr><td><strong>Isolation</strong></td><td>Concurrency control (2PL, MVCC)</td><td>Concurrent transactions don't interfere</td><td>Two ATM withdrawals don't see each other</td></tr><tr><td><strong>Durability</strong></td><td>Write-Ahead Log, checkpointing</td><td>Committed effects are permanent</td><td>Transfer survives power failure after commit</td></tr></table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end 2018 -->
+</div><!-- end 2018 paper -->
+
+<div class="div"></div>
+
+<!-- ══════════════════════
+  FORMULA SHEET
+══════════════════════ -->
+<section class="sec" id="formulas">
+  <div class="sech"><span class="secn">REFERENCE</span><h3 class="sect">📋 Complete <span>Formula Sheet</span></h3></div>
+
+  <div class="qc open">
+    <div class="qh" onclick="tog(this)">
+      <span class="yt yf">ALL FORMULAS</span>
+      <span class="qtit">Every formula from every topic — print this before exam</span>
+      <span class="qimp">⭐ Essential</span>
+      <span class="qtg">+</span>
+    </div>
+    <div class="qb">
+      <div class="g4">
+        <div class="fc"><h5 style="color:var(--teal)">FILE ORGANIZATION</h5><p>bfr = ⌊B÷R⌋<br>b = ⌈r÷bfr⌉<br>BinSearch = ⌈log₂(b)⌉<br>Seq scan avg = b÷2</p></div>
+        <div class="fc"><h5 style="color:var(--gold)">PRIMARY INDEX</h5><p>r_i = V+P<br>bfr_i = ⌊B÷r_i⌋<br>entries = b (sparse)<br>b_i = ⌈b÷bfr_i⌉<br>Search = ⌈log₂(b_i)⌉+1</p></div>
+        <div class="fc"><h5 style="color:var(--rose)">SECONDARY INDEX</h5><p>r_i = V+P<br>bfr_i = ⌊B÷r_i⌋<br>entries = r (dense)<br>b_i = ⌈r÷bfr_i⌉<br>More space than primary</p></div>
+        <div class="fc"><h5 style="color:var(--lilac)">B/B+ TREE</h5><p>Order p: max p-1 keys<br>Overflow at p keys<br>B: PUSH UP middle<br>B+: COPY UP middle<br>B+ leaves linked ↔<br>B: data all nodes<br>B+: data leaves only</p></div>
+        <div class="fc"><h5 style="color:var(--sky)">NORMALIZATION</h5><p>1NF: atomic values<br>2NF: no partial deps<br>3NF: no transitive<br>BCNF: X→Y⟹X=superkey<br>Partial: X⊂PK→non-prime<br>Transitive: NP→NP</p></div>
+        <div class="fc"><h5 style="color:var(--lime)">REL. ALGEBRA</h5><p>σ = Selection<br>Π = Projection<br>∪ = Union<br>∩ = Intersection<br>− = Difference<br>× = Cartesian<br>⋈ = Join<br>÷ = Division</p></div>
+        <div class="fc"><h5 style="color:var(--sage)">SQL AGGREGATES</h5><p>COUNT(*) incl NULLs<br>COUNT(col) excl NULLs<br>SUM ignores NULLs<br>AVG ignores NULLs<br>MAX/MIN ignore NULLs<br>WHERE: row filter<br>HAVING: group filter</p></div>
+        <div class="fc"><h5 style="color:var(--teal)">ACID + PROBLEMS</h5><p>Atomicity=all/none<br>Consistency=valid→valid<br>Isolation=no interfere<br>Durability=permanent<br>Lost Update: T2 overwrites T1<br>Dirty Read: uncom read<br>Incor Summary: mid-agg</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════
+  FINAL CHECKLIST
+══════════════════════ -->
+<section class="sec" id="checklist">
+  <div class="sech"><span class="secn">FINAL</span><h3 class="sect">✅ Complete <span>Checklist</span></h3></div>
+
+  <div class="qc open">
+    <div class="qh" onclick="tog(this)">
+      <span class="yt yf">CHECKLIST</span>
+      <span class="qtit">All 80 questions covered — mark what you've revised</span>
+      <span class="qimp">⭐ Exam Ready</span>
+      <span class="qtg">+</span>
+    </div>
+    <div class="qb">
+      <div class="ab">
+        <div class="g2">
+          <div>
+            <p><strong>2024 Paper (19 questions) ✓</strong></p>
+            <ul><li>Q1a: RESTAURANT FD check ✓</li><li>Q1b: 4 DB user types ✓</li><li>Q1c: PK cannot be NULL ✓</li><li>Q1d: T1 T2 Lost Update ✓</li><li>Q1e: SUPPLIER-PART mapping ✓</li><li>Q1f: T1 T2 RA operations ✓</li><li>Q1g: Recursive role names ✓</li><li>Q1h: CREATE TABLE T ✓</li><li>Q1i: EER specialization ✓</li><li>Q2: University Registrar ER ✓</li><li>Q3a: CUSTOMER/PRODUCT SQL ✓</li><li>Q3b: FD Equivalence F,G ✓</li><li>Q4a: STUDENT anomalies 3NF ✓</li><li>Q4b: Cardinality ratios ✓</li><li>Q5: WORKER/DEPT SQL ✓</li><li>Q6a: BOOK 3NF ✓</li><li>Q6b: File calculations ✓</li><li>Q7a: B+ tree insertion ✓</li><li>Q7b: Library schema ✓</li></ul>
+          </div>
+          <div>
+            <p><strong>2023 Paper (21 questions) ✓</strong></p>
+            <ul><li>Q1a-Q1j: All 10 Section A parts ✓</li><li>Q2a: Three-schema architecture ✓</li><li>Q2b: Schema vs State ✓</li><li>Q3a: Hospital ER ✓</li><li>Q3b: Binary vs Recursive ✓</li><li>Q4: CAR/SALE SQL ✓</li><li>Q5a: SUPPLIER SQL ✓</li><li>Q5b: File calculations ✓</li><li>Q6a: CUSTOMER RA queries ✓</li><li>Q6b: 2NF decomposition ✓</li><li>Q7a: Bank ER mapping ✓</li><li>Q7b: Incorrect Summary ✓</li></ul>
+            <br>
+            <p><strong>2019 Paper (17 questions) ✓</strong></p>
+            <ul><li>Q1a-Q1g: All Section A parts ✓</li><li>Q2: Movie DB ER ✓</li><li>Q3a: Branch/Staff SQL ✓</li><li>Q3b: File calculations ✓</li><li>Q4: B+ tree ✓</li><li>Q5a: SUPPLIER SQL ✓</li><li>Q7b: DBMS advantages ✓</li></ul>
+            <br>
+            <p><strong>2018 Paper (23 questions) ✓</strong></p>
+            <ul><li>Q1a-Q1k: All Section A parts ✓</li><li>Q2a: Project Exam ER ✓</li><li>Q3a: Timetable 3NF ✓</li><li>Q3b: Minimal Cover ✓</li><li>Q4a: Ternary EER mapping ✓</li><li>Q6a: B-tree order 4 ✓</li><li>Q7a: File calculations ✓</li><li>All others ✓</li></ul>
+          </div>
+        </div>
+        <div class="clg">
+          <span class="ci">🎓</span>
+          <div><strong>CONGRATULATIONS! All 80 questions from all 4 PYQ papers (2018, 2019, 2023, 2024) are now completely solved with full explanations, Hinglish concepts, SQL queries, RA expressions, visualizations, and step-by-step working. You are exam ready! All the best! 🎓</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<button id="sup" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function tog(h){h.closest('.qc').classList.toggle('open');}
+const ss=document.querySelectorAll('.paper,.sec');
+const als=document.querySelectorAll('.nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  ss.forEach(s=>{if(s.id&&window.scrollY>=s.offsetTop-180)cur=s.id;});
+  als.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+const sup=document.getElementById('sup');
+window.addEventListener('scroll',()=>{sup.style.opacity=window.scrollY>300?'1':'0';},{passive:true});
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key==='o')document.querySelectorAll('.qc:not(.open)').forEach(c=>c.classList.add('open'));
+  if(e.key==='c')document.querySelectorAll('.qc.open').forEach(c=>c.classList.remove('open'));
+});
+</script>
+</body>
+</html>
